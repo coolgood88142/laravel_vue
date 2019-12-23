@@ -12,12 +12,12 @@
         {{ @message }}
         <select v-model="years_selected" id="year" v-on:change="onDateDeault">
             <option value="" disabled selected>--請選擇--</option>
-            <option v-for="year in years" :value="year.value">{{ @year.text }}</option>
+            <option v-for="year in years" :value="year.value">@{{ year.text }}</option>
         </select>
         <label>年</label>
         <select v-model="months_selected" id="month" v-on:change="onChange">
             <option value="" disabled selected>--請選擇--</option>
-            <option v-for="month in months" :value="month.value">{{ @month.text }}</option>
+            <option v-for="month in months" :value="month.value">@{{ month.text }}</option>
         </select>
         <label>月</label>
         <select v-model="days_selected" id="day">
@@ -26,8 +26,10 @@
         </select>
         <label>日</label>
     </div>
-    <script src="{{mix('js/vue.js')}}"></script>
-    <script src="{{mix('js/date.js')}}"></script>
+    <script src="{{mix('js/app.js')}}"></script>
+    <script src="{{mix('js/manifest.js')}}"></script>
+    <script src="{{mix('js/vendor.js')}}"></script>
+    <script src="{{'./js/date.js'}}"></script>
 </body>
 
 </html>

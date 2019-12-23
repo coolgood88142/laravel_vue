@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/date', function () {
     return view('date');
 });
+
+Route::get('/city', function () {
+    return view('city');
+});
