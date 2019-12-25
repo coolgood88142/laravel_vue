@@ -1,4 +1,5 @@
 <html>
+
 <body>
     <link rel="stylesheet" href="/css/admin.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -10,14 +11,14 @@
 
     <div id="app">
         {{ @message }}
-        <select v-model="years_selected" id="year" v-on:change="onDateDeault">
+        <select v-model="years_selected" id="year" v-on:change="clearOptions">
             <option value="" disabled selected>--請選擇--</option>
-            <option v-for="year in years" :value="year.value">@{{ year.text }}</option>
+            <option v-for="(year, index) in years" :value="index">@{{ year.text }}</option>
         </select>
         <label>年</label>
         <select v-model="months_selected" id="month" v-on:change="onChange">
             <option value="" disabled selected>--請選擇--</option>
-            <option v-for="month in months" :value="month.value">@{{ month.text }}</option>
+            <option v-for="(month, index) in months" :value="index">@{{ month.text }}</option>
         </select>
         <label>月</label>
         <select v-model="days_selected" id="day">

@@ -10627,7 +10627,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./node_modules/admin-lte/dist/js/adminlte.min.js");
@@ -10635,4 +10635,4 @@ module.exports = __webpack_require__("./node_modules/admin-lte/dist/js/adminlte.
 
 /***/ })
 
-},[1]);
+},[2]);
