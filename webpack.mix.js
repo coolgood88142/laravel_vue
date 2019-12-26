@@ -21,3 +21,4 @@ mix.extract(['admin-lte']).autoload({
 });
 
 mix.js('resources/js/date.js', 'public/js')
+mix.js('resources/js/city.js', 'public/js')

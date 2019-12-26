@@ -26,7 +26,29 @@ let districts = [
     ]
 ];
 
-Vue.component('districts_selct', {
+var bus = new Vue();
+Vue.component('counties_select', {
+    props: {
+        counties_array: {
+            type: Array,
+            required: true
+        },
+        counties_selected: {
+            type: String
+        }
+    },
+    template: '<select v-model="counties_selected" id="counties" @change="UpdateDistricts">' +
+        '<option value="" disabled selected>--請選擇--</option>' +
+        '<option v-for="counties in counties_array" :value="counties.value">{{ counties.text }}</option>' +
+        '</select>'
+    , methods: {
+        UpdateDistricts() {
+            bus.$emit('UpdateDistricts', this.counties_selected);
+        }
+    }
+})
+
+Vue.component('districts_select', {
     props: {
         districts_array: {
             type: Array,
@@ -36,22 +58,28 @@ Vue.component('districts_selct', {
             type: String
         }
     },
-    template: '<select v-model="districts_selected" id="districts"><option value="" disabled selected>--請選擇--</option ><option v-for="val in districts_array" :value="val.value">{{ val.text }}</option></select >'
+    template: '<select v-model="districts_selected" id="districts">' +
+        '<option value="" disabled selected>--請選擇--</option>' +
+        '<option v-for="districts in districts_array" :value="districts.value">{{ districts.text }}</option>' +
+        '</select>'
 })
 
-let num_text = '郵遞區號為:';
 let app = new Vue({
     el: '#app',
     data: {
         message: 'Vue練習:',
         counties_array: counties,
-        districts_array: districts[0],
         counties_selected: '',
+        districts_array: '',
         districts_selected: ''
     },
     methods: {
-        onChange: function () {
-            this.districts_array = districts[this.counties_selected];
+        UpdateDistricts(selected) {
+            this.counties_selected = selected;
+            this.districts_array = districts[selected];
         }
+    },
+    created: function () {
+        bus.$on('UpdateDistricts', this.UpdateDistricts);
     }
 })

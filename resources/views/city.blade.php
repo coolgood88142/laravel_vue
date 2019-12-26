@@ -11,16 +11,18 @@
 
     <div id="app">
         {{ @message }}
-        <select v-model="counties_selected" id="counties" v-on:change="onChange">
-            <option value="" disabled selected>--請選擇--</option>
-            <option v-for="counties in counties_array" :value="counties.value">@{{ counties.text }}</option>
-        </select>
-        <districts_selct :districts_selected="districts_selected" :districts_array="districts_array"></districts_selct>
     </div>
-    <script src="{{mix('js/app.js')}}"></script>
     <script src="{{mix('js/manifest.js')}}"></script>
     <script src="{{mix('js/vendor.js')}}"></script>
-    <script src="{{'./js/date.js'}}"></script>
+    <script src="{{mix('js/app.js')}}"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    </script>
 </body>
 
 </html>
