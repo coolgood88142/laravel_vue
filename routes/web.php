@@ -15,10 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/city', function () {
+    return view('city');
+});
+
 Route::get('/date', function () {
     return view('date');
 });
 
-Route::get('/city', function () {
-    return view('city');
-});

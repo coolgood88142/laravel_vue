@@ -1,28 +1,15 @@
 <html>
-
-<body>
-    <link rel="stylesheet" href="/css/admin.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-            <![endif]-->
-
-    <div id="app">
-        {{ @message }}
-    </div>
-    <script src="{{mix('js/manifest.js')}}"></script>
-    <script src="{{mix('js/vendor.js')}}"></script>
-    <script src="{{mix('js/app.js')}}"></script>
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                message: 'Hello Vue!'
-            }
-        })
-    </script>
-</body>
+    <head>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    </head>
+    <body>
+        <div id="app">
+            @{{ message }}
+            <counties_select counties_selected="counties_selected" counties_array="counties_array"></counties_select>
+            <districts_select districts_selected="districts_selected" districts_array="districts_array"></districts_select>
+        </div>
+        <script src="{{mix('js/app.js')}}"></script>
+        <script src="{{mix('js/city.js')}}"></script>
+    </body>
 
 </html>

@@ -1,3 +1,5 @@
+require('./app');
+
 let begin_year = 1900;
 let end_year = 2020;
 
@@ -18,7 +20,7 @@ let app = new Vue({
     data: {
         message: 'Vue練習:',
         years: DefaultDateData(begin_year, end_year),
-        months: DefaultDateData(begin_month, end_month + 1),
+        months: DefaultDateData(begin_month, end_month+1),
         days: '',
         years_selected: '',
         months_selected: '',

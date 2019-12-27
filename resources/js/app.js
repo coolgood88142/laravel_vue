@@ -6,9 +6,8 @@
  */
 
 require('./bootstrap');
-require('admin-lte');
-
 window.Vue = require('vue');
+Vue.config.productionTip = false
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,6 +17,6 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app',
+// });
