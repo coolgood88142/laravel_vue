@@ -7,12 +7,12 @@
             @{{ message }}
             <select v-model="years_selected" id="year" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(year, index) in years" :value="index">@{{ year.text }}</option>
+                <option v-for="(year, index) in years" :value="index">@{{ year.value }}</option>
             </select>
             <label>年</label>
             <select v-model="months_selected" id="month" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(month, index) in months" :value="index">@{{ month.text }}</option>
+                <option v-for="(month, index) in months" :value="index">@{{ month.value }}</option>
             </select>
             <label>月</label>
             <select v-model="days_selected" id="day">
