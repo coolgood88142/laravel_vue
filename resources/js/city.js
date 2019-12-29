@@ -28,20 +28,17 @@ let districts = [
 
 var bus = new Vue();
 Vue.component('counties_select', {
-    props: {
-        counties_array: {
-            type: Array,
-            required: true
-        },
-        counties_selected: {
-            type: String
+    data: function(){
+        return {
+            counties_array: counties,
+            counties_selected: ''
         }
     },
     template: '<select v-model="counties_selected" id="counties" @change="UpdateDistricts">' +
         '<option value="" disabled selected>--請選擇--</option>' +
         '<option v-for="counties in counties_array" :value="counties.value">{{ counties.text }}</option>' +
-        '</select>'
-    ,methods: {
+        '</select>',
+    methods: {
         UpdateDistricts(){
             bus.$emit('UpdateDistricts', this.counties_selected);
         }
@@ -49,30 +46,15 @@ Vue.component('counties_select', {
 })
 
 Vue.component('districts_select', {
-    props: {
-        districts_array: {
-            type: Array,
-            required: true
-        },
-        districts_selected: {
-            type: String
+    data: function(){
+        return {
+            districts_array: []
         }
     },
-    template: '<select v-model="districts_selected" id="districts">'+
+    template: '<select id="districts">'+
         '<option value="" disabled selected>--請選擇--</option>'+
         '<option v-for="districts in districts_array" :value="districts.value">{{ districts.text }}</option>'+
-        '</select>'
-})
-
-let app = new Vue({
-    el: '#app',
-    data:{
-        message: 'Vue練習:',
-        counties_array: counties,
-        counties_selected: '',
-        districts_array: [],
-        districts_selected: ''
-    },
+        '</select>',
     methods: {
         UpdateDistricts(selected){
             this.counties_selected = selected;
@@ -81,5 +63,12 @@ let app = new Vue({
     },
     created: function () {
         bus.$on('UpdateDistricts', this.UpdateDistricts);
+    }
+})
+
+let app = new Vue({
+    el: '#app',
+    data:{
+        message: 'Vue練習:'
     }
 })
