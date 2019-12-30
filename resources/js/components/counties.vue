@@ -1,5 +1,5 @@
 <template>
-    <select v-model="counties_selected" id="counties" @change="UpdateDistricts">
+     <select v-model="counties_selected" id="counties" @change="UpdateDistricts">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(counties, index) in counties_array" :key="counties.value" :value="index">{{ counties.text }}</option>
     </select>
@@ -20,7 +20,9 @@ export default {
     },
     methods: {
         UpdateDistricts(){
+            let data = [this.counties_array, this.counties_selected];
             bus.$emit('UpdateDistricts', this.counties_selected);
+            bus.$emit('CountiesData', data);
         }
     }
 }

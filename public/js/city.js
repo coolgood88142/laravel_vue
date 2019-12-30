@@ -89,7 +89,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         UpdateDistricts: function UpdateDistricts() {
+            var data = [this.counties_array, this.counties_selected];
             __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$emit('UpdateDistricts', this.counties_selected);
+            __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$emit('CountiesData', data);
         }
     }
 });
@@ -116,17 +118,55 @@ var districts = [[{ text: '中正區', value: 100 }, { text: '大同區', value:
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            districts_array: []
+            districts_array: [],
+            districts_selected: ''
         };
     },
     methods: {
         UpdateDistricts: function UpdateDistricts(selected) {
             this.counties_selected = selected;
             this.districts_array = districts[selected];
+        },
+        ShowText: function ShowText() {
+            var data = [this.districts_array, this.districts_selected];
+            __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$emit('DistrictsDate', data);
         }
     },
     created: function created() {
         __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('UpdateDistricts', this.UpdateDistricts);
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/postalcode.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus_js__ = __webpack_require__("./resources/js/bus.js");
+//
+//
+//
+//
+
+
+var CountiesData = '';
+var DistrictsData = '';
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            showText: '顯示郵遞區號!'
+        };
+    },
+    methods: {
+        ShowPostalCode: function ShowPostalCode() {
+            console.log(CountiesData);
+        }
+    },
+    created: function created() {
+        __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('CountiesData', CountiesData);
+        __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('DistrictsData', DistrictsData);
     }
 });
 
@@ -698,6 +738,31 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4ed05c7a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/postalcode.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    { attrs: { id: "show" }, on: { click: _vm.ShowPostalCode } },
+    [_vm._v(_vm._s(_vm.showText))]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4ed05c7a", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6b8544b3\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/counties.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -773,7 +838,36 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "select",
-    { attrs: { id: "districts" } },
+    {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.districts_selected,
+          expression: "districts_selected"
+        }
+      ],
+      staticClass: "form-control",
+      attrs: { id: "districts" },
+      on: {
+        change: [
+          function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.districts_selected = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          },
+          _vm.ShowText
+        ]
+      }
+    },
     [
       _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
         _vm._v("--請選擇--")
@@ -12830,6 +12924,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_counties_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_counties_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_districts_vue__ = __webpack_require__("./resources/js/components/districts.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_districts_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_districts_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_postalcode_vue__ = __webpack_require__("./resources/js/components/postalcode.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_postalcode_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_postalcode_vue__);
+
 
 
 
@@ -12837,11 +12934,13 @@ Vue.config.productionTip = false;
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Vue練習:'
+        message: 'Vue練習:',
+        showText: '顯示郵遞區號!'
     },
     components: {
         'counties_select': __WEBPACK_IMPORTED_MODULE_0__components_counties_vue___default.a,
-        'districts_select': __WEBPACK_IMPORTED_MODULE_1__components_districts_vue___default.a
+        'districts_select': __WEBPACK_IMPORTED_MODULE_1__components_districts_vue___default.a,
+        'postalcode': __WEBPACK_IMPORTED_MODULE_2__components_postalcode_vue___default.a
     }
 });
 
@@ -12932,6 +13031,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-6f12432c", Component.options)
   } else {
     hotAPI.reload("data-v-6f12432c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/postalcode.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/postalcode.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4ed05c7a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/postalcode.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/postalcode.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4ed05c7a", Component.options)
+  } else {
+    hotAPI.reload("data-v-4ed05c7a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

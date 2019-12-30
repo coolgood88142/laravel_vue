@@ -92,7 +92,8 @@ var app = new Vue({
         days: '',
         years_selected: '',
         months_selected: '',
-        days_selected: ''
+        days_selected: '',
+        showText: '顯示日期!'
     },
     methods: {
         clearOptions: function clearOptions() {
@@ -106,7 +107,8 @@ var app = new Vue({
             var month = this.months[this.months_selected].value;
 
             this.days = new Date(year, month, 0).getDate();
-        }
+        },
+        showDate: function showDate() {}
     }
 });
 

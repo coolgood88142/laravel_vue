@@ -1,5 +1,5 @@
 <template>
-    <select id="districts">
+    <select v-model="districts_selected" id="districts" class="form-control" @change="ShowText">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(districts, index) in districts_array" :key="districts.value" :value="index">{{ districts.text }}</option>
     </select>
@@ -32,13 +32,18 @@ import bus from '../bus.js'
 export default {
     data:function(){
         return {
-            districts_array: []
+            districts_array: [],
+            districts_selected: ''
         }
     },
     methods: {
         UpdateDistricts(selected){
             this.counties_selected = selected;
             this.districts_array = districts[selected];
+        },
+        ShowText(){
+            let data = [this.districts_array, this.districts_selected];
+            bus.$emit('DistrictsDate', data);
         }
     },
     created: function () {
