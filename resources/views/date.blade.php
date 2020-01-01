@@ -20,7 +20,7 @@
                 <option v-for="day in days" :value="day">@{{ day }}</option>
             </select>
             <label>日</label>
-            <button id="show" @click="ShowDate">@{{ showText }}</button>
+            {{-- <button id="show" @click="ShowDate">@{{ showText }}</button> --}}
         </div>
         <script src="{{mix('js/app.js')}}"></script>
         <script src="{{mix('js/date.js')}}"></script>

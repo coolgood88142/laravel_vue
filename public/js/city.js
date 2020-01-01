@@ -126,11 +126,12 @@ var districts = [[{ text: '中正區', value: 100 }, { text: '大同區', value:
         UpdateDistricts: function UpdateDistricts(selected) {
             this.counties_selected = selected;
             this.districts_array = districts[selected];
-        },
-        ShowText: function ShowText() {
-            var data = [this.districts_array, this.districts_selected];
-            __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$emit('DistrictsDate', data);
         }
+        // ShowText(){
+        //     let data = [this.districts_array, this.districts_selected];
+        //     bus.$emit('DistrictsDate', data);
+        // }
+
     },
     created: function created() {
         __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('UpdateDistricts', this.UpdateDistricts);
@@ -163,11 +164,11 @@ var DistrictsData = '';
         ShowPostalCode: function ShowPostalCode() {
             console.log(CountiesData);
         }
-    },
-    created: function created() {
-        __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('CountiesData', CountiesData);
-        __WEBPACK_IMPORTED_MODULE_0__bus_js__["a" /* default */].$on('DistrictsData', DistrictsData);
     }
+    // created: function () {
+    //     bus.$on('CountiesData', CountiesData);
+    //     bus.$on('DistrictsData', DistrictsData);
+    // }
 });
 
 /***/ }),

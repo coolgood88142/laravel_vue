@@ -37,9 +37,9 @@ let app = new Vue({
             let month = this.months[this.months_selected].value;
 
             this.days = new Date(year, month, 0).getDate()
-        },
-        showDate: function(){
-            
         }
+        // showDate: function(){
+            
+        // }
     }
 })

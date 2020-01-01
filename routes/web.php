@@ -23,3 +23,6 @@ Route::get('/date', function () {
     return view('date');
 });
 
+Route::get('/btn', function () {
+    return view('button');
+});

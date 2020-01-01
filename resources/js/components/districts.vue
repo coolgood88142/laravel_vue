@@ -40,11 +40,11 @@ export default {
         UpdateDistricts(selected){
             this.counties_selected = selected;
             this.districts_array = districts[selected];
-        },
-        ShowText(){
-            let data = [this.districts_array, this.districts_selected];
-            bus.$emit('DistrictsDate', data);
         }
+        // ShowText(){
+        //     let data = [this.districts_array, this.districts_selected];
+        //     bus.$emit('DistrictsDate', data);
+        // }
     },
     created: function () {
         bus.$on('UpdateDistricts', this.UpdateDistricts);

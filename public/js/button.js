@@ -60,66 +60,64 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/date.js":
-/***/ (function(module, exports) {
+/***/ "./resources/js/button.js":
+/***/ (function(module, __webpack_exports__) {
 
-var begin_year = 1900;
-var end_year = 2020;
-
-var begin_month = 1;
-var end_month = 12;
-
-function DefaultDateData(begin, end) {
-    var date_array = [];
-    for (var i = begin; i < end + 1; i++) {
-        date_array.push({ value: i });
-    }
-
-    return date_array;
-}
-
-var app = new Vue({
-    el: '#app',
+"use strict";
+var list = [{
+    id: "1234567890",
+    name: "Nina Ricci"
+}, {
+    id: "2345678901",
+    name: "Hello Kitty"
+}, {
+    id: "3456789012",
+    name: "Pusheen the cat"
+}];
+var btn = new Vue({
+    el: '#btn',
     data: {
-        message: 'Vue練習:',
-        years: DefaultDateData(begin_year, end_year),
-        months: DefaultDateData(begin_month, end_month),
-        days: '',
-        years_selected: '',
-        months_selected: '',
-        days_selected: '',
-        showText: '顯示日期!'
+        message: 'hello',
+        namelist: list
     },
-    methods: {
-        clearOptions: function clearOptions() {
-            this.months_selected = '';
-            this.days = '';
-            this.days_selected = '';
-        },
-        onChange: function onChange() {
-            this.days_selected = '';
-            var year = this.years[this.years_selected].value;
-            var month = this.months[this.months_selected].value;
-
-            this.days = new Date(year, month, 0).getDate();
+    created: function created() {
+        for (var i = 0; i < this.namelist.length; i++) {
+            this.namelist[i].status = true;
         }
-        // showDate: function(){
-
-        // }
+    },
+    computed: {
+        isStatus: function isStatus() {
+            return function (index) {
+                console.log(this.namelist[index].status);
+                return this.namelist[index].status;
+            };
+        }
+    },
+    // watch: {
+    //     namelist(newVal, oldVal) {
+    //         console.log(newVal); //改变之后的值
+    //         console.log(oldVal);//改变之前的值
+    //     }
+    // },
+    methods: {
+        ShowAdd: function ShowAdd(index, value) {
+            this.$set(this.namelist[index], 'status', value);
+            console.log(this.namelist[index].status);
+        }
     }
 });
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/js/date.js");
+module.exports = __webpack_require__("./resources/js/button.js");
 
 
 /***/ })

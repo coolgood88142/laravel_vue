@@ -17,9 +17,9 @@ export default {
             console.log(CountiesData);
         }
     },
-    created: function () {
-        bus.$on('CountiesData', CountiesData);
-        bus.$on('DistrictsData', DistrictsData);
-    }
+    // created: function () {
+    //     bus.$on('CountiesData', CountiesData);
+    //     bus.$on('DistrictsData', DistrictsData);
+    // }
 }
 </script>>
