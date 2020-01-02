@@ -20,17 +20,18 @@ let btn = new Vue({
     },
     created: function () {
         for (let i = 0; i < this.namelist.length; i++){
+            this.$set(this.namelist[i], 'status', true);
             this.namelist[i].status = true;
          }
     },
-    computed: {
-        isStatus() {
-            return function (index){
-                console.log(this.namelist[index].status);
-                return this.namelist[index].status;
-            }
-        }
-    },
+    // computed: {
+    //     isStatus() {
+    //         return function (index){
+    //             console.log(this.namelist[index].status);
+    //             return this.namelist[index].status;
+    //         }
+    //     }
+    // },
     // watch: {
     //     namelist(newVal, oldVal) {
     //         console.log(newVal); //改变之后的值

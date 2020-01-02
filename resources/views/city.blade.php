@@ -10,8 +10,8 @@
     <body>
         <div id="app" v-cloak>
             @{{ message }}
-            <counties_select></counties_select>
-            <districts_select></districts_select>
+            <counties_select v-on:get-districts="UpdateDistricts"></counties_select>
+            <districts_select :districts_selected="districts_selected" :districts_array="districts_array"></districts_select>
             <postalcode></postalcode>
         </div>
         <script src="{{mix('js/app.js')}}"></script>
