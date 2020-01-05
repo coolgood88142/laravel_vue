@@ -2,7 +2,6 @@ import counties from './components/counties.vue';
 import districts from './components/districts.vue';
 import postalcode from './components/postalcode.vue';
 
-Vue.config.productionTip = false;
 let app = new Vue({
     el: '#app',
     data:{
@@ -17,10 +16,9 @@ let app = new Vue({
         'postalcode': postalcode
     },
     methods: {
-        UpdateDistricts(data) {
-            let districts = data[0];
-            let counties_selected = data[1];
-            this.districts_array = districts[counties_selected];
+        UpdateDistricts(counties_selected) {
+            console.log(counties_selected);
+            // this.districts_array = districts[counties_selected];
         }
         // ShowPostalCode(data){
         //     let counties_array = data[0];
