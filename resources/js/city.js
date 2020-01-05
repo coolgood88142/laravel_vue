@@ -8,7 +8,7 @@ let app = new Vue({
     data:{
         message: 'Vue練習:',
         showText: '顯示郵遞區號!',
-        districts_selected: '',
+        // districts_selected: '',
         districts_array: []
     },
     components:{
@@ -22,5 +22,11 @@ let app = new Vue({
             let counties_selected = data[1];
             this.districts_array = districts[counties_selected];
         }
+        // ShowPostalCode(data){
+        //     let counties_array = data[0];
+        //     let counties_selected = data[1];
+        //     let counties = counties_array[counties_selected];
+        //     let districts = this.districts_array[this.districts_selected];
+        // }
     }
 })

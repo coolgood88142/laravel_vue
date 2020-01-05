@@ -1,7 +1,7 @@
 <template>
      <select v-model="counties_selected" id="counties" @change="ChangeCounties">
         <option value="" disabled selected>--請選擇--</option>
-        <option v-for="(counties, index) in counties_array" :key="counties.value" :value="index">{{ counties.text }}</option>
+        <option v-for="(counties, index) in counties_array" :key="index" :value="counties.value">{{ counties.text }}</option>
     </select>
 </template>
 
@@ -32,9 +32,9 @@ export default {
     data:function(){
         return {
             counties_array: [
-                { text: '台北市', value: 'A' },
-                { text: '基隆市', value: 'B' },
-                { text: '新北市', value: 'C' }
+                { text: '台北市', value: 0 },
+                { text: '基隆市', value: 1 },
+                { text: '新北市', value: 2 }
             ],
             counties_selected: ''
         }
@@ -46,5 +46,9 @@ export default {
             // bus.$emit('CountiesData', data);
         }
     }
+    // created() {
+    //     let data = [this.counties_array, this.counties_selected];
+    //     this.$emit('get-postalcode', data);
+    // }
 }
 </script>>

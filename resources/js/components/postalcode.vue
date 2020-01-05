@@ -1,5 +1,5 @@
 <template>
-    <button id="show" @click="ShowPostalCode">{{ showText }}</button>
+    <button id="show">{{ showText }}</button>
 </template>
 
 <script>
@@ -11,12 +11,7 @@ export default {
         return {
             showText: '顯示郵遞區號!'
         }
-    },
-    methods: {
-        ShowPostalCode(){
-            console.log(CountiesData);
-        }
-    },
+    }
     // created: function () {
     //     bus.$on('CountiesData', CountiesData);
     //     bus.$on('DistrictsData', DistrictsData);

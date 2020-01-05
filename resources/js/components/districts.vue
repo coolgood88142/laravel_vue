@@ -1,22 +1,19 @@
 <template>
-    <select v-model="districts_selected" id="districts" class="form-control">
+    <select id="districts" class="form-control">
         <option value="" disabled selected>--請選擇--</option>
-        <option v-for="(districts, index) in districts_array" :key="districts.value" :value="index">{{ districts.text }}</option>
+        <option v-for="(districts, index) in districts_array" :key="index" :value="districts.value">{{ districts.text }}</option>
     </select>
 </template>
 
 <script>
 export default {
-    data:function(){
-        return {
-            districts_array: [],
-            districts_selected: ''
+    props: {
+        districts_array:{
+            type:Array,
+            required:true
         }
-    },
-    methods: {
-        // ShowText(){
-        //     let data = [this.districts_array, this.districts_selected];
-        //     bus.$emit('DistrictsDate', data);
+        // districts_selected:{
+        //     type:String
         // }
     }
 }

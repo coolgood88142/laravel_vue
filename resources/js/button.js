@@ -32,15 +32,21 @@ let btn = new Vue({
     //         }
     //     }
     // },
-    // watch: {
-    //     namelist(newVal, oldVal) {
-    //         console.log(newVal); //改变之后的值
-    //         console.log(oldVal);//改变之前的值
-    //     }
-    // },
+    watch: {
+        namelist(newVal, oldVal) {
+            console.log(newVal); //改变之后的值
+            console.log(oldVal);//改变之前的值
+        }
+    },
     methods:{
-        ShowAdd(index, value){
-            this.$set(this.namelist[index], 'status', value);
+        ShowAdd(index){
+            let status = this.namelist[index].status
+            let value = true
+            if(status==value){
+                status = false
+            }
+
+            this.$set(this.namelist[index], 'status', status);
             console.log(this.namelist[index].status);
         }
     }
