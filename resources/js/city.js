@@ -2,13 +2,16 @@ import counties from './components/counties.vue';
 import districts from './components/districts.vue';
 import postalcode from './components/postalcode.vue';
 
+let districts_data = '';
 let app = new Vue({
     el: '#app',
     data:{
         message: 'Vue練習:',
-        showText: '顯示郵遞區號!',
-        // districts_selected: '',
-        districts_array: []
+        districts_selected: '',
+        districts_array: [],
+        styleObject: {
+            color: "red"
+        }
     },
     components:{
         'counties_select': counties,
@@ -16,9 +19,11 @@ let app = new Vue({
         'postalcode': postalcode
     },
     methods: {
+        GetDistrictsData(DistrictsData) {
+            districts_data = DistrictsData;
+        },
         UpdateDistricts(counties_selected) {
-            console.log(counties_selected);
-            // this.districts_array = districts[counties_selected];
+            this.districts_array = districts_data[counties_selected];
         }
         // ShowPostalCode(data){
         //     let counties_array = data[0];

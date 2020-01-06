@@ -44649,8 +44649,8 @@ window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 Vue.config.productionTip = false;
 
 //防止顯示生產訊息，vue預設會顯示
-Vue.config.debug = false;
-Vue.config.devtools = false;
+// Vue.config.debug = false;
+// Vue.config.devtools = false;
 // Vue.use(require('bootstrap-vue'));
 
 /**

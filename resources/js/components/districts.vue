@@ -6,7 +6,7 @@
 </template>
 
 <script>
-let districts = [
+let districts_data = [
     [
         { text: '中正區', value: 100 }, { text: '大同區', value: 103 }, { text: '中山區', value: 104 }, { text: '松山區', value: 105 },
         { text: '大安區', value: 106 }, { text: '萬華區', value: 108 }, { text: '信義區', value: 110 }, { text: '士林區', value: 111 },
@@ -32,12 +32,14 @@ export default {
     props: {
         districts_array:{
             type:Array,
-            required: true,
-            defalut:() =>  districts
+            required: true
+        },
+        districts_selected:{
+            type:String
         }
-        // districts_selected:{
-        //     type:String
-        // }
+    },
+    created: function () {
+        this.$emit('get-districts-data', districts_data);
     }
 }
 </script>>
