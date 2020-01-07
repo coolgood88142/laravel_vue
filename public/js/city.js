@@ -109,10 +109,12 @@ var districts_data = [[{ text: '中正區', value: 100 }, { text: '大同區', v
         districts_array: {
             type: Array,
             required: true
-        },
-        districts_selected: {
-            type: String
         }
+    },
+    data: function data() {
+        return {
+            districts_selected: ''
+        };
     },
     created: function created() {
         this.$emit('get-districts-data', districts_data);
@@ -307,7 +309,7 @@ var render = function() {
               : $$selectedVal[0]
           },
           function($event) {
-            return _vm.$emit("get-districts", _vm.counties_selected)
+            return _vm.$emit("update-districts", _vm.counties_selected)
           }
         ]
       }
@@ -349,7 +351,38 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "select",
-    { staticClass: "form-control", attrs: { id: "districts" } },
+    {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.districts_selected,
+          expression: "districts_selected"
+        }
+      ],
+      staticClass: "form-control",
+      attrs: { id: "districts" },
+      on: {
+        change: [
+          function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.districts_selected = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          },
+          function($event) {
+            return _vm.$emit("get-districts-selected", _vm.districts_selected)
+          }
+        ]
+      }
+    },
     [
       _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
         _vm._v("--請選擇--")
@@ -393,15 +426,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var districts_data = '';
+var districts_data = '',
+    districts_selected = '',
+    counties_selected = '';
 var app = new Vue({
     el: '#app',
     data: {
         message: 'Vue練習:',
-        districts_selected: '',
+        showText: '顯示郵遞區號!',
+        // districts_selected: '',
         districts_array: [],
         styleObject: {
-            color: "red"
+            color: "black"
         }
     },
     components: {
@@ -413,16 +449,25 @@ var app = new Vue({
         GetDistrictsData: function GetDistrictsData(DistrictsData) {
             districts_data = DistrictsData;
         },
-        UpdateDistricts: function UpdateDistricts(counties_selected) {
+        GetDistrictsSelected: function GetDistrictsSelected(DistrictsSelected) {
+            districts_selected = DistrictsSelected;
+        },
+        UpdateDistricts: function UpdateDistricts(CountiesSelected) {
+            counties_selected = CountiesSelected;
             this.districts_array = districts_data[counties_selected];
+        },
+        ShowPostalCode: function ShowPostalCode() {
+            var districts_text = '';
+            for (var i = 0; i < this.districts_array.length; i++) {
+                if (this.districts_array[i].value === districts_selected) {
+                    districts_text = this.districts_array[i].text;
+                }
+            }
+            // let counties_array = data[0];
+            // let counties_selected = data[1];
+            // let counties = counties_array[counties_selected];
+            // let districts = this.districts_array[this.districts_selected];
         }
-        // ShowPostalCode(data){
-        //     let counties_array = data[0];
-        //     let counties_selected = data[1];
-        //     let counties = counties_array[counties_selected];
-        //     let districts = this.districts_array[this.districts_selected];
-        // }
-
     }
 });
 
