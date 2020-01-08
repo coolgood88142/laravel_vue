@@ -1,12 +1,12 @@
 <template>
-    <select v-model="districts_selected" id="districts" class="form-control" @change="$emit('get-districts-selected', districts_selected)">
+    <select v-model="districts_selected" id="districts" @change="$emit('change-districts', districts_selected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(districts, index) in districts_array" :key="index" :value="districts.value">{{ districts.text }}</option>
     </select>
 </template>
 
 <script>
-let districts_data = [
+let districts = [
     [
         { text: '中正區', value: 100 }, { text: '大同區', value: 103 }, { text: '中山區', value: 104 }, { text: '松山區', value: 105 },
         { text: '大安區', value: 106 }, { text: '萬華區', value: 108 }, { text: '信義區', value: 110 }, { text: '士林區', value: 111 },
@@ -30,9 +30,16 @@ let districts_data = [
 
 export default {
     props: {
-        districts_array:{
-            type:Array,
-            required: true
+        counties_selected:{
+            type:Number
+        }
+    },
+    computed: {
+        districts_array(){
+            if (this.counties_selected != NaN ){
+                this.districts_selected = '';
+                return districts[this.counties_selected];
+            }
         }
     },
     data:function(){
@@ -40,8 +47,8 @@ export default {
             districts_selected: ''
         }
     },
-    created: function () {
-        this.$emit('get-districts-data', districts_data);
-    }
+    // created: function () {
+    //     this.$emit('get-districts-data', districts);
+    // }
 }
 </script>>

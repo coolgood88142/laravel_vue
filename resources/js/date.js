@@ -35,11 +35,13 @@ let app = new Vue({
             this.days_selected = '';
             let year = this.years[this.years_selected].value;
             let month = this.months[this.months_selected].value;
-
             this.days = new Date(year, month, 0).getDate()
+        },
+        showDate: function(){
+            let year = this.years[this.years_selected].value;
+            let month = this.months[this.months_selected].value;
+            let show_text = year + "年" + month + "月" + this.days_selected + "日";
+            alert(show_text);
         }
-        // showDate: function(){
-            
-        // }
     }
 })

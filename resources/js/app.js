@@ -12,7 +12,11 @@ Vue.config.productionTip = false;
 //防止顯示生產訊息，vue預設會顯示
 // Vue.config.debug = false;
 // Vue.config.devtools = false;
-// Vue.use(require('bootstrap-vue'));
+
+// import BootstrapVue from 'bootstrap-vue'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
+// Vue.use(BootstrapVue);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

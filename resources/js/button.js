@@ -39,7 +39,7 @@ let btn = new Vue({
     //     }
     // },
     methods:{
-        ShowAdd(index){
+        showAdd(index){
             let status = this.namelist[index].status
             let value = true
             if(status==value){

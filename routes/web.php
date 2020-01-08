@@ -26,3 +26,7 @@ Route::get('/date', function () {
 Route::get('/btn', function () {
     return view('button');
 });
+
+Route::get('/style', function () {
+    return view('style');
+});
