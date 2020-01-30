@@ -8,7 +8,8 @@ let app = new Vue({
         message: 'Vue練習:',
         showText: '顯示郵遞區號!',
         countiesSelected: NaN,
-        districtsSelected: ''
+        districtsSelected: '',
+        fontColor: 'text-secondary'
     },
     components:{
         'counties_select': counties,
@@ -25,11 +26,22 @@ let app = new Vue({
         showPostalCode(){
             let counties = document.getElementById("counties");
             let districts = document.getElementById("districts");
-            let counties_text = counties.options[counties.selectedIndex].text;
-            let districts_text = districts.options[districts.selectedIndex].text;
+            
+            let counties_val = counties.options[counties.selectedIndex].value;
+            let districts_val = districts.options[districts.selectedIndex].value;
 
-            let show_text = counties_text + " " + districts_text + " 郵遞區號為：" + this.districtsSelected;
-            alert(show_text);
+            if (counties_val != '' || districts_val != '') {
+                this.fontColor = 'text-secondary';
+                let counties_text = counties.options[counties.selectedIndex].text;
+                let districts_text = districts.options[districts.selectedIndex].text;
+                let num = this.districtsSelected;
+
+                let show_text = counties_text + " " + districts_text + " 郵遞區號為：" + num;
+                alert(show_text);
+            } else {
+                this.fontColor = 'text-danger';
+            }
+            console.log(this.fontColor);
         }
     }
 })
