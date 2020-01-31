@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function selectData()
+    public function show()
     {
-        $users = User::where('us_status', 1);
+        $users = DB::table('user')->get();
 
-        return view('select', ['users' => $users]);
+        return view('user', ['users' => $users]);
     }
 }

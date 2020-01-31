@@ -9,7 +9,8 @@ let app = new Vue({
         showText: '顯示郵遞區號!',
         countiesSelected: NaN,
         districtsSelected: '',
-        fontColor: 'text-secondary'
+        isError: false,
+        errorColor: 'text-danger'
     },
     components:{
         'counties_select': counties,
@@ -29,19 +30,20 @@ let app = new Vue({
             
             let counties_val = counties.options[counties.selectedIndex].value;
             let districts_val = districts.options[districts.selectedIndex].value;
+            let show_text = '';
 
-            if (counties_val != '' || districts_val != '') {
-                this.fontColor = 'text-secondary';
+            if (counties_val == '' || districts_val == '') {
+                this.isError = true;
+                show_text = '請選擇縣市與鄉鎮市區!'
+            } else {
+                this.isError = false;
                 let counties_text = counties.options[counties.selectedIndex].text;
                 let districts_text = districts.options[districts.selectedIndex].text;
                 let num = this.districtsSelected;
 
-                let show_text = counties_text + " " + districts_text + " 郵遞區號為：" + num;
-                alert(show_text);
-            } else {
-                this.fontColor = 'text-danger';
+                show_text = counties_text + " " + districts_text + " 郵遞區號為：" + num;
             }
-            console.log(this.fontColor);
+            alert(show_text);
         }
     }
 })

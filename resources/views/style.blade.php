@@ -6,8 +6,8 @@
 <body>
     <div id="app">
         @{{ message }}
-        <counties_select v-on:change-counties="updateDistricts" :fontColor="fontColor"></counties_select>
-        <districts_select v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected" :fontColor="fontColor"></districts_select>
+        <counties_select :class="[isError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
+        <districts_select :class="[isError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
         <button id="show" v-on:click="showPostalCode">@{{ showText }}</button>
     </div>
     <script src="{{mix('js/app.js')}}"></script>

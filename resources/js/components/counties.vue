@@ -1,5 +1,5 @@
 <template>
-     <select v-model="counties_selected" id="counties" :class="fontColor" @change="$emit('change-counties', counties_selected)">
+     <select v-model="counties_selected" id="counties" @change="$emit('change-counties', counties_selected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(counties, index) in counties_array" :key="index" :value="counties.value">{{ counties.text }}</option>
     </select>
@@ -13,11 +13,6 @@ let counties_data =  [
 ];
 
 export default {
-    props: {
-        fontColor:{
-            type:String
-        }
-    },
     data:function(){
         return {
             counties_array: counties_data,
