@@ -10,7 +10,9 @@ let app = new Vue({
         countiesSelected: NaN,
         districtsSelected: '',
         isError: false,
-        errorColor: 'text-danger'
+        errorColor: 'text-danger',
+        textColor: 'text-black',
+        btnStyle: '"btn btn-primary'
     },
     components:{
         'counties_select': counties,

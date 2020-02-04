@@ -31,4 +31,8 @@ Route::get('/style', function () {
     return view('style');
 });
 
+Route::get('/form', function () {
+    return view('form');
+});
+
 Route::get('/user', 'UserController@show');
