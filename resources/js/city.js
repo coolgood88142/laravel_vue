@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.css'
 import counties from './components/counties.vue';
 import districts from './components/districts.vue';
 import postalcode from './components/postalcode.vue';
@@ -12,7 +13,8 @@ let app = new Vue({
         isError: false,
         errorColor: 'text-danger',
         textColor: 'text-black',
-        btnStyle: '"btn btn-primary'
+        btnStyle: 'btn btn-primary',
+        textStyle: 'text-black font-weight-bold'
     },
     components:{
         'counties_select': counties,

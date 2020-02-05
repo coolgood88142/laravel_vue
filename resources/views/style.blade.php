@@ -11,11 +11,8 @@
         display: flex;
         align-items: center;
     }
-    .container{
-        width: 540px;
-    }
     .card{
-        width: 500px;
+        width: 640px;
     }
     .wrap-contact{
         background: #b3d7ff;
@@ -30,11 +27,15 @@
         <div class="row align-self-center w-100 wrap-contact">
             <div class="mx-auto">
                 <div id="app" class="card">
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <h4 :class="textColor">@{{ message }}</h4>
-                            <counties_select :class="[isError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
-                            <districts_select :class="[isError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
+                     <div class="card-body">
+                         <div class="form-group row">
+                            <label :class="textStyle">@{{ message }}</label>
+                            <div class="col-4">
+                                <counties_select :class="[isError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
+                            </div>
+                            <div class="col-4">
+                                <districts_select :class="[isError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
+                            </div>
                             <button id="show" :class="btnStyle" v-on:click="showPostalCode">@{{ showText }}</button>
                         </div>
                     </div>
@@ -44,7 +45,6 @@
     </div>
 
     <script src="{{mix('js/app.js')}}"></script>
-    <script src="{{mix('js/style.js')}}"></script>
     <script src="{{mix('js/city.js')}}"></script>
 </body>
 

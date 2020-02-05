@@ -40,10 +40,7 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">填寫個人資料</h2>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <h3 class="text-black font-weight-bold">姓名</h3>
-                                    <input type="textbox" class="form-control" id="us_name" name="us_name" />
-                                </div>
+                                <name_textbox></name_textbox>
                                 <div class="form-group">
                                     <h3 class="text-black font-weight-bold">生日</h3>
                                     <div class="form-check form-check-inline">
@@ -52,7 +49,7 @@
                                             <option v-for="(year, index) in years" :value="index">@{{ year.value }}
                                             </option>
                                         </select>
-                                        <label>年</label>
+                                        <label class="col-sm-2 col-form-label">年</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <select v-model="months_selected" id="month" v-on:change="onChange">
@@ -60,15 +57,14 @@
                                             <option v-for="(month, index) in months" :value="index">@{{ month.value }}
                                             </option>
                                         </select>
-                                        <label>月</label>
+                                        <label class="col-sm-2 col-form-label">月</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <select v-model="months_selected" id="month" v-on:change="onChange">
+                                        <select v-model="days_selected" id="day">
                                             <option value="" disabled selected>--請選擇--</option>
-                                            <option v-for="(month, index) in months" :value="index">@{{ month.value }}
-                                            </option>
+                                            <option v-for="day in days" :value="day">@{{ day }}</option>
                                         </select>
-                                        <label>月</label>
+                                        <label class="col-sm-2 col-form-label">日</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -83,41 +79,13 @@
                                             :counties_selected="countiesSelected"></districts_select>
                                     </div>
                                 </div>
+                                <gender_radio></gender_radio>
+                                <email></email>
+                                <interest_checkbox></interest_checkbox>
                                 <div class="form-group">
-                                    <h3 class="text-black font-weight-bold">性別</h3>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">男</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">女</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <h3 class="text-black font-weight-bold">email</h3>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1"
-                                        placeholder="name@example.com">
-                                </div>
-                                <div class="form-group">
-                                    <h3 class="text-black font-weight-bold">興趣(複)</h3>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox0" value="0">
-                                        <label class="form-check-label" for="inlineCheckbox0">運動</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1">
-                                        <label class="form-check-label" for="inlineCheckbox1">上網</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2">
-                                        <label class="form-check-label" for="inlineCheckbox2">其他</label>
-                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2">送出</button>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mb-2">送出</button>
                         </div>
                     </form>
                 </div>
@@ -126,8 +94,6 @@
     </div>
     <script src="{{mix('js/app.js')}}"></script>
     <script src="{{mix('js/style.js')}}"></script>
-    <script src="{{mix('js/city.js')}}"></script>
-    <script src="{{mix('js/date.js')}}"></script>
 </body>
 
 </html>
