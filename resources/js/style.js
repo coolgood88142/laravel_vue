@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 // Vue.use(BootstrapVue);
 
 import name from './components/name.vue';
+import birthday from './components/birthday.vue';
 import gender from './components/gender.vue';
 import email from './components/email.vue';
 import interest from './components/interest.vue';
@@ -45,6 +46,7 @@ let app = new Vue({
         'counties_select': counties,
         'districts_select': districts,
         'name_textbox' : name,
+        'birthday_select': birthday,
         'gender_radio': gender,
         'email_textbox': email,
         'interest_checkbox': interest

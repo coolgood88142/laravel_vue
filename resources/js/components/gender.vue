@@ -16,7 +16,7 @@
 export default {
     data:function(){
         return {
-            genderText: '姓名'
+            genderText: '性別'
         }
     }
 }
