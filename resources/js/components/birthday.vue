@@ -2,25 +2,25 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="year" :class="selectStyle" v-on:change="clearOptions">
+            <select v-model="years_selected" id="us_year" :class="selectStyle" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
-            <label>年</label>
+            <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="months_selected" id="month" :class="selectStyle" v-on:change="onChange">
+            <select v-model="months_selected" id="us_month" :class="selectStyle" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
-             <label>月</label>
+             <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="day" :class="selectStyle">
+             <select v-model="days_selected" id="us_day" :class="selectStyle">
                  <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
-            <label>日</label>
+            <label class="form-check-label">日</label>
           </div>
     </div>
 </template>

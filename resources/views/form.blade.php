@@ -40,25 +40,14 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">填寫個人資料</h2>
                                     </div>
                                 </div>
-                                <name_textbox></name_textbox>
+                                <name_textbox :nameStyle="nameError"></name_textbox>
                                 <birthday_select></birthday_select>
-                                <div class="form-group">
-                                    <h3 class="text-black font-weight-bold">地址</h3>
-                                    <div class="form-check form-check-inline">
-                                        <counties_select :class="[isError ? errorColor : '']"
-                                            v-on:change-counties="updateDistricts"></counties_select>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <districts_select :class="[isError ? errorColor : '']"
-                                            v-on:change-districts="getDistrictsSelected"
-                                            :counties_selected="countiesSelected"></districts_select>
-                                    </div>
-                                </div>
+                                <address_select></address_select>
                                 <gender_radio></gender_radio>
                                 <email_textbox></email_textbox>
                                 <interest_checkbox></interest_checkbox>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary mb-2">送出</button>
+                                    <input type="button" class="btn btn-primary mb-2" value="送出" v-on:click="send()">
                                 </div>
                             </div>
                         </div>

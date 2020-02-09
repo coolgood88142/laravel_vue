@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
-        <input type="email" class="form-control" id="exampleFormControlInput1">
+        <input type="email" class="form-control" id="us_email" >
     </div>
 </template>
 
@@ -13,4 +13,4 @@ export default {
         }
     }
 }
-</script>>
+</script>
