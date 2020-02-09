@@ -176,8 +176,8 @@ export default {
             selectStyle: 'custom-select'
         }
     },
-    // created: function () {
-    //     this.$emit('get-districts-data', districts);
-    // }
+    watch:{
+        
+    }
 }
 </script>>

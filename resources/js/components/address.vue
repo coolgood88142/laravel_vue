@@ -1,7 +1,7 @@
 
 <template>
     <div class="form-group">
-        <h3 class="text-black font-weight-bold">地址</h3>
+        <h3 :class="[isError ? errorColor : textColor]">地址</h3>
         <div class="form-check form-check-inline">
             <counties_select :class="[isError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
         </div>
@@ -9,7 +9,7 @@
             <districts_select :class="[isError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
         </div>
         <div class="form-check form-check-inline">
-            <input type="email" class="form-control" id="us_address" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="email" class="form-control" id="us_address" v-mode="addressValue" placeholder="請選擇縣市與鄉鎮市區">
         </div>
     </div>
 </template>
@@ -24,8 +24,9 @@ export default {
             addressText: '地址',
             countiesSelected: NaN,
             districtsSelected: '',
-            isError: false,
-            errorColor: 'text-danger'
+            isError:false,
+            errorColor: 'text-danger font-weight-bold',
+            textColor: 'text-black font-weight-bold'
         }
     },
     components:{
@@ -38,6 +39,15 @@ export default {
         },
         updateDistricts(CountiesSelected) {
             this.countiesSelected = CountiesSelected;
+        }
+    },
+    watch: {
+        addressValue(newValue){
+            if(newValue ==  ''){
+                this.isError = true
+            }else{
+                this.isError = false
+            }
         }
     }
 }

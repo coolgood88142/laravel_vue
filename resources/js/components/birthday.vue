@@ -2,21 +2,21 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="us_year" :class="selectStyle" v-on:change="clearOptions">
+            <select v-model="years_selected" id="year" :class="[isYearError ? errorColor : selectStyle]" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="months_selected" id="us_month" :class="selectStyle" v-on:change="onChange">
+            <select v-model="months_selected" id="month" :class="[isMonthError ? errorColor : selectStyle]" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="us_day" :class="selectStyle">
+             <select v-model="days_selected" id="day" :class="[isDayError ? errorColor : selectStyle]">
                  <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
@@ -50,6 +50,10 @@ export default {
             years_selected: '',
             months_selected: '',
             days_selected: '',
+            isYearError: false,
+            isMonthError: false,
+            isDayError: false,
+            errorColor: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }
     },
@@ -64,6 +68,29 @@ export default {
             let year = this.years[this.years_selected].value;
             let month = this.months[this.months_selected].value;
             this.days = new Date(year, month, 0).getDate()
+        }
+    },
+    watch:{
+        years_selected(newValue){
+            if(newValue == ''){
+                this.isYearError = true
+            }else{
+                this.isYearError = false
+            }
+        },
+        months_selected(newValue){
+            if(newValue == ''){
+                this.isMonthError = true
+            }else{
+                this.isMonthError = false
+            }
+        },
+        days_selected(newValue){
+            if(newValue == ''){
+                this.isDayError = true
+            }else{
+                this.isDayError = false
+            }
         }
     }
 }

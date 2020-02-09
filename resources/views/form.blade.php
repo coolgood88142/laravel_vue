@@ -40,7 +40,7 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">填寫個人資料</h2>
                                     </div>
                                 </div>
-                                <name_textbox :nameStyle="nameError"></name_textbox>
+                                <name_textbox></name_textbox>
                                 <birthday_select></birthday_select>
                                 <address_select></address_select>
                                 <gender_radio></gender_radio>

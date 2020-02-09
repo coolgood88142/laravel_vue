@@ -38,6 +38,14 @@ export default {
             counties_selected: '',
             selectStyle: 'custom-select'
         }
+    },
+    watch:{
+        counties_selected(newValue){
+            if (newValue != NaN ){
+                
+            }
+        }
+        
     }
 }
 </script>

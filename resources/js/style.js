@@ -14,7 +14,14 @@ let app = new Vue({
     el: '#app',
     data: {
         btnStyle: '"btn btn-primary',
-        nameError : false
+        yearError : false,
+        monthError: false,
+        dayError: false,
+        yearError: false,
+        yearError: false,
+        yearError: false,
+        yearError: false,
+        yearError: false,
     },
     components: {
         'name_textbox' : name,
@@ -26,11 +33,28 @@ let app = new Vue({
     },
     methods: {
         send: function () {
-            let us_name = document.getElementById("us_name");
-            let us_year = document.getElementById("us_year");
-            let us_month = document.getElementById("us_month");
-            let us_day = document.getElementById("us_day");
-            this.nameError = true;
+            let year = document.getElementById("year");
+            let month = document.getElementById("month");
+            let day = document.getElementById("day");
+            let counties = document.getElementById("counties");
+            let districts = document.getElementById("districts");
+            let interest0 = document.getElementById("interest0");
+            let interest1 = document.getElementById("interest1");
+            let interest2 = document.getElementById("interest2");
+
+            let year_val = year.options[year.selectedIndex].value;
+            let month_val = month.options[month.selectedIndex].value;
+            let day_val = day.options[day.selectedIndex].value;
+            let counties_val = counties.options[counties.selectedIndex].value;
+            let districts_val = districts.options[districts.selectedIndex].value;
+            let interest0_val = interest0.options[interest0.selectedIndex].value;
+            let interest1_val = interest1.options[interest1.selectedIndex].value;
+            let interest2_val = interest2.options[interest2.selectedIndex].value;
+            
+            if (year_val == ''){
+
+            }
+            
         }
     }
 })

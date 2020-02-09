@@ -1,17 +1,9 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="interest1" value="0">
-            <label class="form-check-label" for="interest1">運動</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="interest2" value="1">
-            <label class="form-check-label" for="interest2">上網</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="interest3" value="2">
-            <label class="form-check-label" for="interest3">其他</label>
+        <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
+            <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value">
+            <label class="form-check-label">{{ interest.text }}</label>
         </div>
     </div>
 </template>
@@ -20,7 +12,12 @@
 export default {
     data:function(){
         return {
-            interestText: '興趣(複)'
+            interestText: '興趣(複)',
+            interest_array: [
+                { id:'interest0', text: '運動', value: 0 },
+                { id:'interest1', text: '上網', value: 1 },
+                { id:'interest2', text: '其他', value: 2 }
+            ]
         }
     }
 }

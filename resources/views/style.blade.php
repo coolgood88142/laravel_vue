@@ -31,10 +31,10 @@
                          <div class="form-group row">
                             <label :class="textStyle">@{{ message }}</label>
                             <div class="col-4">
-                                <counties_select :class="[isError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
+                                <counties_select :class="[countiesError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
                             </div>
                             <div class="col-4">
-                                <districts_select :class="[isError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
+                                <districts_select :class="[districtsError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
                             </div>
                             <button id="show" :class="btnStyle" v-on:click="showPostalCode">@{{ showText }}</button>
                         </div>
