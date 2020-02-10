@@ -3,13 +3,13 @@
     <div class="form-group">
         <h3 :class="[isError ? errorColor : textColor]">地址</h3>
         <div class="form-check form-check-inline">
-            <counties_select :class="[isError ? errorColor : '']" v-on:change-counties="updateDistricts"></counties_select>
+            <counties_select v-on:change-counties="updateDistricts"></counties_select>
         </div>
         <div class="form-check form-check-inline">
-            <districts_select :class="[isError ? errorColor : '']" v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
+            <districts_select v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
         </div>
         <div class="form-check form-check-inline">
-            <input type="email" class="form-control" id="us_address" v-mode="addressValue" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="email" class="form-control" id="us_address" v-model="addressValue" placeholder="請選擇縣市與鄉鎮市區">
         </div>
     </div>
 </template>
@@ -24,6 +24,7 @@ export default {
             addressText: '地址',
             countiesSelected: NaN,
             districtsSelected: '',
+            addressValue: '',
             isError:false,
             errorColor: 'text-danger font-weight-bold',
             textColor: 'text-black font-weight-bold'

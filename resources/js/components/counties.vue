@@ -1,5 +1,5 @@
 <template>
-     <select v-model="counties_selected" id="counties" :class="selectStyle" @change="$emit('change-counties', counties_selected)">
+     <select v-model="counties_selected" id="counties" :class="[isCountiesError ? errorColor : selectStyle]" @change="$emit('change-counties', counties_selected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(counties, index) in counties_array" :key="index" :value="counties.value">{{ counties.text }}</option>
     </select>
@@ -36,16 +36,19 @@ export default {
         return {
             counties_array: counties_data,
             counties_selected: '',
+            isCountiesError: false,
+            errorColor: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }
     },
     watch:{
         counties_selected(newValue){
-            if (newValue != NaN ){
-                
+            if (newValue == NaN ){
+                this.isCountiesError = true
+            }else{
+                this.isCountiesError = false
             }
         }
-        
     }
 }
 </script>

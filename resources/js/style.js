@@ -13,15 +13,7 @@ import interest from './components/interest.vue';
 let app = new Vue({
     el: '#app',
     data: {
-        btnStyle: '"btn btn-primary',
-        yearError : false,
-        monthError: false,
-        dayError: false,
-        yearError: false,
-        yearError: false,
-        yearError: false,
-        yearError: false,
-        yearError: false,
+        btnStyle: '"btn btn-primary'
     },
     components: {
         'name_textbox' : name,
@@ -51,8 +43,9 @@ let app = new Vue({
             let interest1_val = interest1.options[interest1.selectedIndex].value;
             let interest2_val = interest2.options[interest2.selectedIndex].value;
             
-            if (year_val == ''){
-
+            if (year_val != '' && month_val != '' && day_val != '' && counties_val != ''
+                && districts_val != ''){
+                    alert('送出成功!')
             }
             
         }

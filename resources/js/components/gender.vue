@@ -13,7 +13,7 @@ export default {
     data:function(){
         return {
             genderText: '性別',
-            genderValue: 'S',
+            genderValue: 'R',
             gender_array:[
                 { id:'gender0', text: '男', value: 'R' },
                 { id:'gender1', text: '女', value: 'S' }

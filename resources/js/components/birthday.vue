@@ -79,7 +79,7 @@ export default {
             }
         },
         months_selected(newValue){
-            if(newValue == ''){
+            if(newValue == '' ){
                 this.isMonthError = true
             }else{
                 this.isMonthError = false
