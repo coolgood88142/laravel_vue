@@ -37,15 +37,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h2 id="title" class="text-center text-black font-weight-bold">填寫個人資料</h2>
+                                        <h2 id="title" class="text-center text-black font-weight-bold"></h2>
                                     </div>
                                 </div>
-                                <name_textbox></name_textbox>
-                                <birthday_select></birthday_select>
-                                <address_select></address_select>
+                                <name_textbox :name_error="nameError"></name_textbox>
+                                <birthday_select :birthday_error="birthdayError"></birthday_select>
+                                <address_select :address_error="addressError"></address_select>
                                 <gender_radio></gender_radio>
-                                <email_textbox></email_textbox>
-                                <interest_checkbox></interest_checkbox>
+                                <email_textbox :email_error="emailError"></email_textbox>
+                                <interest_checkbox :interest_error="interestError"></interest_checkbox>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-primary mb-2" value="送出" v-on:click="send()">
                                 </div>

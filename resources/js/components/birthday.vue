@@ -1,23 +1,23 @@
 <template>
     <div class="form-group">
-        <h3 class="text-black font-weight-bold">生日</h3>
+        <h3 :class="[birthday_error ? errorColor : textColor]">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="year" :class="[isYearError ? errorColor : selectStyle]" v-on:change="clearOptions">
-                <option value="" disabled selected>--請選擇--</option>
+            <select v-model="years_selected" id="us_year" :class="[isYearError ? errorSelect : selectStyle]" v-on:change="clearOptions">
+                <option value="*" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="months_selected" id="month" :class="[isMonthError ? errorColor : selectStyle]" v-on:change="onChange">
-                <option value="" disabled selected>--請選擇--</option>
+            <select v-model="months_selected" id="us_month" :class="[isMonthError ? errorSelect : selectStyle]" v-on:change="onChange">
+                <option value="*" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="day" :class="[isDayError ? errorColor : selectStyle]">
-                 <option value="" disabled selected>--請選擇--</option>
+             <select v-model="days_selected" id="us_day" :class="[isDayError ? errorSelect : selectStyle]">
+                 <option value="*" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
             <label class="form-check-label">日</label>
@@ -42,51 +42,60 @@ function DefaultDateData(begin, end) {
 }
 
 export default {
+    props: {
+        birthday_error:{
+            type:Boolean
+        }
+    },
     data:function(){
         return {
             years: DefaultDateData(begin_year, end_year),
             months: DefaultDateData(begin_month, end_month),
             days: '',
-            years_selected: '',
-            months_selected: '',
-            days_selected: '',
+            years_selected: '*',
+            months_selected: '*',
+            days_selected: '*',
             isYearError: false,
             isMonthError: false,
             isDayError: false,
-            errorColor: 'text-danger custom-select',
+            errorColor: 'text-danger font-weight-bold',
+            textColor: 'text-black font-weight-bold',
+            errorSelect: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }
     },
     methods: {
         clearOptions: function () {
-            this.months_selected = '';
+            this.months_selected = '*';
             this.days = '';
-            this.days_selected = '';
+            this.days_selected = '*';
         },
         onChange: function () {
-            this.days_selected = '';
-            let year = this.years[this.years_selected].value;
-            let month = this.months[this.months_selected].value;
-            this.days = new Date(year, month, 0).getDate()
+            this.days_selected = '*';
+            if (this.years_selected  != '*'){
+                let year = this.years[this.years_selected].value;
+                let month = this.months[this.months_selected].value;
+                this.days = new Date(year, month, 0).getDate()
+            }
         }
     },
     watch:{
-        years_selected(newValue){
-            if(newValue == ''){
+        years_selected(newSelected){
+            if(newSelected == '*'){
                 this.isYearError = true
             }else{
                 this.isYearError = false
             }
         },
-        months_selected(newValue){
-            if(newValue == '' ){
+        months_selected(newSelected){
+            if(newSelected == '*' ){
                 this.isMonthError = true
             }else{
                 this.isMonthError = false
             }
         },
-        days_selected(newValue){
-            if(newValue == ''){
+        days_selected(newSelected){
+            if(newSelected == '*'){
                 this.isDayError = true
             }else{
                 this.isDayError = false

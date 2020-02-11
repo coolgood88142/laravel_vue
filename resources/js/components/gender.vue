@@ -3,7 +3,7 @@
         <h3 class="text-black font-weight-bold">{{ genderText }}</h3>
         <div class="form-check form-check-inline" v-for="(gender, index) in gender_array" :key="index">
              <input class="form-check-input" type="radio" name="gender" :id="gender.id" v-model="genderValue" :value="gender.value">
-            <label class="form-check-label">{{ gender.text }}</label>
+            <label class="form-check-label" :for="gender.id">{{ gender.text }}</label>
          </div>
     </div>
 </template>

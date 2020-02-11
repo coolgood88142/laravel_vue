@@ -33,9 +33,13 @@ let app = new Vue({
         },
         onChange: function () {
             this.days_selected = '';
-            let year = this.years[this.years_selected].value;
-            let month = this.months[this.months_selected].value;
-            this.days = new Date(year, month, 0).getDate()
+            if (this.years_selected  != ''){
+                let year = this.years[this.years_selected].value;
+                let month = this.months[this.months_selected].value;
+                this.days = new Date(year, month, 0).getDate()
+            }else{
+                alert('請先選擇年份!')
+            }
         },
         showDate: function(){
             let year = this.years[this.years_selected].value;
