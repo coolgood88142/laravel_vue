@@ -13,12 +13,20 @@ import interest from './components/interest.vue';
 let app = new Vue({
     el: '#app',
     data: {
-        btnStyle: '"btn btn-primary',
-        nameError: false,
+        title: '填寫個人資料',
+        btnStyle: 'btn btn-primary',
+        btnText: '送出',
+        nameError: true,
+        nameWarning: false,
         birthdayError: false,
-        addressError: false,
-        emailError: false,
-        interestError: false
+        birthdayWarning: false,
+        addressError: true,
+        genderError: true,
+        genderWarning: false,
+        emailError: true,
+        emailWarning: false,
+        interestError: true,
+        interestWarning: false
     },
     components: {
         'name_textbox' : name,
@@ -33,8 +41,10 @@ let app = new Vue({
             let us_name = document.getElementById("us_name");
             if (us_name.value == ''){
                 this.nameError = true
+                this.nameWarning = true
             }else{
                 this.nameError = false
+                this.nameWarning = false
             }
 
             let us_year = document.getElementById("us_year");
@@ -50,6 +60,10 @@ let app = new Vue({
                 this.birthdayError = false
             }
 
+            if (year_val == '*' || month_val == '*' || day_val == '*'){
+                this.birthdayWarning = false
+            }
+
             let counties = document.getElementById("counties");
             let districts = document.getElementById("districts");
             let us_address = document.getElementById("us_address");
@@ -62,7 +76,25 @@ let app = new Vue({
                 this.addressError = false
             }
 
+            let gender0 = document.getElementById("gender0");
+            let gender1 = document.getElementById("gender1");
+
+            if (gender0.checked != true && gender1.checked != true){
+                this.genderWarning = true
+            }else{
+                this.genderWarning = false
+            }
+
+
+
             let us_email = document.getElementById("us_email");
+            if (us_email.value == ''){
+                this.emailWarning = true
+            }else{
+                this.emailWarning = false
+            }
+
+
             let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
             if (!isMail.test(us_email.value)) {
                 this.emailError = true
@@ -76,8 +108,10 @@ let app = new Vue({
 
             if (interest0.checked != true && interest1.checked != true && interest2.checked != true){
                 this.interestError = true
+                this.interestWarning = true
             }else{
                 this.interestError = false
+                this.interestWarning = false
             }
             
             if (year_val != '' && month_val != '' && day_val != '' && counties_val != ''

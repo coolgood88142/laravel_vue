@@ -173,7 +173,7 @@ export default {
     data:function(){
         return {
             districts_selected: '',
-            isDistrictsError: false,
+            isDistrictsError: true,
             errorColor: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }

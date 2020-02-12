@@ -10,12 +10,13 @@ let app = new Vue({
         showText: '顯示郵遞區號!',
         countiesSelected: NaN,
         districtsSelected: '',
-        countiesError: false,
-        districtsError: false,
-        errorColor: 'text-danger',
-        textColor: 'text-black',
         btnStyle: 'btn btn-primary',
-        textStyle: 'text-black font-weight-bold'
+        cityStyle: {
+            countiesError: false,
+            districtsError: false,
+            errorColor: 'text-danger',
+            textStyle: 'text-black font-weight-bold'
+        }
     },
     components:{
         'counties_select': counties,

@@ -37,17 +37,17 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h2 id="title" class="text-center text-black font-weight-bold"></h2>
+                                        <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox :name_error="nameError"></name_textbox>
-                                <birthday_select :birthday_error="birthdayError"></birthday_select>
+                                <name_textbox :name_error="nameError" :name_warning="nameWarning"></name_textbox>
+                                <birthday_select :birthday_error="birthdayError" :birthday_warning="birthdayWarning"></birthday_select>
                                 <address_select :address_error="addressError"></address_select>
-                                <gender_radio></gender_radio>
-                                <email_textbox :email_error="emailError"></email_textbox>
-                                <interest_checkbox :interest_error="interestError"></interest_checkbox>
+                                <gender_radio :gender_error="genderError" :gender_warning="genderWarning"></gender_radio>
+                                <email_textbox :email_error="emailError" :email_warning="emailWarning"></email_textbox>
+                                <interest_checkbox :interest_error="interestError" :interest_warning="interestWarning"></interest_checkbox>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-primary mb-2" value="送出" v-on:click="send()">
+                                    <input type="button" :class="btnStyle" :value="btnText" v-on:click="send()">
                                 </div>
                             </div>
                         </div>

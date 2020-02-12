@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <h3 :class="[birthday_error ? errorColor : textColor]">生日</h3>
+        <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
             <select v-model="years_selected" id="us_year" :class="[isYearError ? errorSelect : selectStyle]" v-on:change="clearOptions">
                 <option value="*" disabled selected>--請選擇--</option>
@@ -21,7 +21,8 @@
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
             <label class="form-check-label">日</label>
-          </div>
+        </div>
+        <small id="warning" :class="[birthday_error ? errorText : smallText]">{{ birthday_warning ?  notSelectedText : warningText }}</small>
     </div>
 </template>
 
@@ -45,6 +46,9 @@ export default {
     props: {
         birthday_error:{
             type:Boolean
+        },
+        birthday_warning:{
+            type:Boolean
         }
     },
     data:function(){
@@ -55,23 +59,26 @@ export default {
             years_selected: '*',
             months_selected: '*',
             days_selected: '*',
-            isYearError: false,
-            isMonthError: false,
-            isDayError: false,
-            errorColor: 'text-danger font-weight-bold',
-            textColor: 'text-black font-weight-bold',
+            isYearError: true,
+            isMonthError: true,
+            isDayError: true,
+            warningText: '生日必填',
+            notSelectedText:'生日填寫不完整',
             errorSelect: 'text-danger custom-select',
-            selectStyle: 'custom-select'
+            selectStyle: 'custom-select',
+            errorText: 'form-text text-danger',
+            remindText: 'form-text text-black',
+            smallText: 'form-text d-none'
         }
     },
     methods: {
         clearOptions: function () {
-            this.months_selected = '*';
-            this.days = '';
-            this.days_selected = '*';
+            this.months_selected = '*'
+            this.days = ''
+            this.days_selected = '*'
         },
         onChange: function () {
-            this.days_selected = '*';
+            this.days_selected = '*'
             if (this.years_selected  != '*'){
                 let year = this.years[this.years_selected].value;
                 let month = this.months[this.months_selected].value;

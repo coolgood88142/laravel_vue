@@ -1,7 +1,7 @@
 
 <template>
     <div class="form-group">
-        <h3 :class="[address_error ? errorColor : textColor]">地址</h3>
+        <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
             <counties_select v-on:change-counties="updateDistricts"></counties_select>
         </div>
@@ -9,8 +9,9 @@
             <districts_select v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
         </div>
         <div class="form-check form-check-inline">
-            <input type="email" class="form-control" id="us_address" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="email" :class="[address_error ? errorColor : borderColor]" id="us_address" placeholder="請選擇縣市與鄉鎮市區">
         </div>
+        <small id="warning" :class="[address_error ? errorText : smallText]">{{ warningText }}</small>
     </div>
 </template>
 
@@ -29,8 +30,11 @@ export default {
             addressText: '地址',
             countiesSelected: NaN,
             districtsSelected: '',
-            errorColor: 'text-danger font-weight-bold',
-            textColor: 'text-black font-weight-bold'
+            warningText: '地址必填',
+            errorColor: 'form-control border border-danger',
+            borderColor: 'form-control border',
+            errorText: 'form-text text-danger',
+            smallText: 'form-text d-none'
         }
     },
     components:{

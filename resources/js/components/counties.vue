@@ -36,7 +36,7 @@ export default {
         return {
             counties_array: counties_data,
             counties_selected: '',
-            isCountiesError: false,
+            isCountiesError: true,
             errorColor: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }
