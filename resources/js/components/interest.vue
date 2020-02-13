@@ -34,13 +34,6 @@ export default {
             errorText: 'form-text text-danger',
             smallText: 'form-text d-none'
         }
-    },
-    watch:{
-        interestChecked(newChecked){
-            if(newChecked.length >= 1){
-                this.interest_warning = false
-            }
-        }
     }
 }
 </script>>

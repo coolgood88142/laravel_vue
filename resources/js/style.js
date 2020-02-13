@@ -16,17 +16,31 @@ let app = new Vue({
         title: '填寫個人資料',
         btnStyle: 'btn btn-primary',
         btnText: '送出',
-        nameError: true,
-        nameWarning: false,
-        birthdayError: false,
-        birthdayWarning: false,
-        addressError: true,
-        genderError: true,
-        genderWarning: false,
-        emailError: true,
-        emailWarning: false,
-        interestError: true,
-        interestWarning: false
+        nameStyle:{
+            Error: true,
+            Warning: false
+        },
+        birthdayStyle:{
+            Error: false,
+            Incomplete: true
+        },
+        addressStyle:{
+            Error: false,
+            Incomplete: true
+        },
+        genderStyle:{
+            Error: true,
+            Warning: false
+        },
+        emailStyle:{
+            Error: true,
+            Warning: false,
+            Format: false
+        },
+        interestStyle:{
+            Error: true,
+            Warning: false
+        }
     },
     components: {
         'name_textbox' : name,
@@ -40,11 +54,11 @@ let app = new Vue({
         send: function () {
             let us_name = document.getElementById("us_name");
             if (us_name.value == ''){
-                this.nameError = true
-                this.nameWarning = true
+                this.nameStyle.Error = true
+                this.nameStyle.Warning = true
             }else{
-                this.nameError = false
-                this.nameWarning = false
+                this.nameStyle.Error = false
+                this.nameStyle.Warning = false
             }
 
             let us_year = document.getElementById("us_year");
@@ -53,15 +67,17 @@ let app = new Vue({
             let year_val = us_year.options[us_year.selectedIndex].value;
             let month_val = us_month.options[us_month.selectedIndex].value;
             let day_val = us_day.options[us_day.selectedIndex].value;
-
-            if (year_val == '*' || month_val == '*' || day_val == '*'){
-                this.birthdayError = true
+            
+            if (year_val != '*' && month_val != '*' && day_val != '*'){
+                this.birthdayStyle.Error = false
+                this.birthdayStyle.Incomplete = true
             }else{
-                this.birthdayError = false
-            }
-
-            if (year_val == '*' || month_val == '*' || day_val == '*'){
-                this.birthdayWarning = false
+                this.birthdayStyle.Error = true
+                if (year_val == '*' && month_val == '*' && day_val == '*'){
+                    this.birthdayStyle.Incomplete = false
+                }else{
+                    this.birthdayStyle.Incomplete = true
+                }
             }
 
             let counties = document.getElementById("counties");
@@ -70,36 +86,43 @@ let app = new Vue({
             let counties_val = counties.options[counties.selectedIndex].value;
             let districts_val = districts.options[districts.selectedIndex].value;
 
-            if (counties_val == '' || districts_val == '' || us_address.value == ''){
-                this.addressError = true
-            }else{
-                this.addressError = false
+            if (counties_val != '' && districts_val != '' && us_address.value != '') {
+                this.addressStyle.Error = false
+                this.addressStyle.Incomplete = true
+            } else {
+                this.addressStyle.Error = true
+                if (counties_val == '' && districts_val == '' && us_address.value == '') {
+                    this.addressStyle.Incomplete = false
+                } else {
+                    this.addressStyle.Incomplete = true
+                }
             }
 
             let gender0 = document.getElementById("gender0");
             let gender1 = document.getElementById("gender1");
 
             if (gender0.checked != true && gender1.checked != true){
-                this.genderWarning = true
+                this.genderStyle.Error = true
+                this.genderStyle.Warning = true
             }else{
-                this.genderWarning = false
+                this.genderStyle.Error = false
+                this.genderStyle.Warning = false
             }
-
-
 
             let us_email = document.getElementById("us_email");
-            if (us_email.value == ''){
-                this.emailWarning = true
-            }else{
-                this.emailWarning = false
-            }
-
-
             let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-            if (!isMail.test(us_email.value)) {
-                this.emailError = true
+
+            if (us_email.value == '') {
+                this.emailStyle.Warning = true
             } else {
-                this.emailError = false
+                if (!isMail.test(us_email.value)) {
+                    this.emailStyle.Error = true
+                    this.emailStyle.Format = true
+                } else {
+                    this.emailStyle.Error = false
+                    this.emailStyle.Format = false
+                    this.emailStyle.Warning = false
+                }
             }
 
             let interest0 = document.getElementById("interest0");
@@ -107,11 +130,11 @@ let app = new Vue({
             let interest2 = document.getElementById("interest2");
 
             if (interest0.checked != true && interest1.checked != true && interest2.checked != true){
-                this.interestError = true
-                this.interestWarning = true
+                this.interestStyle.Error = true
+                this.interestStyle.Warning = true
             }else{
-                this.interestError = false
-                this.interestWarning = false
+                this.interestStyle.Error = false
+                this.interestStyle.Warning = false
             }
             
             if (year_val != '' && month_val != '' && day_val != '' && counties_val != ''
