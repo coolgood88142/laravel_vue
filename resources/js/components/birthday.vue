@@ -44,14 +44,6 @@ function DefaultDateData(begin, end) {
 
 export default {
     //要加3個選擇器
-    props: {
-        birthday_error:{
-            type:Boolean
-        },
-        birthday_incomplete:{
-            type:Boolean
-        }
-    },
     data:function(){
         return {
             years: DefaultDateData(begin_year, end_year),
@@ -60,6 +52,8 @@ export default {
             years_selected: '*',
             months_selected: '*',
             days_selected: '*',
+            birthday_error: false,
+            birthday_incomplete: true, 
             isYearError: false,
             isMonthError: false,
             isDayError: false,
@@ -70,6 +64,25 @@ export default {
             errorTextStyle: 'form-text text-danger',
             remindTextStyle: 'form-text text-secondary',
             smallText: 'form-text d-none'
+
+            // let us_year = document.getElementById("us_year");
+            // let us_month = document.getElementById("us_month");
+            // let us_day = document.getElementById("us_day");
+            // let year_val = us_year.options[us_year.selectedIndex].value;
+            // let month_val = us_month.options[us_month.selectedIndex].value;
+            // let day_val = us_day.options[us_day.selectedIndex].value;
+            
+            // if (year_val != '*' && month_val != '*' && day_val != '*'){
+            //     this.birthdayStyle.Error = false
+            //     this.birthdayStyle.Incomplete = true
+            // }else{
+            //     this.birthdayStyle.Error = true
+            //     if (year_val == '*' && month_val == '*' && day_val == '*'){
+            //         this.birthdayStyle.Incomplete = false
+            //     }else{
+            //         this.birthdayStyle.Incomplete = true
+            //     }
+            // }
         }
     },
     methods: {

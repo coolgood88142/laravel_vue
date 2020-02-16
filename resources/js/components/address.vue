@@ -20,25 +20,19 @@ import counties from './counties.vue';
 import districts from './districts.vue';
 
 export default {
-    props: {
-        address_error:{
-            type:Boolean
-        },
-        address_incomplete:{
-            type:Boolean
-        }
-    },
     data:function(){
         return {
             addressText: '地址',
             countiesSelected: NaN,
             districtsSelected: '',
+            address_error: false,
+            address_incomplete: true,
             warningText: '地址必填',
             remindText:'地址填寫不完整',
             errorColor: 'form-control border border-danger',
             borderColor: 'form-control border',
             errorTextStyle: 'form-text text-danger',
-            remindTextStyle: 'form-text text-black',
+            remindTextStyle: 'form-text text-secondary',
             smallText: 'form-text d-none'
         }
     },
@@ -53,6 +47,24 @@ export default {
         updateDistricts(CountiesSelected) {
             this.countiesSelected = CountiesSelected;
         }
+
+        // let counties = document.getElementById("counties");
+        //     let districts = document.getElementById("districts");
+        //     let us_address = document.getElementById("us_address");
+        //     let counties_val = counties.options[counties.selectedIndex].value;
+        //     let districts_val = districts.options[districts.selectedIndex].value;
+
+        //     if (counties_val != '' && districts_val != '' && us_address.value != '') {
+        //         this.addressStyle.Error = false
+        //         this.addressStyle.Incomplete = true
+        //     } else {
+        //         this.addressStyle.Error = true
+        //         if (counties_val == '' && districts_val == '' && us_address.value == '') {
+        //             this.addressStyle.Incomplete = false
+        //         } else {
+        //             this.addressStyle.Incomplete = true
+        //         }
+        //     }
     }
 }
 </script>

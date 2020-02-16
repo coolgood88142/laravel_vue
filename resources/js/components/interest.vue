@@ -11,17 +11,11 @@
 
 <script>
 export default {
-    props: {
-        interest_error:{
-            type:Boolean
-        },
-        interest_warning:{
-            type:Boolean
-        }
-    },
     data:function(){
         return {
             interestText: '興趣(複)',
+            interest_error: false,
+            interest_warning: false,
             interest_array: [
                 { id:'interest0', text: '運動', value: 0 },
                 { id:'interest1', text: '上網', value: 1 },
@@ -34,5 +28,17 @@ export default {
             smallText: 'form-text d-none'
         }
     }
+
+    // let interest0 = document.getElementById("interest0");
+    //         let interest1 = document.getElementById("interest1");
+    //         let interest2 = document.getElementById("interest2");
+
+    //         if (interest0.checked != true && interest1.checked != true && interest2.checked != true){
+    //             this.interestStyle.Error = true
+    //             this.interestStyle.Warning = true
+    //         }else{
+    //             this.interestStyle.Error = false
+    //             this.interestStyle.Warning = false
+    //         }
 }
 </script>

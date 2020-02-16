@@ -16,31 +16,7 @@ let app = new Vue({
         title: '填寫個人資料',
         btnStyle: 'btn btn-primary',
         btnText: '送出',
-        nameStyle:{
-            Error: false,
-            Warning: false
-        },
-        birthdayStyle:{
-            Error: false,
-            Incomplete: true
-        },
-        addressStyle:{
-            Error: false,
-            Incomplete: true
-        },
-        genderStyle:{
-            Error: false,
-            Warning: false
-        },
-        emailStyle:{
-            Error: false,
-            Warning: false,
-            Format: false
-        },
-        interestStyle:{
-            Error: false,
-            Warning: false
-        }
+        nameCheck: false
     },
     components: {
         'name_textbox' : name,
@@ -52,97 +28,17 @@ let app = new Vue({
     },
     methods: {
         send: function () {
-            //使用mixins回傳ture或false，就不用寫ifelse，目的是要讓程式減少重複性
-            let us_name = document.getElementById("us_name");
-            if (us_name.value == ''){
-                this.nameStyle.Error = true
-                this.nameStyle.Warning = true
-            }else{
-                this.nameStyle.Error = false
-                this.nameStyle.Warning = false
-            }
-
-            let us_year = document.getElementById("us_year");
-            let us_month = document.getElementById("us_month");
-            let us_day = document.getElementById("us_day");
-            let year_val = us_year.options[us_year.selectedIndex].value;
-            let month_val = us_month.options[us_month.selectedIndex].value;
-            let day_val = us_day.options[us_day.selectedIndex].value;
+            //TODO:全部的component要回傳boolean 要在這裡做判斷，要顯示送出成功文字
+            //各個component判斷完v-model資料後，在用mixins使用class.js裡的變數(用function return想要的class回傳)
+            //做完後再帶boolean到這裡
+            let isErrorName = this.nameCheck();
+            console.log(isErrorName)
+ 
             
-            if (year_val != '*' && month_val != '*' && day_val != '*'){
-                this.birthdayStyle.Error = false
-                this.birthdayStyle.Incomplete = true
-            }else{
-                this.birthdayStyle.Error = true
-                if (year_val == '*' && month_val == '*' && day_val == '*'){
-                    this.birthdayStyle.Incomplete = false
-                }else{
-                    this.birthdayStyle.Incomplete = true
-                }
-            }
-
-            let counties = document.getElementById("counties");
-            let districts = document.getElementById("districts");
-            let us_address = document.getElementById("us_address");
-            let counties_val = counties.options[counties.selectedIndex].value;
-            let districts_val = districts.options[districts.selectedIndex].value;
-
-            if (counties_val != '' && districts_val != '' && us_address.value != '') {
-                this.addressStyle.Error = false
-                this.addressStyle.Incomplete = true
-            } else {
-                this.addressStyle.Error = true
-                if (counties_val == '' && districts_val == '' && us_address.value == '') {
-                    this.addressStyle.Incomplete = false
-                } else {
-                    this.addressStyle.Incomplete = true
-                }
-            }
-
-            let gender0 = document.getElementById("gender0");
-            let gender1 = document.getElementById("gender1");
-
-            if (gender0.checked != true && gender1.checked != true){
-                this.genderStyle.Error = true
-                this.genderStyle.Warning = true
-            }else{
-                this.genderStyle.Error = false
-                this.genderStyle.Warning = false
-            }
-
-            let us_email = document.getElementById("us_email");
-            let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-
-            if (us_email.value == '') {
-                this.emailStyle.Error = true
-                this.emailStyle.Warning = true
-            } else {
-                if (!isMail.test(us_email.value)) {
-                    this.emailStyle.Error = true
-                    this.emailStyle.Format = true
-                } else {
-                    this.emailStyle.Error = false
-                    this.emailStyle.Format = false
-                    this.emailStyle.Warning = false
-                }
-            }
-
-            let interest0 = document.getElementById("interest0");
-            let interest1 = document.getElementById("interest1");
-            let interest2 = document.getElementById("interest2");
-
-            if (interest0.checked != true && interest1.checked != true && interest2.checked != true){
-                this.interestStyle.Error = true
-                this.interestStyle.Warning = true
-            }else{
-                this.interestStyle.Error = false
-                this.interestStyle.Warning = false
-            }
-            
-            if (year_val != '' && month_val != '' && day_val != '' && counties_val != ''
-                && districts_val != '' && (interest0.checked == true || interest1.checked == true || interest2.checked == true)){
-                    alert('送出成功!')
-            }
+            // if (us_name.value != '' && year_val != '' && month_val != '' && day_val != '' && counties_val != '' && gender0.checked == true && gender1.checked == true
+            //     && districts_val != '' && (interest0.checked == true || interest1.checked == true || interest2.checked == true)){
+            //         alert('送出成功!')
+            // }
             
         }
     }

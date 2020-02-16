@@ -5,7 +5,7 @@ let textbox_class = {
 
 let text_class = {
     error: 'form-text text-danger',
-    remind: 'form-text text-black',
+    remind: 'form-text text-secondary',
     success: 'form-text d-none'
 }
 

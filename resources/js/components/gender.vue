@@ -11,17 +11,11 @@
 
 <script>
 export default {
-    props: {
-        gender_error:{
-            type:Boolean
-        },
-        gender_warning:{
-            type:Boolean
-        }
-    },
     data:function(){
         return {
             genderText: '性別',
+            gender_error: false,
+            gender_warning: false,
             genderChecked: '',
             gender_array:[
                 { id:'gender0', text: '男', value: 'R' },
