@@ -157,6 +157,7 @@ let districts = [
 ];
 
 export default {
+    //要加3個選擇器
     props: {
         counties_selected:{
             type:Number
@@ -173,7 +174,7 @@ export default {
     data:function(){
         return {
             districts_selected: '',
-            isDistrictsError: true,
+            isDistrictsError: false,
             errorColor: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }

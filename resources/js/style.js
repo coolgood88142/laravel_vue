@@ -17,7 +17,7 @@ let app = new Vue({
         btnStyle: 'btn btn-primary',
         btnText: '送出',
         nameStyle:{
-            Error: true,
+            Error: false,
             Warning: false
         },
         birthdayStyle:{
@@ -29,16 +29,16 @@ let app = new Vue({
             Incomplete: true
         },
         genderStyle:{
-            Error: true,
+            Error: false,
             Warning: false
         },
         emailStyle:{
-            Error: true,
+            Error: false,
             Warning: false,
             Format: false
         },
         interestStyle:{
-            Error: true,
+            Error: false,
             Warning: false
         }
     },
@@ -52,6 +52,7 @@ let app = new Vue({
     },
     methods: {
         send: function () {
+            //使用mixins回傳ture或false，就不用寫ifelse，目的是要讓程式減少重複性
             let us_name = document.getElementById("us_name");
             if (us_name.value == ''){
                 this.nameStyle.Error = true
@@ -113,6 +114,7 @@ let app = new Vue({
             let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
 
             if (us_email.value == '') {
+                this.emailStyle.Error = true
                 this.emailStyle.Warning = true
             } else {
                 if (!isMail.test(us_email.value)) {

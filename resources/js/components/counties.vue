@@ -32,11 +32,12 @@ let counties_data =  [
 ];
 
 export default {
+    //要加選擇器
     data:function(){
         return {
             counties_array: counties_data,
             counties_selected: '',
-            isCountiesError: true,
+            isCountiesError: false,
             errorColor: 'text-danger custom-select',
             selectStyle: 'custom-select'
         }

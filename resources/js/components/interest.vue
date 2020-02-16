@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
         <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
-            <input class="form-check-input" type="checkbox" v-model="interestChecked" :id="interest.id" :value="interest.value">
+            <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value">
             <label :class="[interest_error ? errorColor : textColor]" :for="interest.id">{{ interest.text }}</label>
         </div>
         <small id="warning" :class="[interest_warning ? errorText : smallText]">{{ warningText }}</small>
@@ -27,7 +27,6 @@ export default {
                 { id:'interest1', text: '上網', value: 1 },
                 { id:'interest2', text: '其他', value: 2}
             ],
-            interestChecked: [],
             warningText: '興趣必填',
             errorColor: 'text-danger form-check-label',
             textColor: 'text-black form-check-label',
@@ -36,4 +35,4 @@ export default {
         }
     }
 }
-</script>>
+</script>

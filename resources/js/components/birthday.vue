@@ -43,6 +43,7 @@ function DefaultDateData(begin, end) {
 }
 
 export default {
+    //要加3個選擇器
     props: {
         birthday_error:{
             type:Boolean
@@ -59,15 +60,15 @@ export default {
             years_selected: '*',
             months_selected: '*',
             days_selected: '*',
-            isYearError: true,
-            isMonthError: true,
-            isDayError: true,
+            isYearError: false,
+            isMonthError: false,
+            isDayError: false,
             warningText: '生日必填',
             remindText:'生日填寫不完整',
-            errorSelect: 'text-danger custom-select',
+            errorSelect: 'custom-select text-danger',
             selectStyle: 'custom-select',
             errorTextStyle: 'form-text text-danger',
-            remindTextStyle: 'form-text text-black',
+            remindTextStyle: 'form-text text-secondary',
             smallText: 'form-text d-none'
         }
     },
