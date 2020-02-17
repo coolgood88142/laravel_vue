@@ -65,6 +65,14 @@ export default {
         //             this.addressStyle.Incomplete = true
         //         }
         //     }
+    },
+    watch:{
+        countiesSelected(newValue){
+            this.emit('change-counties', newValue)
+        },
+        districtsSelected(newValue){
+            this.emit('change-districts', newValue)
+        }
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
-        <input type="email" :class="[email_error ? errorColor : borderColor]" id="us_email">
+        <input type="email" :class="[email_error ? errorColor : borderColor]" id="us_email" v-model="email_value" @change="$emit('keyup-email', email_value)">
         <small id="warning" :class="[email_warning ? (email_format ? remindTextStyle : errorTextStyle) : smallText]">{{ email_format ? remindText : warningText }}</small>
     </div>
 </template>
@@ -11,6 +11,7 @@ export default {
     data:function(){
         return {
             emailText: 'email',
+            email_value: '',
             email_error: false,
             email_warning: false,
             email_format: false,

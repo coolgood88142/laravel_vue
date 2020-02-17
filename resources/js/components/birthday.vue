@@ -16,7 +16,7 @@
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="us_day" :class="[isDayError ? errorSelect : selectStyle]">
+             <select v-model="days_selected" id="us_day" :class="[isDayError ? errorSelect : selectStyle]" @change="$emit('change-days', days_selected)">
                  <option value="*" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
@@ -90,6 +90,7 @@ export default {
             this.months_selected = '*'
             this.days = ''
             this.days_selected = '*'
+            this.emit('change-years', this.years_selected)
         },
         onChange: function () {
             this.days_selected = '*'
@@ -98,6 +99,7 @@ export default {
                 let month = this.months[this.months_selected].value;
                 this.days = new Date(year, month, 0).getDate()
             }
+            this.emit('change-months', this.months_selected)
         }
     },
     watch:{

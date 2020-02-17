@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
         <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
-            <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value">
+            <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value" v-model="interest_checked" @change="$emit('change-interest', interest_checked)">
             <label :class="[interest_error ? errorColor : textColor]" :for="interest.id">{{ interest.text }}</label>
         </div>
         <small id="warning" :class="[interest_warning ? errorText : smallText]">{{ warningText }}</small>
@@ -14,6 +14,7 @@ export default {
     data:function(){
         return {
             interestText: '興趣(複)',
+            interest_checked: '',
             interest_error: false,
             interest_warning: false,
             interest_array: [
