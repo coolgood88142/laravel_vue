@@ -13,6 +13,7 @@ import classdata from './components/class.vue';
 
 let app = new Vue({
     el: '#app',
+    mixins: [classdata.ElementCalss],
     data: {
         title: '填寫個人資料',
         btnStyle: 'btn btn-primary',

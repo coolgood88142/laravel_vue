@@ -28,9 +28,9 @@ let ElementCalss = {
   }
 }
 
-let ClassData = Vue.extend({
-  mixins: [ElementCalss]
-});
-let classData = new ClassData();
+// let ClassData = Vue.extend({
+//   mixins: [ElementCalss]
+// });
+// let classData = new ClassData();
 
 </script>
