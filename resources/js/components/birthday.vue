@@ -42,8 +42,11 @@ function DefaultDateData(begin, end) {
     return date_array;
 }
 
+import classdata from '../class.js';
+
 export default {
     //要加3個選擇器
+    mixins: [classdata],
     data:function(){
         return {
             years: DefaultDateData(begin_year, end_year),
@@ -59,11 +62,11 @@ export default {
             isDayError: false,
             warningText: '生日必填',
             remindText:'生日填寫不完整',
-            errorSelect: 'custom-select text-danger',
-            selectStyle: 'custom-select',
-            errorTextStyle: 'form-text text-danger',
-            remindTextStyle: 'form-text text-secondary',
-            smallText: 'form-text d-none'
+            errorSelect: this.getSelectClass().error,
+            selectStyle: this.getSelectClass().success,
+            errorTextStyle: this.getTextClass().error,
+            remindTextStyle: this.getTextClass().remind,
+            smallText: this.getTextClass().success
 
             // let us_year = document.getElementById("us_year");
             // let us_month = document.getElementById("us_month");

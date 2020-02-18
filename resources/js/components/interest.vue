@@ -10,7 +10,10 @@
 </template>
 
 <script>
+import classdata from '../class.js';
+
 export default {
+    mixins: [classdata],
     data:function(){
         return {
             interestText: '興趣(複)',
@@ -23,10 +26,10 @@ export default {
                 { id:'interest2', text: '其他', value: 2}
             ],
             warningText: '興趣必填',
-            errorColor: 'text-danger form-check-label',
-            textColor: 'text-black form-check-label',
-            errorText: 'form-text text-danger',
-            smallText: 'form-text d-none'
+            errorColor: this.getCheckBoxClass().error,
+            textColor: this.getCheckBoxClass().success,
+            errorText: this.getTextClass().error,
+            smallText: this.getTextClass().success
         }
     }
 

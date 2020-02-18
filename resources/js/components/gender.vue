@@ -10,7 +10,9 @@
 </template>
 
 <script>
+import classdata from '../class.js';
 export default {
+    mixins: [classdata],
     data:function(){
         return {
             genderText: '性別',
@@ -22,10 +24,10 @@ export default {
                 { id:'gender1', text: '女', value: 'S' }
             ],
             warningText: '性別必填',
-            errorColor: 'text-danger form-check-label',
-            textColor: 'text-black form-check-label',
-            errorText: 'form-text text-danger',
-            smallText: 'form-text d-none'
+            errorColor: this.getCheckBoxClass().error,
+            textColor: this.getCheckBoxClass().success,
+            errorText: this.getTextClass().error,
+            smallText: this.getTextClass().success
         }
     }
 }

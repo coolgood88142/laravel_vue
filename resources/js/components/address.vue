@@ -18,8 +18,10 @@
 <script>
 import counties from './counties.vue';
 import districts from './districts.vue';
+import classdata from '../class.js';
 
 export default {
+    mixins: [classdata],
     data:function(){
         return {
             addressText: '地址',
@@ -29,11 +31,11 @@ export default {
             address_incomplete: true,
             warningText: '地址必填',
             remindText:'地址填寫不完整',
-            errorColor: 'form-control border border-danger',
-            borderColor: 'form-control border',
-            errorTextStyle: 'form-text text-danger',
-            remindTextStyle: 'form-text text-secondary',
-            smallText: 'form-text d-none'
+            errorColor: this.getTextBoxClass().error,
+            borderColor: this.getTextBoxClass().success,
+            errorTextStyle: this.getTextClass().error,
+            remindTextStyle: this.getTextClass().remind,
+            smallText: this.getTextClass().success
         }
     },
     components:{
