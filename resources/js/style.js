@@ -20,16 +20,31 @@ let app = new Vue({
         btnStyle: 'btn btn-primary',
         btnText: '送出',
         nameError: false,
-        nameTextBoxClass: classdata.methods.getTextBoxClass().success,
-        nameTextClass: classdata.methods.getTextClass().success,
+        showNameErrorClass: false,
         yearError: false,
         monthError: false,
         dayError: false,
+        birthdayError:{
+            [yearError, monthError, dayError]
+        },
+        showYearErrorClass: false,
+        showMonthErrorClass: false,
+        showDayErrorClass: false,
+        showBirthdayErrorClass:{
+            [showYearErrorClass, showMonthErrorClass, showDayErrorClass]
+        }
         countiesError: false,
+        showCountiesErrorClass: false,
         districtsError: false,
+        showDistrictsErrorClass: false,
+        addressError: false,
+        showAddressErrorClass: false,
         genderError: false,
+        showGenderErrorClass: false,
         emailError: false,
+        showEmailErrorClass: false,
         interestError: false,
+        showInterestErrorClass: false,
     },
     components: {
         'name_textbox' : name,
@@ -43,20 +58,20 @@ let app = new Vue({
         getNameIsError(isError) {
             this.nameError = isError;
         },
-        getYearsSelected(isError){
+        getBirthdaySelected(Selected){
+            for(let i = 0; i<Selected.length; i++){
+                Selected[i]
+            }
             this.yearError = isError;
-        },
-        getMonthsSelected(isError) {
-            this.monthError = isError;
-        },
-        getDaysSelected(isError) {
-            this.dayError = isError;
-        },
+        }
         getCountiesSelected(isError) {
             this.countiesError = isError;
         },
         getDistrictsSelected(isError) {
             this.districtsError = isError;
+        },
+        getAddressIsError(isError) {
+            this.addressError = isError;
         },
         getGenderChecked(isError) {
             this.genderError = isError;
@@ -71,9 +86,16 @@ let app = new Vue({
             //TODO:全部的component要回傳boolean 要在這裡做判斷，要顯示送出成功文字
             //各個component判斷完v-model資料後，在用mixins使用class.js裡的變數(用function return想要的class回傳)
             //做完後再帶boolean到這裡
-            this.nameTextBoxClass = this.nameError ? this.getTextBoxClass().error : this.getTextBoxClass().success
-            this.nameTextClass = this.nameError ? this.getTextClass().error : this.getTextClass().success
-            console.log(this.name_error)
+            this.showNameErrorClass = this.nameError
+            this.showYearErrorClass = this.yearError
+            this.showMonthErrorClass = this.monthError
+            this.showDayErrorClass = this.dayError
+            this.showCountiesErrorClass = this.countiesError
+            this.showDistrictsErrorClass = this.districtsError
+            this.showAddressErrorClass = this.addressError
+            this.showGenderErrorClass = this.genderError
+            this.showEmailErrorClass = this.emailError
+            this.showInterestErrorClass = this.interestError
             
             if (this.nameError != '' && year_val != '' && month_val != '' && day_val != '' && counties_val != '' && gender0.checked == true && gender1.checked == true
                 && districts_val != '' && (interest0.checked == true || interest1.checked == true || interest2.checked == true)){

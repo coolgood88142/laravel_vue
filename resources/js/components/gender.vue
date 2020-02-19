@@ -5,7 +5,7 @@
             <input class="form-check-input" type="radio" name="gender" v-model="gender_checked" :id="gender.id" :value="gender.value" @change="$emit('change-gender', gender_checked)">
             <label :class="[gender_error ? errorColor : textColor]" :for="gender.id">{{ gender.text }}</label>
         </div>
-        <small id="warning" :class="[gender_warning ? errorText : smallText]">{{ warningText }}</small>
+        <small id="warning" :class="[gender_error ? errorText : smallText]">{{ warningText }}</small>
     </div>
 </template>
 
@@ -13,10 +13,14 @@
 import classdata from '../class.js';
 export default {
     mixins: [classdata],
+    props: {
+        gender_error:{
+            type:Boolean
+        }
+    },
     data:function(){
         return {
             genderText: '性別',
-            gender_error: false,
             gender_warning: false,
             gender_checked: '',
             gender_array:[

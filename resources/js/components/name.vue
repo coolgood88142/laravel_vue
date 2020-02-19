@@ -1,8 +1,8 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ nameText }}</h3>
-        <input type="textbox" :class="TextBoxClass" id="us_name" name="us_name" v-model="name_value" @change="$emit('name-error', nameError)"/>
-        <small id="warning" :class="[name_warning ? errorText : smallText]">{{ warningText }}</small>
+        <input type="textbox" :class="[name_error ? errorColor : borderColor]" id="us_name" name="us_name" v-model="name_value" @change="$emit('name-error', nameError)"/>
+        <small id="warning" :class="[name_error ? errorText : smallText]">{{ warningText }}</small>
      </div>
 </template>
 
@@ -12,8 +12,8 @@ export default {
     //Boolean要怎麼接受後，要怎麼觸發function判斷
     //使用mixins回傳ture或false，就不用寫ifelse，目的是要讓程式減少重複性
     props: {
-        TextBoxClass:{
-            type:String
+        name_error:{
+            type:Boolean
         }
     },
     mixins: [classdata],

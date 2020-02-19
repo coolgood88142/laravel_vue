@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
         <input type="email" :class="[email_error ? errorColor : borderColor]" id="us_email" v-model="email_value" @change="$emit('keyup-email', email_value)">
-        <small id="warning" :class="[email_warning ? (email_format ? remindTextStyle : errorTextStyle) : smallText]">{{ email_format ? remindText : warningText }}</small>
+        <small id="warning" :class="[email_error ? (email_warning ? remindTextStyle : errorTextStyle) : smallText]">{{ email_warning ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -11,6 +11,14 @@ import classdata from '../class.js';
 
 export default {
     mixins: [classdata],
+    props: {
+        email_error:{
+            type:Boolean
+        },
+        email_warning:{
+            type:Boolean
+        },
+    },
     data:function(){
         return {
             emailText: 'email',

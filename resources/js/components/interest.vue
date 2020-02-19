@@ -5,7 +5,7 @@
             <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value" v-model="interest_checked" @change="$emit('change-interest', interest_checked)">
             <label :class="[interest_error ? errorColor : textColor]" :for="interest.id">{{ interest.text }}</label>
         </div>
-        <small id="warning" :class="[interest_warning ? errorText : smallText]">{{ warningText }}</small>
+        <small id="warning" :class="[interest_error ? errorText : smallText]">{{ warningText }}</small>
     </div>
 </template>
 
@@ -14,6 +14,11 @@ import classdata from '../class.js';
 
 export default {
     mixins: [classdata],
+    props: {
+        interest_error:{
+            type:Boolean
+        }
+    },
     data:function(){
         return {
             interestText: '興趣(複)',

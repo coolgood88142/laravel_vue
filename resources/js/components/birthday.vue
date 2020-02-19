@@ -16,7 +16,7 @@
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="us_day" :class="[isDayError ? errorSelect : selectStyle]" @change="$emit('change-days', days_selected)">
+             <select v-model="days_selected" id="us_day" :class="[isDayError ? errorSelect : selectStyle]" @change="$emit('change-birthday', birthday_selected)">
                  <option value="*" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
@@ -60,6 +60,9 @@ export default {
             isYearError: false,
             isMonthError: false,
             isDayError: false,
+            birthday_selected:{
+                [this.isYearError, this.isMonthError, this.isDayError]
+            },
             warningText: '生日必填',
             remindText:'生日填寫不完整',
             errorSelect: this.getSelectClass().error,
@@ -93,7 +96,7 @@ export default {
             this.months_selected = '*'
             this.days = ''
             this.days_selected = '*'
-            this.emit('change-years', this.years_selected)
+            this.emit('change-birthday', this.birthday_selected)
         },
         onChange: function () {
             this.days_selected = '*'
@@ -102,7 +105,7 @@ export default {
                 let month = this.months[this.months_selected].value;
                 this.days = new Date(year, month, 0).getDate()
             }
-            this.emit('change-months', this.months_selected)
+            this.emit('change-birthday', this.birthday_selected)
         }
     },
     watch:{
