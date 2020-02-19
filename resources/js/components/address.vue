@@ -9,7 +9,7 @@
             <districts_select v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
         </div>
         <div class="form-check form-check-inline">
-            <input type="email" :class="[address_error ? errorColor : borderColor]" id="us_address" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="email" :class="[address_error ? errorColor : borderColor]" id="us_address" v-model="address_value" placeholder="請選擇縣市與鄉鎮市區">
         </div>
         <small id="warning" :class="[address_error ? (address_incomplete ? remindTextStyle : errorTextStyle) : smallText]">{{ address_incomplete ? remindText : warningText }}</small>
     </div>
@@ -18,7 +18,7 @@
 <script>
 import counties from './counties.vue';
 import districts from './districts.vue';
-import classdata from '../class.js';
+import classdata from './mixins/class.js';
 
 export default {
     mixins: [classdata],
@@ -27,15 +27,17 @@ export default {
             addressText: '地址',
             countiesSelected: NaN,
             districtsSelected: '',
-            address_error: false,
+            address_value:'',
+            addressError: false,
             address_incomplete: true,
             warningText: '地址必填',
             remindText:'地址填寫不完整',
+            selectClass: 'custom-select',
             errorColor: this.getTextBoxClass().error,
             borderColor: this.getTextBoxClass().success,
             errorTextStyle: this.getTextClass().error,
             remindTextStyle: this.getTextClass().remind,
-            smallText: this.getTextClass().success
+            smallClass: 'form-text'
         }
     },
     components:{
@@ -48,6 +50,17 @@ export default {
         },
         updateDistricts(CountiesSelected) {
             this.countiesSelected = CountiesSelected;
+        },
+        getAddressIsError:function(){
+            if (this.countiesSelected != '' && this.districtsSelected != '' && this.address_value != '') {
+                this.addressError = false
+            }else{
+                this.addressError = true
+                if (this.countiesSelected == '' && this.districtsSelected == '' && this.address_value == '') {
+                
+                }
+            }
+            return this.addressError
         }
 
         // let counties = document.getElementById("counties");

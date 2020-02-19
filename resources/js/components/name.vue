@@ -1,21 +1,17 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ nameText }}</h3>
-        <input type="textbox" :class="[name_error ? errorColor : borderColor]" id="us_name" name="us_name" v-model="name_value" @change="$emit('name-error', nameError)"/>
-        <small id="warning" :class="[name_error ? errorText : smallText]">{{ warningText }}</small>
+        <input type="textbox" :class="inputClass" id="us_name" name="us_name" v-model="name_value"/>
+        <small id="warning" :class="smallClass">{{ warningText }}</small>
      </div>
 </template>
 
 <script>
-import classdata from '../class.js';
+import classdata from './mixins/class.js';
+
 export default {
     //Boolean要怎麼接受後，要怎麼觸發function判斷
     //使用mixins回傳ture或false，就不用寫ifelse，目的是要讓程式減少重複性
-    props: {
-        name_error:{
-            type:Boolean
-        }
-    },
     mixins: [classdata],
     data:function(){
         return {
@@ -25,19 +21,18 @@ export default {
             name_check:false,
             name_warning : false,
             warningText: '姓名必填',
-            errorColor: this.getTextBoxClass().error,
-            borderColor: this.getTextBoxClass().success,
-            errorText: this.getTextClass().error,
-            smallText: this.getTextClass().success
+            inputClass: 'form-control border',
+            smallClass: 'form-text'
         }
     },
-    watch:{
-        name_value(newValue){
-            if(newValue == ''){
-                this.nameError = true
-            }else{
+    methods:{
+        getNameIsError:function(){
+            if(this.name_value != ''){
                 this.nameError = false
+            }else{
+                this.nameError = true
             }
+            return this.nameError
         }
     }
 

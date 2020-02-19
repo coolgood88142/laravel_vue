@@ -1,13 +1,13 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
-        <input type="email" :class="[email_error ? errorColor : borderColor]" id="us_email" v-model="email_value" @change="$emit('keyup-email', email_value)">
-        <small id="warning" :class="[email_error ? (email_warning ? remindTextStyle : errorTextStyle) : smallText]">{{ email_warning ? remindText : warningText }}</small>
+        <input type="email" :class="[email_error ? errorColor : borderColor]" id="us_email" v-model="email_value" @change="$emit('email-error', emailError)">
+        <small id="warning" :class="[email_error ? (email_format ? remindTextStyle : errorTextStyle) : smallText]">{{ email_format ? remindText : warningText }}</small>
     </div>
 </template>
 
 <script>
-import classdata from '../class.js';
+import classdata from './mixins/class.js';
 
 export default {
     mixins: [classdata],
@@ -15,15 +15,19 @@ export default {
         email_error:{
             type:Boolean
         },
-        email_warning:{
+        email_format:{
             type:Boolean
         },
     },
     data:function(){
         return {
             emailText: 'email',
+            emailError: false,
             email_value: '',
-            email_error: false,
+            // emailError: [
+            //     {textError : false},
+            //     {formatError: false}
+            // ],
             email_warning: false,
             email_format: false,
             warningText: 'email必填',
@@ -33,6 +37,21 @@ export default {
             errorTextStyle: this.getTextClass().error,
             remindTextStyle: this.getTextClass().remind,
             smallText: this.getTextClass().success
+        }
+    },
+    methods:{
+        getEmailIsError:function(){
+            if(this.email_value == ''){
+                this.emailError = true
+            }else{
+                let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                if (!isMail.test(this.email_value)) {
+                    this.emailError = true
+                }else{
+                    this.emailError = false
+                }
+            }
+            return this.emailError
         }
     }
 

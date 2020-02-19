@@ -40,12 +40,12 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox v-on:name-error="getNameIsError" :name_error="showNameErrorClass"></name_textbox>
-                                <birthday_select v-on:change-birthday="getBirthdaySelected" :year_error="showYearErrorClass" :month_error="showMonthErrorClass" :day_error="showDayErrorClass"></birthday_select>
-                                <address_select :change-counties="getCountiesSelected" :change-districts="getDistrictsSelected" :showErrorClass="showBirthdayErrorClass" ></address_select>
-                                <gender_radio :change-gender="getGenderChecked"></gender_radio>
-                                <email_textbox :keyup-email="getEmailIsError"></email_textbox>
-                                <interest_checkbox :change-interest="getInterestChecked"></interest_checkbox>
+                                <name_textbox></name_textbox>
+                                <birthday_select></birthday_select>
+                                <address_select></address_select>
+                                <gender_radio></gender_radio>
+                                <email_textbox></email_textbox>
+                                <interest_checkbox></interest_checkbox>
                                 <div class="form-group">
                                     <input type="button" :class="btnStyle" :value="btnText" v-on:click="send()">
                                 </div>

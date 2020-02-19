@@ -2,22 +2,22 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="us_year" :class="[isYearError ? errorSelect : selectStyle]" v-on:change="clearOptions">
-                <option value="*" disabled selected>--請選擇--</option>
+            <select v-model="years_selected" id="us_year" :class="selectClass" v-on:change="clearOptions">
+                <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="months_selected" id="us_month" :class="[isMonthError ? errorSelect : selectStyle]" v-on:change="onChange">
-                <option value="*" disabled selected>--請選擇--</option>
+            <select v-model="months_selected" id="us_month" :class="selectClass" v-on:change="onChange">
+                <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="us_day" :class="[isDayError ? errorSelect : selectStyle]" @change="$emit('change-birthday', birthday_selected)">
-                 <option value="*" disabled selected>--請選擇--</option>
+             <select v-model="days_selected" id="us_day" :class="selectClass">
+                 <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
             <label class="form-check-label">日</label>
@@ -42,10 +42,9 @@ function DefaultDateData(begin, end) {
     return date_array;
 }
 
-import classdata from '../class.js';
+import classdata from './mixins/class.js';
 
 export default {
-    //要加3個選擇器
     mixins: [classdata],
     data:function(){
         return {
@@ -55,21 +54,14 @@ export default {
             years_selected: '*',
             months_selected: '*',
             days_selected: '*',
-            birthday_error: false,
-            birthday_incomplete: true, 
-            isYearError: false,
-            isMonthError: false,
-            isDayError: false,
-            birthday_selected:{
-                [this.isYearError, this.isMonthError, this.isDayError]
-            },
+            birthdayError:false,
+            birthday_incomplete: true,
             warningText: '生日必填',
             remindText:'生日填寫不完整',
-            errorSelect: this.getSelectClass().error,
-            selectStyle: this.getSelectClass().success,
+            selectClass: 'custom-select',
             errorTextStyle: this.getTextClass().error,
             remindTextStyle: this.getTextClass().remind,
-            smallText: this.getTextClass().success
+            smallClass: 'form-text'
 
             // let us_year = document.getElementById("us_year");
             // let us_month = document.getElementById("us_month");
@@ -96,7 +88,6 @@ export default {
             this.months_selected = '*'
             this.days = ''
             this.days_selected = '*'
-            this.emit('change-birthday', this.birthday_selected)
         },
         onChange: function () {
             this.days_selected = '*'
@@ -105,7 +96,19 @@ export default {
                 let month = this.months[this.months_selected].value;
                 this.days = new Date(year, month, 0).getDate()
             }
-            this.emit('change-birthday', this.birthday_selected)
+        },
+        getBirthdayIsError:function(){
+            if (this.years_selected != '*' && this.months_selected != '*' && this.days_selected != '*'){
+                this.birthdayError = false
+            }else{
+                this.birthdayError = true
+                if (this.years_selected == '*' && this.months_selected == '*' && this.days_selected == '*'){
+
+                }else{
+
+                }
+            }
+            return this.birthdayError
         }
     },
     watch:{
