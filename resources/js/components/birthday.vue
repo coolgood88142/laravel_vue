@@ -22,7 +22,7 @@
             </select>
             <label class="form-check-label">日</label>
         </div>
-        <small id="warning" :class="[birthday_error ? (birthday_incomplete ? remindTextStyle : errorTextStyle) : smallText]">{{ birthday_incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="[birthdayError ? (birthday_incomplete ? remindTextStyle : errorTextStyle) : smallClass]">{{ birthday_incomplete ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
             years_selected: '*',
             months_selected: '*',
             days_selected: '*',
-            birthdayError:false,
+            birthdayError:true,
             birthday_incomplete: true,
             warningText: '生日必填',
             remindText:'生日填寫不完整',

@@ -27,12 +27,8 @@ export default {
     },
     methods:{
         getNameIsError:function(){
-            if(this.name_value != ''){
-                this.nameError = false
-            }else{
-                this.nameError = true
-            }
-            return this.nameError
+            let test = classdata.methods.setElementClass([this.name_value], ["input"])
+            return true
         }
     }
 

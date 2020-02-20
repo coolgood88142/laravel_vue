@@ -9,9 +9,9 @@
             <districts_select v-on:change-districts="getDistrictsSelected" :counties_selected="countiesSelected"></districts_select>
         </div>
         <div class="form-check form-check-inline">
-            <input type="email" :class="[address_error ? errorColor : borderColor]" id="us_address" v-model="address_value" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="email" :class="[addressError ? errorColor : borderColor]" id="us_address" v-model="address_value" placeholder="請選擇縣市與鄉鎮市區">
         </div>
-        <small id="warning" :class="[address_error ? (address_incomplete ? remindTextStyle : errorTextStyle) : smallText]">{{ address_incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="[addressError ? (address_incomplete ? remindTextStyle : errorTextStyle) : smallClass]">{{ address_incomplete ? remindText : warningText }}</small>
     </div>
 </template>
 

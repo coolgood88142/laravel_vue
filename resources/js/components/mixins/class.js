@@ -1,29 +1,38 @@
-//補上是否為空值的function(value, type, class)
-//value、type、class為陣列資料型態
+//補上是否為空值的function(value, type)
 //宣告變數帶type要加的class
 //回傳陣列資料去對應class要放什麼值
 //有值class為空字串，沒值要加class資料
-export default {
-    data:{
-        text: {
-            error: 'text-danger',
-            remind: 'text-secondary',
-            hide: 'd-none'
-        },
-        input: 'border-danger'
-    },
-    methods: {
-        setElementClass: function(value_array, type_array) {
-            let class_array = []
-            for (let i = 0; i < value_array.length; i++) {
-                value = value_array[i]
-                type = type_array[i]
-                if (value != '') {
-                    
-                }else{
+let classData =  {
+    "input": {
+        error: 'border-danger',
+        normal: ''
+               },
+    "text": {
+        error: 'text-danger',
+        remind: 'text-secondary',
+        hide: 'd-none',
+        normal: ''
+    }
+}
 
-                }
+export default {
+    methods: {
+        setElementClass: function (value, type) {
+            let class_data = {}
+            let isError = false
+            let type_data = classData.type
+            if (value == '') {
+                isError = true
+                class_data.class = type_data.error
+            }else{
+                class_data.class = type_data.error
             }
+            class_data.isError = isError
+
+            return class_data
+        },
+        getElementClass: function(){
+            console.log('text')
         },
         getTextBoxClass: function () {
             return {

@@ -3,9 +3,9 @@
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
         <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
             <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value" v-model="interest_checked">
-            <label :class="[interest_error ? errorColor : textColor]" :for="interest.id">{{ interest.text }}</label>
+            <label :class="[interestError ? errorColor : textColor]" :for="interest.id">{{ interest.text }}</label>
         </div>
-        <small id="warning" :class="[interest_error ? errorText : smallText]">{{ warningText }}</small>
+        <small id="warning" :class="[interestError ? errorText : smallClass]">{{ warningText }}</small>
     </div>
 </template>
 
@@ -14,11 +14,6 @@ import classdata from './mixins/class.js';
 
 export default {
     mixins: [classdata],
-    props: {
-        interest_error:{
-            type:Boolean
-        }
-    },
     data:function(){
         return {
             interestText: '興趣(複)',

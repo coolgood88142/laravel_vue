@@ -32,7 +32,7 @@ let app = new Vue({
             //使用全部的component的function要回傳布林值，在function做完資料判斷後，宣告變數為布林值，就可以在component直接變更class
             //回傳的布林值做是否要顯示"送出成功!"文字
             let nameError = name.methods.getNameIsError()
-            console.log(classdata.data.text.hide)
+            console.log(classdata.data.class)
             this.showNameErrorClass = (this.name_value == '') ? true : false
             this.showYearErrorClass = (this.birthdayError.year_selected == '*') ? true : false
             this.showMonthErrorClass = (this.birthdayError.month_selected == '*') ? true : false

@@ -3,9 +3,9 @@
         <h3 class="text-black font-weight-bold">{{ genderText }}</h3>
         <div class="form-check form-check-inline" v-for="(gender, index) in gender_array" :key="index">
             <input class="form-check-input" type="radio" name="gender" v-model="gender_checked" :id="gender.id" :value="gender.value">
-            <label :class="[gender_error ? errorColor : textColor]" :for="gender.id">{{ gender.text }}</label>
+            <label :class="[genderError ? errorColor : textColor]" :for="gender.id">{{ gender.text }}</label>
         </div>
-        <small id="warning" :class="[gender_error ? errorText : smallText]">{{ warningText }}</small>
+        <small id="warning" :class="[genderError ? errorText : smallText]">{{ warningText }}</small>
     </div>
 </template>
 
@@ -14,11 +14,6 @@ import classdata from './mixins/class.js';
 
 export default {
     mixins: [classdata],
-    props: {
-        gender_error:{
-            type:Boolean
-        }
-    },
     data:function(){
         return {
             genderText: '性別',
