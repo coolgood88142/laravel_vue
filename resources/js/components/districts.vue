@@ -156,8 +156,10 @@ let districts = [
     ]
 ];
 
+import classdata from './mixins/class.js';
+
 export default {
-    //要加3個選擇器
+    mixins: [classdata],
     props: {
         counties_selected:{
             type:Number
@@ -176,7 +178,7 @@ export default {
             districts_selected: '',
             isDistrictsError: false,
             errorColor: 'text-danger custom-select',
-            selectStyle: 'custom-select'
+            selectStyle: this.getSelectClass()
         }
     },
     watch:{

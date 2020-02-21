@@ -24,11 +24,11 @@ export default {
             email_format: false,
             warningText: 'email必填',
             remindText:'email格式錯誤',
-            errorColor: this.getTextBoxClass().error,
-            borderColor: this.getTextBoxClass().success,
-            errorTextStyle: this.getTextClass().error,
-            remindTextStyle: this.getTextClass().remind,
-            smallText: this.getTextClass().success
+            errorColor: this.getInputClass(),
+            borderColor: this.getInputClass(),
+            errorTextStyle: this.getTextClass(),
+            remindTextStyle: this.getTextClass(),
+            smallText: this.getTextClass()
         }
     },
     methods:{

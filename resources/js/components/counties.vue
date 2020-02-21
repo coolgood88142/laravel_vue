@@ -31,15 +31,17 @@ let counties_data =  [
     { text: '連江縣', value: 21 }
 ];
 
+import classdata from './mixins/class.js';
+
 export default {
-    //要加選擇器
+    mixins: [classdata],
     data:function(){
         return {
             counties_array: counties_data,
             counties_selected: '',
             isCountiesError: false,
             errorColor: 'text-danger custom-select',
-            selectStyle: 'custom-select'
+            selectStyle: this.getSelectClass()
         }
     },
     watch:{

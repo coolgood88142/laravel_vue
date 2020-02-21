@@ -51,17 +51,17 @@ export default {
             years: DefaultDateData(begin_year, end_year),
             months: DefaultDateData(begin_month, end_month),
             days: '',
-            years_selected: '*',
-            months_selected: '*',
-            days_selected: '*',
+            years_selected: '',
+            months_selected: '',
+            days_selected: '',
             birthdayError:true,
             birthday_incomplete: true,
             warningText: '生日必填',
             remindText:'生日填寫不完整',
-            selectClass: 'custom-select',
-            errorTextStyle: this.getTextClass().error,
-            remindTextStyle: this.getTextClass().remind,
-            smallClass: 'form-text'
+            selectClass: this.getSelectClass(),
+            errorTextStyle: this.getTextClass(),
+            remindTextStyle: this.getTextClass(),
+            smallClass: this.getTextClass()
 
             // let us_year = document.getElementById("us_year");
             // let us_month = document.getElementById("us_month");
@@ -85,24 +85,24 @@ export default {
     },
     methods: {
         clearOptions: function () {
-            this.months_selected = '*'
+            this.months_selected = ''
             this.days = ''
-            this.days_selected = '*'
+            this.days_selected = ''
         },
         onChange: function () {
-            this.days_selected = '*'
-            if (this.years_selected  != '*'){
+            this.days_selected = ''
+            if (this.years_selected  != ''){
                 let year = this.years[this.years_selected].value;
                 let month = this.months[this.months_selected].value;
                 this.days = new Date(year, month, 0).getDate()
             }
         },
         getBirthdayIsError:function(){
-            if (this.years_selected != '*' && this.months_selected != '*' && this.days_selected != '*'){
+            if (this.years_selected != '' && this.months_selected != '' && this.days_selected != ''){
                 this.birthdayError = false
             }else{
                 this.birthdayError = true
-                if (this.years_selected == '*' && this.months_selected == '*' && this.days_selected == '*'){
+                if (this.years_selected == '' && this.months_selected == '' && this.days_selected == ''){
 
                 }else{
 

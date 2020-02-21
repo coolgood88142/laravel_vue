@@ -25,10 +25,10 @@ export default {
                 { id:'gender1', text: '女', value: 'S' }
             ],
             warningText: '性別必填',
-            errorColor: this.getCheckBoxClass().error,
-            textColor: this.getCheckBoxClass().success,
-            errorText: this.getTextClass().error,
-            smallText: this.getTextClass().success
+            errorColor: this.getCheckLabelClass(),
+            textColor: this.getCheckLabelClass(),
+            errorText: this.getTextClass(),
+            smallText: this.getTextClass()
         }
     },
     methods:{

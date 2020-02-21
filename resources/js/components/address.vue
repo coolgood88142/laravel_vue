@@ -33,11 +33,11 @@ export default {
             warningText: '地址必填',
             remindText:'地址填寫不完整',
             selectClass: 'custom-select',
-            errorColor: this.getTextBoxClass().error,
-            borderColor: this.getTextBoxClass().success,
-            errorTextStyle: this.getTextClass().error,
-            remindTextStyle: this.getTextClass().remind,
-            smallClass: 'form-text'
+            errorColor: this.getInputClass(),
+            borderColor: this.getInputClass(),
+            errorTextStyle: this.getTextClass(),
+            remindTextStyle: this.getTextClass(),
+            smallClass: this.getTextClass()
         }
     },
     components:{

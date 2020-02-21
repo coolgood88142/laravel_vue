@@ -26,10 +26,10 @@ export default {
                 { id:'interest2', text: '其他', value: 2}
             ],
             warningText: '興趣必填',
-            errorColor: this.getCheckBoxClass().error,
-            textColor: this.getCheckBoxClass().success,
-            errorText: this.getTextClass().error,
-            smallClass: 'form-text'
+            errorColor: this.getCheckLabelClass(),
+            textColor: this.getCheckLabelClass(),
+            errorText: this.getTextClass(),
+            smallClass: this.getTextClass()
         }
     },
     methods:{

@@ -17,7 +17,10 @@ let app = new Vue({
     data: {
         title: '填寫個人資料',
         btnStyle: 'btn btn-primary',
-        btnText: '送出'
+        btnText: '送出',
+        nameValue:'',
+        nameInputClass: classdata.methods.getInputClass(),
+        nameSmallClass: classdata.methods.getTextClass(),
     },
     components: {
         'name_textbox' : name,
@@ -28,16 +31,22 @@ let app = new Vue({
         'interest_checkbox': interest
     },
     methods: {
+        updateNameValue: function(newVal){
+            this.nameValue = newVal;
+        },
         send: function () {
             //使用全部的component的function要回傳布林值，在function做完資料判斷後，宣告變數為布林值，就可以在component直接變更class
             //回傳的布林值做是否要顯示"送出成功!"文字
-            let nameError = name.methods.getNameIsError()
-            console.log(classdata.data.class)
-            this.showNameErrorClass = (this.name_value == '') ? true : false
-            this.showYearErrorClass = (this.birthdayError.year_selected == '*') ? true : false
-            this.showMonthErrorClass = (this.birthdayError.month_selected == '*') ? true : false
-            this.showDayErrorClass = (this.birthdayError.day_selected == '*') ? true : false
-            this.showBirthdayErrorText = (this.showYearErrorClass || this.showMonthErrorClass || this.showDayErrorClass)
+            let nameError = name.methods.getNameIsError(this.nameValue)
+            this.nameInputClass = classdata.methods.setElementClass(nameError, "input", false)
+            this.nameSmallClass = classdata.methods.setElementClass(nameError, "text", false)
+
+            // classdata.methods.testClass()
+            // this.showNameErrorClass = (this.name_value == '') ? true : false
+            // this.showYearErrorClass = (this.birthdayError.year_selected == '*') ? true : false
+            // this.showMonthErrorClass = (this.birthdayError.month_selected == '*') ? true : false
+            // this.showDayErrorClass = (this.birthdayError.day_selected == '*') ? true : false
+            // this.showBirthdayErrorText = (this.showYearErrorClass || this.showMonthErrorClass || this.showDayErrorClass)
             // this.showCountiesErrorClass = this.countiesError
             // this.showDistrictsErrorClass = this.districtsError
             // this.showAddressErrorClass = this.addressError

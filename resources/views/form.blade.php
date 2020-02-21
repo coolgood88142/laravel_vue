@@ -40,7 +40,7 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox></name_textbox>
+                                <name_textbox :input_class="nameInputClass" :small_class="nameSmallClass" :name_value="nameValue" @input="updateNameValue"></name_textbox>
                                 <birthday_select></birthday_select>
                                 <address_select></address_select>
                                 <gender_radio></gender_radio>
