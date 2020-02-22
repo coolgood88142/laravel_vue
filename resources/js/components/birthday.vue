@@ -2,27 +2,27 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="us_year" :class="selectClass" v-on:change="clearOptions">
+            <select v-model="years_selected" id="us_year" :class="select_class" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="months_selected" id="us_month" :class="selectClass" v-on:change="onChange">
+            <select v-model="months_selected" id="us_month" :class="select_class" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="us_day" :class="selectClass">
+             <select v-model="days_selected" id="us_day" :class="select_class">
                  <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
             <label class="form-check-label">日</label>
         </div>
-        <small id="warning" :class="[birthdayError ? (birthday_incomplete ? remindTextStyle : errorTextStyle) : smallClass]">{{ birthday_incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="small_class">{{ incomplete ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -45,23 +45,33 @@ function DefaultDateData(begin, end) {
 import classdata from './mixins/class.js';
 
 export default {
+    props: {
+        select_class: {
+            type:String
+        },
+        small_class: {
+            type:String
+        },
+        incomplete: {
+            type:Boolean
+        }
+    },
     mixins: [classdata],
     data:function(){
         return {
             years: DefaultDateData(begin_year, end_year),
             months: DefaultDateData(begin_month, end_month),
             days: '',
-            years_selected: '',
+            years_selected:'',
             months_selected: '',
             days_selected: '',
-            birthdayError:true,
-            birthday_incomplete: true,
+            selectValue:{
+                years: this.years_selected,
+                months: this.months_selected,
+                days: this.days_selected,
+            },
             warningText: '生日必填',
-            remindText:'生日填寫不完整',
-            selectClass: this.getSelectClass(),
-            errorTextStyle: this.getTextClass(),
-            remindTextStyle: this.getTextClass(),
-            smallClass: this.getTextClass()
+            remindText:'生日填寫不完整'
 
             // let us_year = document.getElementById("us_year");
             // let us_month = document.getElementById("us_month");
@@ -97,42 +107,52 @@ export default {
                 this.days = new Date(year, month, 0).getDate()
             }
         },
-        getBirthdayIsError:function(){
-            if (this.years_selected != '' && this.months_selected != '' && this.days_selected != ''){
-                this.birthdayError = false
+        getBirthdayIsError:function(year, month, day){
+            let errorData = {}
+            if (year != '' && month != '' && day != ''){
+                errorData.isError = false
+                errorData.isRemind = false
             }else{
-                this.birthdayError = true
-                if (this.years_selected == '' && this.months_selected == '' && this.days_selected == ''){
-
+                if (year == '' && month == '' && day == ''){
+                    errorData.isError= true
+                    errorData.isRemind = false
                 }else{
-
+                    errorData.isError= false
+                    errorData.isRemind = true
                 }
             }
-            return this.birthdayError
+
+            return errorData
         }
     },
     watch:{
-        years_selected(newSelected){
-            if(newSelected == '*'){
-                this.isYearError = true
-            }else{
-                this.isYearError = false
+        years_selected(newVal){
+            this.selectValue = {
+                years: newVal,
+                months: this.months_selected,
+                days: this.days_selected,
             }
+
+            this.$emit('select-value', this.selectValue);
         },
-        months_selected(newSelected){
-            if(newSelected == '*' ){
-                this.isMonthError = true
-            }else{
-                this.isMonthError = false
+        months_selected(newVal){
+            this.selectValue = {
+                years: this.years_selected,
+                months: newVal,
+                days: this.days_selected,
             }
+
+            this.$emit('select-value', this.selectValue);
         },
-        days_selected(newSelected){
-            if(newSelected == '*'){
-                this.isDayError = true
-            }else{
-                this.isDayError = false
+        days_selected(newVal){
+            this.selectValue = {
+                years: this.years_selected,
+                months: this.months_selected,
+                days: newVal,
             }
-        }
+
+            this.$emit('select-value', this.selectValue);
+        },
     }
 }
 </script>

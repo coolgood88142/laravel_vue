@@ -19,6 +19,7 @@ let changeClass= {
 
 let defaultClass = {
     text: elementClass.text + changeClass.hide,
+    textError: elementClass.text + changeClass.textError,
     input: elementClass.input + changeClass.border,
     select: elementClass.select + changeClass.textError,
     checklabel: elementClass.checklabel + changeClass.textError
@@ -32,13 +33,19 @@ export default {
                 if(el === type){
                     if(!isError){
                         newClass = elementClass[el]
-                        if(el === "text" && isRemind){
-                            newClass += changeClass[el]
+                        if(el === "text"){
+                            newClass += (isRemind ? changeClass.textRemind : changeClass.hide)
+                        }else if (isRemind) {
+                            newClass = defaultClass[el]
                         }
-                        break
                     }else{
-                        newClass = defaultClass[el]
+                        if (el === "text"){
+                            newClass = defaultClass.textError
+                        }else{
+                            newClass = defaultClass[el]
+                        }
                     }
+                    break
                 }
             }
 

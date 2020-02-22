@@ -1,5 +1,5 @@
 <template>
-    <select v-model="districts_selected" id="districts" :class="[isDistrictsError ? errorColor : selectStyle]" @change="$emit('change-districts', districts_selected)">
+    <select v-model="districts_selected" id="districts" :class="select_class" @change="$emit('change-districts', districts_selected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(districts, index) in districts_array" :key="index" :value="districts.value">{{ districts.text }}</option>
     </select>
@@ -159,12 +159,15 @@ let districts = [
 import classdata from './mixins/class.js';
 
 export default {
-    mixins: [classdata],
     props: {
         counties_selected:{
             type:Number
+        },
+        select_class: {
+            type:String
         }
     },
+    mixins: [classdata],
     computed: {
         districts_array(){
             if (this.counties_selected != NaN ){
@@ -175,19 +178,7 @@ export default {
     },
     data:function(){
         return {
-            districts_selected: '',
-            isDistrictsError: false,
-            errorColor: 'text-danger custom-select',
-            selectStyle: this.getSelectClass()
-        }
-    },
-    watch:{
-        districts_selected(newValue){
-            if (newValue == '' ){
-                this.isDistrictsError = true
-            }else{
-                this.isDistrictsError = false
-            }
+            districts_selected: ''
         }
     }
 }

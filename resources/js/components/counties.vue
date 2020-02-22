@@ -1,5 +1,5 @@
 <template>
-     <select v-model="counties_selected" id="counties" :class="[isCountiesError ? errorColor : selectStyle]" @change="$emit('change-counties', counties_selected)">
+     <select v-model="counties_selected" id="counties" :class="select_class" @change="$emit('change-counties', counties_selected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(counties, index) in counties_array" :key="index" :value="counties.value">{{ counties.text }}</option>
     </select>
@@ -34,23 +34,16 @@ let counties_data =  [
 import classdata from './mixins/class.js';
 
 export default {
+    props: {
+        select_class: {
+            type:String
+        }
+    },
     mixins: [classdata],
     data:function(){
         return {
             counties_array: counties_data,
-            counties_selected: '',
-            isCountiesError: false,
-            errorColor: 'text-danger custom-select',
-            selectStyle: this.getSelectClass()
-        }
-    },
-    watch:{
-        counties_selected(newValue){
-            if (newValue == NaN ){
-                this.isCountiesError = true
-            }else{
-                this.isCountiesError = false
-            }
+            counties_selected: ''
         }
     }
 }
