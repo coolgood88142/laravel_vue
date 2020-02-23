@@ -50,18 +50,6 @@ export default {
             }
 
             return newClass
-
-            // for(let i = 0; i < classData.length; i++){
-            //     if(classData[i].type === type){
-            //         if (isError) {
-            //             Class += classData[i].error
-            //         }else{
-            //             Class += classData[i].hide
-            //         }
-            //         break
-            //     }
-            // }
-
         },
         isValueNullOrEmpty: function(value){
             let isError = false
@@ -75,16 +63,16 @@ export default {
             return isError
         },
         getInputClass: function () {
-            return defaultClass.input
+            return elementClass.input
         },
         getTextClass: function () {
             return defaultClass.text
         },
         getSelectClass: function () {
-            return defaultClass.select
+            return elementClass.select
         },
         getCheckLabelClass: function () {
-            return defaultClass.checklabel
+            return elementClass.checklabel
         }
     }
 }

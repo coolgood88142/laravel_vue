@@ -40,7 +40,9 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox :input_class="nameInputClass" :small_class="nameSmallClass" v-on:input-value="updateNameValue"></name_textbox>
+                                <!--ref-->
+                                <name_textbox :input_class="nameEl.nameInputClass" :small_class="nameEl.nameSmallClass" v-on:input-value="updateNameValue"></name_textbox>
+                                <name_textbox :input_class="nameEl.nameInputClass" :small_class="nameEl.nameSmallClass" v-on:input-value="updateNameValue"></name_textbox>
                                 <birthday_select :select_class="birthdaySelectClass" :small_class="birthdaySmallClass" :incomplete="birthdayIcomplete" v-on:select-value="updateBirthdayValue"></birthday_select>
                                 <address_select :input_class="addressInputClass" :select_class="addressSelectClass" :small_class="addressSmallClass" :incomplete="addressIcomplete" v-on:select-value="updateAddressValue"></address_select>
                                 <gender_radio :check_label_class="genderCheckLabelClass" :small_class="genderSmallClass" v-on:check-label-value="updateGenderValue"></gender_radio>
