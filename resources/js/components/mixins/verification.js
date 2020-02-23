@@ -59,16 +59,16 @@ export default {
             return isError
         },
         getInputClass: function () {
-            return defaultClass.input
+            return elementClass.input
         },
         getTextClass: function () {
             return defaultClass.text
         },
         getSelectClass: function () {
-            return defaultClass.select
+            return elementClass.select
         },
         getCheckLabelClass: function () {
-            return defaultClass.checklabel
+            return elementClass.checklabel
         }
     }
 }

@@ -11,6 +11,8 @@ import email from './components/email.vue';
 import interest from './components/interest.vue';
 import verification from './components/mixins/verification.js';
 
+
+
 let app = new Vue({
     el: '#app',
     mixins: [verification],
@@ -81,7 +83,6 @@ let app = new Vue({
             this.interestCheckLabelClass = this.setElementClass(interestError, "checklabel", false)
             this.interestSmallClass = this.setElementClass(interestError, "text", false)
 
-            
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){
                 alert('送出成功!')
             }
