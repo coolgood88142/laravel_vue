@@ -48,29 +48,13 @@ export default {
                     break
                 }
             }
-
             return newClass
-
-            // for(let i = 0; i < classData.length; i++){
-            //     if(classData[i].type === type){
-            //         if (isError) {
-            //             Class += classData[i].error
-            //         }else{
-            //             Class += classData[i].hide
-            //         }
-            //         break
-            //     }
-            // }
-
         },
         isValueNullOrEmpty: function(value){
             let isError = false
-            for(let i = 0; i < value.length; i++){
-                if (value == '' || value == null) {
-                    isError = true
-                    break
-                }
-            }
+            if (value == '' || value == null) {
+                isError = true
+             }
 
             return isError
         },

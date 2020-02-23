@@ -9,41 +9,37 @@ import birthday from './components/birthday.vue';
 import gender from './components/gender.vue';
 import email from './components/email.vue';
 import interest from './components/interest.vue';
-import classdata from './components/mixins/class.js';
+import verification from './components/mixins/verification.js';
 
 let app = new Vue({
     el: '#app',
-    mixins: [classdata],
+    mixins: [verification],
     data: {
         title: '填寫個人資料',
         btnStyle: 'btn btn-primary',
         btnText: '送出',
-        nameValue:'',
-        nameInputClass: classdata.methods.getInputClass(),
-        nameSmallClass: classdata.methods.getTextClass(),
-        yearValue:'',
-        monthValue: '',
-        dayValue: '',
+        nameInputClass: '',
+        nameSmallClass: '',
         birthdayIcomplete: false,
-        birthdaySelectClass: classdata.methods.getSelectClass(),
-        birthdaySmallClass: classdata.methods.getTextClass(),
+        birthdaySelectClass: '',
+        birthdaySmallClass: '',
         addressValue:'',
         countiesValue:'',
         districtsValue:'',
         addressIcomplete: false,
-        addressSelectClass: classdata.methods.getSelectClass(),
-        addressInputClass: classdata.methods.getInputClass(),
-        addressSmallClass: classdata.methods.getTextClass(),
+        addressSelectClass: '',
+        addressInputClass: '',
+        addressSmallClass: '',
         genderValue:'',
-        genderCheckLabelClass: classdata.methods.getCheckLabelClass(),
-        genderSmallClass: classdata.methods.getTextClass(),
+        genderCheckLabelClass: '',
+        genderSmallClass: '',
         emailValue: '',
         emailFormat:false,
-        emailInputClass: classdata.methods.getInputClass(),
-        emailSmallClass: classdata.methods.getTextClass(),
+        emailInputClass: verification.methods.getInputClass(),
+        emailSmallClass: verification.methods.getTextClass(),
         interestValue:'',
-        interestCheckLabelClass: classdata.methods.getCheckLabelClass(),
-        interestSmallClass: classdata.methods.getTextClass(),
+        interestCheckLabelClass: verification.methods.getCheckLabelClass(),
+        interestSmallClass: verification.methods.getTextClass(),
     },
     components: {
         'name_textbox' : name,
@@ -54,61 +50,36 @@ let app = new Vue({
         'interest_checkbox': interest
     },
     methods: {
-        updateNameValue: function(newVal){
-            this.nameValue = newVal
-        },
-        updateBirthdayValue: function (newVal) {
-            this.yearValue = newVal.years
-            this.monthValue = newVal.months
-            this.dayValue = newVal.days
-        },
-        updateAddressValue: function (newVal) {
-            this.countiesValue = newVal.counties
-            this.districtsValue = newVal.districts
-            this.addressValue = newVal.address
-        },
-        updateGenderValue: function(newVal) {
-            this.genderValue = newVal
-        },
-        updateEmailValue: function (newVal) {
-            this.emailValue = newVal
-        },
-        updateInterestValue: function (newVal) {
-            this.interestValue = newVal
-        },
         send: function () {
             //使用全部的component的function要回傳布林值，在function做完資料判斷後，宣告變數為布林值，就可以在component直接變更class
             //回傳的布林值做是否要顯示"送出成功!"文字
-            let nameError = name.methods.getNameIsError(this.nameValue)
-            this.nameInputClass = classdata.methods.setElementClass(nameError, "input", false)
-            this.nameSmallClass = classdata.methods.setElementClass(nameError, "text", false)
+            let nameError = this.$refs.nameRef.isError
+            this.nameInputClass = this.setElementClass(nameError, "input", false)
+            this.nameSmallClass = this.setElementClass(nameError, "text", false)
 
-            let birthdayErrorData = birthday.methods.getBirthdayIsError(this.yearValue, this.monthValue, this.dayValue)
-            let birthdayError = birthdayErrorData.isError
-            this.birthdayIcomplete = birthdayErrorData.isRemind
-            this.birthdaySelectClass = classdata.methods.setElementClass(birthdayError, "select", this.birthdayIcomplete)
-            this.birthdaySmallClass = classdata.methods.setElementClass(birthdayError, "text", this.birthdayIcomplete)
+            let birthdayError = this.$refs.birthdayRef.isError
+            this.birthdayIcomplete = this.$refs.birthdayRef.isRemind
+            this.birthdaySelectClass = this.setElementClass(birthdayError, "select", this.birthdayIcomplete)
+            this.birthdaySmallClass = this.setElementClass(birthdayError, "text", this.birthdayIcomplete)
 
-            let addressErrorData = address.methods.getAddressIsError(this.countiesValue, this.districtsValue, this.addressValue)
-            let addressError = addressErrorData.isError
-            this.addressIcomplete = addressErrorData.isRemind
-            this.addressSelectClass = classdata.methods.setElementClass(addressError, "select", this.addressIcomplete)
-            this.addressInputClass = classdata.methods.setElementClass(addressError, "input", this.addressIcomplete)
-            this.addressSmallClass = classdata.methods.setElementClass(addressError, "text", this.addressIcomplete)
+            let addressError = this.$refs.addressRef.isError
+            this.addressIcomplete = this.$refs.addressRef.isRemind
+            this.addressSelectClass = this.setElementClass(addressError, "select", this.addressIcomplete)
+            this.addressInputClass = this.setElementClass(addressError, "input", this.addressIcomplete)
+            this.addressSmallClass = this.setElementClass(addressError, "text", this.addressIcomplete)
 
-            let genderError = gender.methods.getGenderIsError(this.genderValue)
-            this.genderCheckLabelClass = classdata.methods.setElementClass(genderError, "checklabel", false)
-            this.genderSmallClass = classdata.methods.setElementClass(genderError, "text", false)
+            let genderError = this.$refs.genderRef.isError
+            this.genderCheckLabelClass = this.setElementClass(genderError, "checklabel", false)
+            this.genderSmallClass = this.setElementClass(genderError, "text", false)
 
-            let emailErrorData = email.methods.getEmailIsError(this.emailValue)
-            let emailError = emailErrorData.isError
-            this.emailFormat = emailErrorData.isFormat
-            this.emailInputClass = classdata.methods.setElementClass(emailError, "input", false)
-            this.emailSmallClass = classdata.methods.setElementClass(emailError, "text", this.emailFormat)
+            let emailError = this.$refs.emailRef.isError
+            this.emailFormat = this.$refs.emailRef.isFormat
+            this.emailInputClass = this.setElementClass(emailError, "input", false)
+            this.emailSmallClass = this.setElementClass(emailError, "text", this.emailFormat)
 
-            let interestError = interest.methods.getInterestIsError(this.interestValue)
-            this.interestCheckLabelClass = classdata.methods.setElementClass(interestError, "checklabel", false)
-            this.interestSmallClass = classdata.methods.setElementClass(interestError, "text", false)
+            let interestError = this.$refs.interestRef.isError
+            this.interestCheckLabelClass = this.setElementClass(interestError, "checklabel", false)
+            this.interestSmallClass = this.setElementClass(interestError, "text", false)
 
             
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){

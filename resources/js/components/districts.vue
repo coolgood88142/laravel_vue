@@ -156,8 +156,6 @@ let districts = [
     ]
 ];
 
-import classdata from './mixins/class.js';
-
 export default {
     props: {
         counties_selected:{
@@ -167,7 +165,6 @@ export default {
             type:String
         }
     },
-    mixins: [classdata],
     computed: {
         districts_array(){
             if (this.counties_selected != NaN ){

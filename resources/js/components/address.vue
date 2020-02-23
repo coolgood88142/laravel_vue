@@ -3,22 +3,22 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
-            <counties_select v-on:change-counties="updateDistricts" :select_class="select_class"></counties_select>
+            <counties_select v-on:change-counties="updateDistricts" :select_class="selectClass"></counties_select>
         </div>
         <div class="form-check form-check-inline">
-            <districts_select v-on:change-districts="getDistrictsSelected" :select_class="select_class" :counties_selected="countiesSelected"></districts_select>
+            <districts_select v-on:change-districts="getDistrictsSelected" :select_class="selectClass" :counties_selected="countiesSelected"></districts_select>
         </div>
         <div class="form-check form-check-inline">
-            <input type="email" :class="input_class" id="us_address" v-model="addressValue" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="email" :class="inputClass" id="us_address" v-model="addressValue" placeholder="請選擇縣市與鄉鎮市區">
         </div>
-        <small id="warning" :class="small_class">{{ incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="smallClass">{{ incomplete ? remindText : warningText }}</small>
     </div>
 </template>
 
 <script>
 import counties from './counties.vue';
 import districts from './districts.vue';
-import classdata from './mixins/class.js';
+import verification from './mixins/verification.js';
 
 export default {
     props: {
@@ -35,26 +35,19 @@ export default {
             type:Boolean
         }
     },
-    mixins: [classdata],
+    mixins: [verification],
     data:function(){
         return {
             addressText: '地址',
             countiesSelected: NaN,
             districtsSelected: '',
             addressValue:'',
-            selectValue:{
-                counties: this.countiesSelected,
-                districts: this.districtsSelected,
-                address:this.addressValue
-            },
-            address_incomplete: true,
             warningText: '地址必填',
             remindText:'地址填寫不完整',
-            selectClass: 'custom-select',
-            errorColor: this.getInputClass(),
-            borderColor: this.getInputClass(),
-            errorTextStyle: this.getTextClass(),
-            remindTextStyle: this.getTextClass(),
+            isError: true,
+            isRemind: false,
+            selectClass: this.getSelectClass(),
+            inputClass: this.getInputClass(),
             smallClass: this.getTextClass()
         }
     },
@@ -70,21 +63,18 @@ export default {
             this.countiesSelected = CountiesSelected;
         },
         getAddressIsError:function(counties, districts, address){
-            let errorData = {}
             if (counties != '' && districts != '' && address != ''){
-                errorData.isError = false
-                errorData.isRemind = false
+                this.isError = false
+                this.isRemind = false
             }else{
                 if (counties == '' && districts == '' && address == ''){
-                    errorData.isError= true
-                    errorData.isRemind = false
+                    this.isError= true
+                    this.isRemind = false
                 }else{
-                    errorData.isError= false
-                    errorData.isRemind = true
+                    this.isError= false
+                    this.isRemind = true
                 }
             }
-
-            return errorData
         }
 
         // let counties = document.getElementById("counties");
@@ -107,31 +97,22 @@ export default {
     },
     watch:{
         countiesSelected(newVal){
-            this.selectValue = {
-                counties: newVal,
-                districts: this.districtsSelected,
-                address: this.addressValue
-            }
-
-            this.$emit('select-value', this.selectValue)
+            this.getAddressIsError(newVal, this.districtsSelected, this.addressValue)
         },
         districtsSelected(newVal){
-            this.selectValue = {
-                counties: this.countiesSelected,
-                districts: newVal,
-                address: this.addressValue
-            }
-
-            this.$emit('select-value', this.selectValue)
+            this.getAddressIsError(this.countiesSelected, newVal, this.addressValue)
         },
         addressValue(newVal){
-            this.selectValue = {
-                counties: this.countiesSelected,
-                districts: this.districtsSelected,
-                address: newVal
-            }
-
-            this.$emit('select-value', this.selectValue);
+            this.getAddressIsError(this.countiesSelected, this.districtsSelected, newVal)
+        },
+        select_class(newVal){
+            this.selectClass = newVal
+        },
+        input_class(newVal){
+            this.inputClass = newVal
+        },
+        small_class(newVal){
+            this.smallClass = newVal
         }
     }
 }

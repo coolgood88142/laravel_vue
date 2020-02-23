@@ -31,15 +31,12 @@ let counties_data =  [
     { text: '連江縣', value: 21 }
 ];
 
-import classdata from './mixins/class.js';
-
 export default {
     props: {
         select_class: {
             type:String
         }
     },
-    mixins: [classdata],
     data:function(){
         return {
             counties_array: counties_data,

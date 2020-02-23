@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import classdata from './mixins/class.js';
+import verification from './mixins/verification.js';
 
 export default {
     props: {
@@ -21,37 +21,45 @@ export default {
             type:Boolean
         }
     },
-    mixins: [classdata],
+    mixins: [verification],
     data:function(){
         return {
             emailText: 'email',
             emailValue: '',
             warningText: 'email必填',
-            remindText:'email格式錯誤'
+            remindText:'email格式錯誤',
+            isError: true,
+            isFormat: false,
+            inputClass: this.getInputClass(),
+            smallClass: this.getTextClass()
         }
     },
     methods:{
         getEmailIsError:function(value){
-            let errorData = {}
-            if(classdata.methods.isValueNullOrEmpty([value])){
-                errorData.isError = true
-                errorData.isFormat = false
+            if(this.isValueNullOrEmpty(value)){
+                this.isError = true
+                this.isFormat = false
             }else{
                 let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
                 if (!isMail.test(value)) {
-                    errorData.isError = true
-                    errorData.isFormat = true
+                    this.isError = true
+                    this.isFormat = true
                 }else{
-                    errorData.isError = false
-                    errorData.isFormat = false
+                    this.isError = false
+                    this.isFormat = false
                 }
             }
-            return errorData
         }
     },
     watch:{
         emailValue(newVal){
-            this.$emit('input-value', newVal);
+            this.getEmailIsError(newVal)
+        },
+        input_class(newVal){
+            this.inputClass = newVal
+        },
+        small_class(newVal){
+            this.smallClass = newVal
         }
     }
 

@@ -16,7 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/date.js', 'public/js')
     .js('resources/js/button.js', 'public/js')
     .js('resources/js/style.js', 'public/js')
-    .js('resources/js/components/mixins/class.js', 'public/js')
+    .js('resources/js/components/mixins/verification.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .version();
 

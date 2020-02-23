@@ -40,12 +40,12 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox :input_class="nameInputClass" :small_class="nameSmallClass" v-on:input-value="updateNameValue"></name_textbox>
-                                <birthday_select :select_class="birthdaySelectClass" :small_class="birthdaySmallClass" :incomplete="birthdayIcomplete" v-on:select-value="updateBirthdayValue"></birthday_select>
-                                <address_select :input_class="addressInputClass" :select_class="addressSelectClass" :small_class="addressSmallClass" :incomplete="addressIcomplete" v-on:select-value="updateAddressValue"></address_select>
-                                <gender_radio :check_label_class="genderCheckLabelClass" :small_class="genderSmallClass" v-on:check-label-value="updateGenderValue"></gender_radio>
-                                <email_textbox :input_class="emailInputClass" :small_class="emailSmallClass" :wrong_format="emailFormat" v-on:input-value="updateEmailValue"></email_textbox>
-                                <interest_checkbox :check_label_class="interestCheckLabelClass" :small_class="interestSmallClass" v-on:check-label-value="updateInterestValue"></interest_checkbox>
+                                <name_textbox ref="nameRef" :input_class="nameInputClass" :small_class="nameSmallClass"></name_textbox>
+                                <birthday_select ref="birthdayRef" :select_class="birthdaySelectClass" :small_class="birthdaySmallClass" :incomplete="birthdayIcomplete"></birthday_select>
+                                <address_select ref="addressRef" :input_class="addressInputClass" :select_class="addressSelectClass" :small_class="addressSmallClass" :incomplete="addressIcomplete"></address_select>
+                                <gender_radio ref="genderRef" :check_label_class="genderCheckLabelClass" :small_class="genderSmallClass"></gender_radio>
+                                <email_textbox ref="emailRef" :input_class="emailInputClass" :small_class="emailSmallClass" :wrong_format="emailFormat"></email_textbox>
+                                <interest_checkbox ref="interestRef" :check_label_class="interestCheckLabelClass" :small_class="interestSmallClass"></interest_checkbox>
                                 <div class="form-group">
                                     <input type="button" :class="btnStyle" :value="btnText" v-on:click="send()">
                                 </div>

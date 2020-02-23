@@ -3,14 +3,14 @@
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
         <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
             <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value" v-model="interestChecked">
-            <label :class="check_label_class" :for="interest.id">{{ interest.text }}</label>
+            <label :class="checkLabelClass" :for="interest.id">{{ interest.text }}</label>
         </div>
-        <small id="warning" :class="small_class">{{ warningText }}</small>
+        <small id="warning" :class="smallClass">{{ warningText }}</small>
     </div>
 </template>
 
 <script>
-import classdata from './mixins/class.js';
+import verification from './mixins/verification.js';
 
 export default {
     props: {
@@ -21,7 +21,7 @@ export default {
             type:String
         },
     },
-    mixins: [classdata],
+    mixins: [verification],
     data:function(){
         return {
             interestText: '興趣(複)',
@@ -31,17 +31,21 @@ export default {
                 { id:'interest1', text: '上網', value: 1 },
                 { id:'interest2', text: '其他', value: 2}
             ],
-            warningText: '興趣必填'
-        }
-    },
-    methods:{
-        getInterestIsError:function(value){
-            return classdata.methods.isValueNullOrEmpty([value])
+            warningText: '興趣必填',
+            isError: true,
+            checkLabelClass: this.getCheckLabelClass(),
+            smallClass: this.getTextClass()
         }
     },
     watch:{
         interestChecked(newVal){
-            this.$emit('check-label-value', newVal);
+            this.isError = this.isValueNullOrEmpty(newVal)
+        },
+        check_label_class(newVal){
+            this.checkLabelClass = newVal
+        },
+        small_class(newVal){
+            this.smallClass = newVal
         }
     }
 

@@ -2,27 +2,27 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="us_year" :class="select_class" v-on:change="clearOptions">
+            <select v-model="yearsSelected" id="us_year" :class="selectClass" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="months_selected" id="us_month" :class="select_class" v-on:change="onChange">
+            <select v-model="monthsSelected" id="us_month" :class="selectClass" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="days_selected" id="us_day" :class="select_class">
+             <select v-model="daysSelected" id="us_day" :class="selectClass">
                  <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
             <label class="form-check-label">日</label>
         </div>
-        <small id="warning" :class="small_class">{{ incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="smallClass">{{ incomplete ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -42,7 +42,7 @@ function DefaultDateData(begin, end) {
     return date_array;
 }
 
-import classdata from './mixins/class.js';
+import verification from './mixins/verification.js';
 
 export default {
     props: {
@@ -56,22 +56,22 @@ export default {
             type:Boolean
         }
     },
-    mixins: [classdata],
+    mixins: [verification],
     data:function(){
         return {
             years: DefaultDateData(begin_year, end_year),
             months: DefaultDateData(begin_month, end_month),
             days: '',
-            years_selected:'',
-            months_selected: '',
-            days_selected: '',
-            selectValue:{
-                years: this.years_selected,
-                months: this.months_selected,
-                days: this.days_selected,
-            },
+            yearsSelected:'',
+            monthsSelected: '',
+            daysSelected: '',
             warningText: '生日必填',
-            remindText:'生日填寫不完整'
+            remindText:'生日填寫不完整',
+            isError: true,
+            isRemind: false,
+            selectClass: this.getSelectClass(),
+            smallClass: this.getTextClass()
+
 
             // let us_year = document.getElementById("us_year");
             // let us_month = document.getElementById("us_month");
@@ -95,64 +95,49 @@ export default {
     },
     methods: {
         clearOptions: function () {
-            this.months_selected = ''
+            this.monthsSelected = ''
             this.days = ''
-            this.days_selected = ''
+            this.daysSelected = ''
         },
         onChange: function () {
-            this.days_selected = ''
-            if (this.years_selected  != ''){
-                let year = this.years[this.years_selected].value;
-                let month = this.months[this.months_selected].value;
+            this.daysSelected = ''
+            if (this.yearsSelected  != ''){
+                let year = this.years[this.yearsSelected].value;
+                let month = this.months[this.monthsSelected].value;
                 this.days = new Date(year, month, 0).getDate()
             }
         },
         getBirthdayIsError:function(year, month, day){
-            let errorData = {}
             if (year != '' && month != '' && day != ''){
-                errorData.isError = false
-                errorData.isRemind = false
+                this.isError = false
+                this.isRemind = false
             }else{
                 if (year == '' && month == '' && day == ''){
-                    errorData.isError= true
-                    errorData.isRemind = false
+                    this.isError= true
+                    this.isRemind = false
                 }else{
-                    errorData.isError= false
-                    errorData.isRemind = true
+                    this.isError= false
+                    this.isRemind = true
                 }
             }
-
-            return errorData
         }
     },
     watch:{
-        years_selected(newVal){
-            this.selectValue = {
-                years: newVal,
-                months: this.months_selected,
-                days: this.days_selected,
-            }
-
-            this.$emit('select-value', this.selectValue);
+        yearsSelected(newVal){
+            this.getBirthdayIsError(newVal, this.monthsSelected, this.daysSelected)
         },
-        months_selected(newVal){
-            this.selectValue = {
-                years: this.years_selected,
-                months: newVal,
-                days: this.days_selected,
-            }
-
-            this.$emit('select-value', this.selectValue);
+        monthsSelected(newVal){
+            this.getBirthdayIsError(this.yearsSelected, newVal, this.daysSelected)
         },
-        days_selected(newVal){
-            this.selectValue = {
-                years: this.years_selected,
-                months: this.months_selected,
-                days: newVal,
-            }
-
-            this.$emit('select-value', this.selectValue);
+        daysSelected(newVal){
+            this.getBirthdayIsError(this.yearsSelected, this.monthsSelected, newVal)
         },
+        select_class(newVal){
+            this.selectClass = newVal
+        },
+        small_class(newVal){
+            this.smallClass = newVal
+        }
     }
 }
 </script>
