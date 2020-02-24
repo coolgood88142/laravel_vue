@@ -41,8 +41,8 @@
                                     </div>
                                 </div>
                                 <name_textbox ref="nameRef" :input_class="nameInputClass" :small_class="nameSmallClass"></name_textbox>
-                                <birthday_select ref="birthdayRef" :select_class="birthdaySelectClass" :small_class="birthdaySmallClass" :incomplete="birthdayIcomplete"></birthday_select>
-                                <address_select ref="addressRef" :input_class="addressInputClass" :select_class="addressSelectClass" :small_class="addressSmallClass" :incomplete="addressIcomplete"></address_select>
+                                <birthday_select ref="birthdayRef" :year_select_class="birthdayYearSelectClass" :month_select_class="birthdayMonthSelectClass" :day_select_class="birthdayDaySelectClass" :small_class="birthdaySmallClass" :incomplete="birthdayIcomplete"></birthday_select>
+                                <address_select ref="addressRef" :counties_select_class="addressCountiesSelectClass" :districts_select_class="addressDistrictsSelectClass" :input_class="addressInputClass" :small_class="addressSmallClass" :incomplete="addressIcomplete"></address_select>
                                 <gender_radio ref="genderRef" :check_label_class="genderCheckLabelClass" :small_class="genderSmallClass"></gender_radio>
                                 <email_textbox ref="emailRef" :input_class="emailInputClass" :small_class="emailSmallClass" :wrong_format="emailFormat"></email_textbox>
                                 <interest_checkbox ref="interestRef" :check_label_class="interestCheckLabelClass" :small_class="interestSmallClass"></interest_checkbox>

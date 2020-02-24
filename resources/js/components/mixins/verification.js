@@ -35,8 +35,6 @@ export default {
                         newClass = elementClass[el]
                         if(el === "text"){
                             newClass += (isRemind ? changeClass.textRemind : changeClass.hide)
-                        }else if (isRemind) {
-                            newClass = defaultClass[el]
                         }
                     }else{
                         if (el === "text"){

@@ -2,21 +2,21 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="yearsSelected" id="us_year" :class="selectClass" v-on:change="clearOptions">
+            <select v-model="yearsSelected" id="us_year" :class="yearSelectClass" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="monthsSelected" id="us_month" :class="selectClass" v-on:change="onChange">
+            <select v-model="monthsSelected" id="us_month" :class="monthSelectClass" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="daysSelected" id="us_day" :class="selectClass">
+             <select v-model="daysSelected" id="us_day" :class="daySelectClass">
                  <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
@@ -46,7 +46,13 @@ import verification from './mixins/verification.js';
 
 export default {
     props: {
-        select_class: {
+        year_select_class: {
+            type:String
+        },
+        month_select_class: {
+            type:String
+        },
+        day_select_class: {
             type:String
         },
         small_class: {
@@ -67,9 +73,13 @@ export default {
             daysSelected: '',
             warningText: '生日必填',
             remindText:'生日填寫不完整',
-            isError: true,
+            isYearError: true,
+            isMonthError: true,
+            isDayError: true,
             isRemind: false,
-            selectClass: this.getSelectClass(),
+            yearSelectClass: this.getSelectClass(),
+            monthSelectClass: this.getSelectClass(),
+            daySelectClass: this.getSelectClass(),
             smallClass: this.getTextClass()
 
 
@@ -109,14 +119,11 @@ export default {
         },
         getBirthdayIsError:function(year, month, day){
             if (year != '' && month != '' && day != ''){
-                this.isError = false
                 this.isRemind = false
             }else{
                 if (year == '' && month == '' && day == ''){
-                    this.isError= true
                     this.isRemind = false
                 }else{
-                    this.isError= false
                     this.isRemind = true
                 }
             }
@@ -124,16 +131,25 @@ export default {
     },
     watch:{
         yearsSelected(newVal){
+            this.isYearError = this.isValueNullOrEmpty(newVal)
             this.getBirthdayIsError(newVal, this.monthsSelected, this.daysSelected)
         },
         monthsSelected(newVal){
+            this.isMonthError = this.isValueNullOrEmpty(newVal)
             this.getBirthdayIsError(this.yearsSelected, newVal, this.daysSelected)
         },
         daysSelected(newVal){
+            this.isDayError = this.isValueNullOrEmpty(newVal)
             this.getBirthdayIsError(this.yearsSelected, this.monthsSelected, newVal)
         },
-        select_class(newVal){
-            this.selectClass = newVal
+        year_select_class(newVal){
+            this.yearSelectClass = newVal
+        },
+        month_select_class(newVal){
+            this.monthSelectClass = newVal
+        },
+        day_select_class(newVal){
+            this.daySelectClass = newVal
         },
         small_class(newVal){
             this.smallClass = newVal

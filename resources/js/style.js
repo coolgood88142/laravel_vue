@@ -23,23 +23,20 @@ let app = new Vue({
         nameInputClass: '',
         nameSmallClass: '',
         birthdayIcomplete: false,
-        birthdaySelectClass: '',
+        birthdayYearSelectClass: '',
+        birthdayMonthSelectClass: '',
+        birthdayDaySelectClass: '',
         birthdaySmallClass: '',
-        addressValue:'',
-        countiesValue:'',
-        districtsValue:'',
         addressIcomplete: false,
-        addressSelectClass: '',
+        addressCountiesSelectClass: '',
+        addressDistrictsSelectClass: '',
         addressInputClass: '',
         addressSmallClass: '',
-        genderValue:'',
         genderCheckLabelClass: '',
         genderSmallClass: '',
-        emailValue: '',
         emailFormat:false,
         emailInputClass: verification.methods.getInputClass(),
         emailSmallClass: verification.methods.getTextClass(),
-        interestValue:'',
         interestCheckLabelClass: verification.methods.getCheckLabelClass(),
         interestSmallClass: verification.methods.getTextClass(),
     },
@@ -59,15 +56,24 @@ let app = new Vue({
             this.nameInputClass = this.setElementClass(nameError, "input", false)
             this.nameSmallClass = this.setElementClass(nameError, "text", false)
 
-            let birthdayError = this.$refs.birthdayRef.isError
+            let birthdayYearError = this.$refs.birthdayRef.isYearError
+            let birthdayMonthError = this.$refs.birthdayRef.isMonthError
+            let birthdayDayError = this.$refs.birthdayRef.isDayError
+            let birthdayError = (birthdayYearError && birthdayMonthError && birthdayDayError) ? true : false
             this.birthdayIcomplete = this.$refs.birthdayRef.isRemind
-            this.birthdaySelectClass = this.setElementClass(birthdayError, "select", this.birthdayIcomplete)
+            this.birthdayYearSelectClass = this.setElementClass(birthdayYearError, "select", this.birthdayIcomplete)
+            this.birthdayMonthSelectClass = this.setElementClass(birthdayMonthError, "select", this.birthdayIcomplete)
+            this.birthdayDaySelectClass = this.setElementClass(birthdayDayError, "select", this.birthdayIcomplete)
             this.birthdaySmallClass = this.setElementClass(birthdayError, "text", this.birthdayIcomplete)
 
-            let addressError = this.$refs.addressRef.isError
+            let addressCountiesError = this.$refs.addressRef.isCountiesError
+            let addressDistrictsError = this.$refs.addressRef.isDistrictsError
+            let addressInputError = this.$refs.addressRef.isInputError
+            let addressError = (addressCountiesError && addressDistrictsError && addressInputError) ? true : false
             this.addressIcomplete = this.$refs.addressRef.isRemind
-            this.addressSelectClass = this.setElementClass(addressError, "select", this.addressIcomplete)
-            this.addressInputClass = this.setElementClass(addressError, "input", this.addressIcomplete)
+            this.addressCountiesSelectClass = this.setElementClass(addressCountiesError, "select", this.addressIcomplete)
+            this.addressDistrictsSelectClass = this.setElementClass(addressDistrictsError, "select", this.addressIcomplete)
+            this.addressInputClass = this.setElementClass(addressInputError, "input", this.addressIcomplete)
             this.addressSmallClass = this.setElementClass(addressError, "text", this.addressIcomplete)
 
             let genderError = this.$refs.genderRef.isError
