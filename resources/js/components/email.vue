@@ -1,8 +1,8 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
-        <input type="email" :class="input_class" id="us_email" v-model="emailValue">
-        <small id="warning" :class="small_class">{{ wrong_format ? remindText : warningText }}</small>
+        <input type="email" :class="inputClass" id="us_email" name="us_email" v-model="emailValue">
+        <small id="warning" :class="smallClass">{{ wrong_format ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -62,23 +62,5 @@ export default {
             this.smallClass = newVal
         }
     }
-
-
-    // let us_email = document.getElementById("us_email");
-    //         let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-
-    //         if (us_email.value == '') {
-    //             this.emailStyle.Error = true
-    //             this.emailStyle.Warning = true
-    //         } else {
-    //             if (!isMail.test(us_email.value)) {
-    //                 this.emailStyle.Error = true
-    //                 this.emailStyle.Format = true
-    //             } else {
-    //                 this.emailStyle.Error = false
-    //                 this.emailStyle.Format = false
-    //                 this.emailStyle.Warning = false
-    //             }
-    //         }
 }
 </script>

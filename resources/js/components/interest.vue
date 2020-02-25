@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
         <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
-            <input class="form-check-input" type="checkbox" :id="interest.id" :value="interest.value" v-model="interestChecked">
+            <input class="form-check-input" type="checkbox" name="us_interest" :id="interest.id" :value="interest.value" v-model="interestChecked">
             <label :class="checkLabelClass" :for="interest.id">{{ interest.text }}</label>
         </div>
         <small id="warning" :class="smallClass">{{ warningText }}</small>
@@ -48,17 +48,5 @@ export default {
             this.smallClass = newVal
         }
     }
-
-    // let interest0 = document.getElementById("interest0");
-    //         let interest1 = document.getElementById("interest1");
-    //         let interest2 = document.getElementById("interest2");
-
-    //         if (interest0.checked != true && interest1.checked != true && interest2.checked != true){
-    //             this.interestStyle.Error = true
-    //             this.interestStyle.Warning = true
-    //         }else{
-    //             this.interestStyle.Error = false
-    //             this.interestStyle.Warning = false
-    //         }
 }
 </script>

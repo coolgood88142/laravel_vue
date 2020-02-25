@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ genderText }}</h3>
         <div class="form-check form-check-inline" v-for="(gender, index) in gender_array" :key="index">
-            <input class="form-check-input" type="radio" name="gender" v-model="genderChecked" :id="gender.id" :value="gender.value">
+            <input class="form-check-input" type="radio" name="us_gender" v-model="genderChecked" :id="gender.id" :value="gender.value">
             <label :class="checkLabelClass" :for="gender.id">{{ gender.text }}</label>
         </div>
         <small id="warning" :class="smallClass">{{ warningText }}</small>

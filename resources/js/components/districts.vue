@@ -1,5 +1,5 @@
 <template>
-    <select v-model="districts_selected" id="districts" :class="select_class" @change="$emit('change-districts', districts_selected)">
+    <select v-model="districts_selected" id="us_districts" name="us_districts" :class="select_class" @change="$emit('change-districts', districts_selected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(districts, index) in districts_array" :key="index" :value="districts.value">{{ districts.text }}</option>
     </select>
@@ -169,7 +169,7 @@ export default {
         districts_array(){
             if (this.counties_selected != NaN ){
                 this.districts_selected = '';
-                return districts[this.counties_selected];
+                return districts[(this.counties_selected) - 1];
             }
         }
     },

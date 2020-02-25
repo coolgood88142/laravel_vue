@@ -4,14 +4,14 @@
         <div class="form-check form-check-inline">
             <select v-model="yearsSelected" id="us_year" :class="yearSelectClass" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
+                <option v-for="(year, index) in years" :key="index" :value="(index+1)">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
             <select v-model="monthsSelected" id="us_month" :class="monthSelectClass" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
+                <option v-for="(month, index) in months" :key="index" :value="(index+1)">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
@@ -81,26 +81,6 @@ export default {
             monthSelectClass: this.getSelectClass(),
             daySelectClass: this.getSelectClass(),
             smallClass: this.getTextClass()
-
-
-            // let us_year = document.getElementById("us_year");
-            // let us_month = document.getElementById("us_month");
-            // let us_day = document.getElementById("us_day");
-            // let year_val = us_year.options[us_year.selectedIndex].value;
-            // let month_val = us_month.options[us_month.selectedIndex].value;
-            // let day_val = us_day.options[us_day.selectedIndex].value;
-            
-            // if (year_val != '*' && month_val != '*' && day_val != '*'){
-            //     this.birthdayStyle.Error = false
-            //     this.birthdayStyle.Incomplete = true
-            // }else{
-            //     this.birthdayStyle.Error = true
-            //     if (year_val == '*' && month_val == '*' && day_val == '*'){
-            //         this.birthdayStyle.Incomplete = false
-            //     }else{
-            //         this.birthdayStyle.Incomplete = true
-            //     }
-            // }
         }
     },
     methods: {
