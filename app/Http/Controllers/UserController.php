@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -18,20 +19,21 @@ class UserController extends Controller
 
     public function addData(Request $request)
     {
-        $us_name = $request->input('us_name');
-        $us_year = $request->input('us_year');
-        $us_month = $request->input('us_month');
-        $us_day = $request->input('us_day');
+        $us_name = $request->us_name;
+        $us_year = ((int)($request->us_year) + 1900);
+        $us_month = $request->us_month;
+        $us_day = $request->us_day;
         $us_birthday = $us_year . '-' . $us_month . '-' . $us_day;
-        
-        $us_counties = $request->input('us_counties');
-        $us_districts = $request->input('us_districts');
-        $us_road = $request->input('us_road');
+        dd($us_birthday);
+
+        $us_counties = $request->us_counties;
+        $us_districts = $request->us_districts;
+        $us_road = $request->us_road;
         $us_address = $us_counties . $us_districts . $us_road;
 
-        $us_gender = $request->input('us_gender');
-        $us_email = $request->input('us_email');
-        $us_interest = $request->input('us_interest');
+        $us_gender = $request->us_gender;
+        $us_email = $request->us_email;
+        $us_interest = $request->us_interest;
         $datetime = Carbon::now();
 
         $users = DB::table('user')->insert(

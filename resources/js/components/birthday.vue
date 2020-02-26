@@ -2,21 +2,21 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="yearsSelected" id="us_year" :class="yearSelectClass" v-on:change="clearOptions">
+            <select v-model="yearsSelected" id="us_year" name="us_year" :class="yearSelectClass" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(year, index) in years" :key="index" :value="(index+1)">{{ year.value }}</option>
+                <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="monthsSelected" id="us_month" :class="monthSelectClass" v-on:change="onChange">
+            <select v-model="monthsSelected" id="us_month" name="us_month" :class="monthSelectClass" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(month, index) in months" :key="index" :value="(index+1)">{{ month.value }}</option>
+                <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="daysSelected" id="us_day" :class="daySelectClass">
+             <select v-model="daysSelected" id="us_day" name="us_day" :class="daySelectClass">
                  <option value="" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
