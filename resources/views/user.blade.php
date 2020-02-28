@@ -6,7 +6,7 @@
 
 <body>
     <div class="container">
-        <div class="content">
+        <div id="app" class="content">
             <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">使用者資料</h2>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
@@ -23,7 +23,7 @@
                         <td>{{ $user->us_id }}</td>
                         <td>{{ $user->us_name }}</td>
                         <td>{{ $user->us_email }}</td>
-                        <td>{{ $user->us_status }}</td>
+                        <td>{{ ($user->us_status == 1 ? '正常' : '停用')  }}</td>
                     </tr>
                     @endforeach
                 </tbody>

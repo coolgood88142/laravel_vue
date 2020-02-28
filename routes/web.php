@@ -35,6 +35,8 @@ Route::get('/form', function () {
     return view('form');
 });
 
+Route::resource('user','UserController@show');
+
 Route::get('/user', 'UserController@show');
 
 Route::post('/form', 'UserController@addData')->name('add');

@@ -22,9 +22,10 @@ class UserController extends Controller
         $us_name = $request->us_name;
         $us_year = ((int)($request->us_year) + 1900);
         $us_month = $request->us_month;
+        $us_month= $us_month < 10 ? '0' . $us_month : $us_month;
         $us_day = $request->us_day;
+        $us_day= $us_month < 10 ? '0' . $us_day : $us_day;
         $us_birthday = $us_year . '-' . $us_month . '-' . $us_day;
-        dd($us_birthday);
 
         $us_counties = $request->us_counties;
         $us_districts = $request->us_districts;
@@ -38,7 +39,7 @@ class UserController extends Controller
 
         $users = DB::table('user')->insert(
             ['us_account' => '', 'us_password' => '', 'us_name' => $us_name, 'us_birthday' => $us_birthday,
-            'us_address' => $us_address, 'us_gender' => $us_gender, 'us_email' => $us_email, 'us_interest' => $us_interest, 
+            'us_address' => '', 'us_gender' => $us_gender, 'us_email' => $us_email, 'us_interest' => $us_interest, 
             'us_admin' => 'N', 'us_status' => 1, 'us_last_login' => $datetime, 'us_headshot_path' => '']
         );
         
