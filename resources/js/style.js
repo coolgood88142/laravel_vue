@@ -9,6 +9,7 @@ import birthday from './components/birthday.vue';
 import gender from './components/gender.vue';
 import email from './components/email.vue';
 import interest from './components/interest.vue';
+import usertable from './components/usertable.vue'
 import verification from './components/mixins/verification.js';
 
 
@@ -58,7 +59,8 @@ let app = new Vue({
         'birthday_select': birthday,
         'gender_radio': gender,
         'email_textbox': email,
-        'interest_checkbox': interest
+        'interest_checkbox': interest,
+        'usertable_table': usertable
     },
     methods: {
         send: function () {

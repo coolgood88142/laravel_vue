@@ -10,11 +10,39 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
-    public function show()
-    {
-        $users = DB::table('user')->get();
+    public function select(){
+        $users = DB::table('user')->paginate(5);
+        $response = [
+            'pagination' => [
+                'total' => $users->total(),
+                'per_page' => $users->perPage(),
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'from' => $users->firstItem(),
+                'to' => $users->lastItem()
+            ],
+            'data' => $users
+        ];
 
-        return view('user', ['users' => $users]);
+        return $response['data'];
+    }
+
+    public function index()
+    {
+        $users = DB::table('user')->paginate(5);
+        $response = [
+            'pagination' => [
+                'total' => $users->total(),
+                'per_page' => $users->perPage(),
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'from' => $users->firstItem(),
+                'to' => $users->lastItem()
+            ],
+            'data' => $users
+        ];
+
+        return response()->json($response);
     }
 
     public function addData(Request $request)
