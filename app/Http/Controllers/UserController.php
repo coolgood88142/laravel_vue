@@ -65,10 +65,10 @@ class UserController extends Controller
         $us_interest = $request->us_interest;
         $datetime = Carbon::now();
 
-        $users = DB::table('user')->insert(
-            ['us_account' => '', 'us_password' => '', 'us_name' => $us_name, 'us_birthday' => $us_birthday,
-            'us_address' => '', 'us_gender' => $us_gender, 'us_email' => $us_email, 'us_interest' => $us_interest, 
-            'us_admin' => 'N', 'us_status' => 1, 'us_last_login' => $datetime, 'us_headshot_path' => '']
+        $users = DB::table('vueUser')->insert(
+            ['us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
+             'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender, 
+             'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1]
         );
         
         return redirect('user');

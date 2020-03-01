@@ -22,7 +22,7 @@
             </select>
             <label class="form-check-label">日</label>
         </div>
-        <small id="warning" :class="smallClass">{{ incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -45,23 +45,6 @@ function DefaultDateData(begin, end) {
 import verification from './mixins/verification.js';
 
 export default {
-    props: {
-        year_select_class: {
-            type:String
-        },
-        month_select_class: {
-            type:String
-        },
-        day_select_class: {
-            type:String
-        },
-        small_class: {
-            type:String
-        },
-        incomplete: {
-            type:Boolean
-        }
-    },
     mixins: [verification],
     data:function(){
         return {
@@ -97,42 +80,43 @@ export default {
                 this.days = new Date(year, month, 0).getDate()
             }
         },
-        getBirthdayIsError:function(year, month, day){
-            if (year != '' && month != '' && day != ''){
+        isRemindError: function(){
+            if (this.yearsSelected != '' && this.monthsSelected != '' && this.daysSelected != ''){
                 this.isRemind = false
             }else{
-                if (year == '' && month == '' && day == ''){
+                if (this.yearsSelected == '' && this.monthsSelected == '' && this.daysSelected == ''){
                     this.isRemind = false
                 }else{
                     this.isRemind = true
                 }
             }
+
+            return this.isRemind
+        },
+        getBirthdayIsError: function(){
+            let isRemindError = this.isRemindError()
+            this.isYearError = this.isValueNullOrEmpty(this.yearsSelected)
+            this.isMonthError = this.isValueNullOrEmpty(this.monthsSelected)
+            this.isDayError = this.isValueNullOrEmpty(this.daysSelected)
+
+            let birthdayError = (this.isYearError && this.isMonthError && this.isDayError) ? true : false
+            this.yearSelectClass = this.setElementClass(this.isYearError, "select", isRemindError)
+            this.monthSelectClass = this.setElementClass(this.isMonthError, "select", isRemindError)
+            this.daySelectClass = this.setElementClass(this.isDayError, "select", isRemindError)
+            this.smallClass = this.setElementClass(birthdayError, "text", isRemindError)
+            
+            return birthdayError
         }
     },
     watch:{
         yearsSelected(newVal){
-            this.isYearError = this.isValueNullOrEmpty(newVal)
-            this.getBirthdayIsError(newVal, this.monthsSelected, this.daysSelected)
+            this.getBirthdayIsError()
         },
         monthsSelected(newVal){
-            this.isMonthError = this.isValueNullOrEmpty(newVal)
-            this.getBirthdayIsError(this.yearsSelected, newVal, this.daysSelected)
+            this.getBirthdayIsError()
         },
         daysSelected(newVal){
-            this.isDayError = this.isValueNullOrEmpty(newVal)
-            this.getBirthdayIsError(this.yearsSelected, this.monthsSelected, newVal)
-        },
-        year_select_class(newVal){
-            this.yearSelectClass = newVal
-        },
-        month_select_class(newVal){
-            this.monthSelectClass = newVal
-        },
-        day_select_class(newVal){
-            this.daySelectClass = newVal
-        },
-        small_class(newVal){
-            this.smallClass = newVal
+            this.getBirthdayIsError()
         }
     }
 }

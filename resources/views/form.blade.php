@@ -41,14 +41,14 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox ref="nameRef" :input_class="name.inputClass" :small_class="name.smallClass"></name_textbox>
-                                <birthday_select ref="birthdayRef" :year_select_class="birthday.yearSelectClass" :month_select_class="birthday.monthSelectClass" :day_select_class="birthday.daySelectClass" :small_class="birthday.smallClass" :incomplete="birthday.icomplete"></birthday_select>
-                                <address_select ref="addressRef" :counties_select_class="address.countiesSelectClass" :districts_select_class="address.districtsSelectClass" :input_class="address.inputClass" :small_class="address.smallClass" :incomplete="address.icomplete"></address_select>
-                                <gender_radio ref="genderRef" :check_label_class="gender.checkLabelClass" :small_class="gender.smallClass"></gender_radio>
-                                <email_textbox ref="emailRef" :input_class="email.inputClass" :small_class="email.smallClass" :wrong_format="email.format"></email_textbox>
-                                <interest_checkbox ref="interestRef" :check_label_class="interest.checkLabelClass" :small_class="interest.smallClass"></interest_checkbox>
+                                <name_textbox ref="nameRef"></name_textbox>
+                                <birthday_select ref="birthdayRef"></birthday_select>
+                                <address_select ref="addressRef"></address_select>
+                                <gender_radio ref="genderRef"></gender_radio>
+                                <email_textbox ref="emailRef"></email_textbox>
+                                <interest_checkbox ref="interestRef"></interest_checkbox>
                                 <div class="form-group">
-                                    <input type="submit" :class="btnStyle" :value="btnText" v-on:click="send()">
+                                    <input type="button" :class="btnStyle" :value="btnText" v-on:click="send()">
                                 </div>
                             </div>
                         </div>

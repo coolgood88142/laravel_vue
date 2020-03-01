@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
         <input type="email" :class="inputClass" id="us_email" name="us_email" v-model="emailValue">
-        <small id="warning" :class="smallClass">{{ wrong_format ? remindText : warningText }}</small>
+        <small id="warning" :class="smallClass">{{ isFormat ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -10,17 +10,6 @@
 import verification from './mixins/verification.js';
 
 export default {
-    props: {
-        input_class: {
-            type:String
-        },
-        small_class: {
-            type:String
-        },
-        wrong_format: {
-            type:Boolean
-        }
-    },
     mixins: [verification],
     data:function(){
         return {
@@ -35,13 +24,15 @@ export default {
         }
     },
     methods:{
-        getEmailIsError:function(value){
-            if(this.isValueNullOrEmpty(value)){
+        getEmailIsError: function(){
+            let emailError = this.isValueNullOrEmpty(this.emailValue)
+            
+            if(emailError){
                 this.isError = true
                 this.isFormat = false
             }else{
                 let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                if (!isMail.test(value)) {
+                if (!isMail.test(this.emailValue)) {
                     this.isError = true
                     this.isFormat = true
                 }else{
@@ -49,17 +40,16 @@ export default {
                     this.isFormat = false
                 }
             }
+
+            this.inputClass = this.setElementClass(emailError, "input", false)
+            this.smallClass = this.setElementClass(emailError, "text", this.isFormat)
+
+            return this.isError
         }
     },
     watch:{
         emailValue(newVal){
-            this.getEmailIsError(newVal)
-        },
-        input_class(newVal){
-            this.inputClass = newVal
-        },
-        small_class(newVal){
-            this.smallClass = newVal
+            this.getEmailIsError()
         }
     }
 }

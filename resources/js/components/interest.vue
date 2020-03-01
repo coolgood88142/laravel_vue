@@ -13,14 +13,6 @@
 import verification from './mixins/verification.js';
 
 export default {
-    props: {
-        check_label_class:{
-            type:String
-        },
-        small_class: {
-            type:String
-        },
-    },
     mixins: [verification],
     data:function(){
         return {
@@ -37,15 +29,18 @@ export default {
             smallClass: this.getTextClass()
         }
     },
+    methods:{
+        getInterestIsError: function(){
+            this.isError = this.isValueNullOrEmpty(this.interestChecked)
+            this.checkLabelClass = this.setElementClass(this.isError, "checklabel", false)
+            this.smallClass = this.setElementClass(this.isError, "text", false)
+
+            return this.isError
+        }
+    },
     watch:{
         interestChecked(newVal){
-            this.isError = this.isValueNullOrEmpty(newVal)
-        },
-        check_label_class(newVal){
-            this.checkLabelClass = newVal
-        },
-        small_class(newVal){
-            this.smallClass = newVal
+            this.getInterestIsError()
         }
     }
 }

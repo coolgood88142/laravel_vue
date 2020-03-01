@@ -10,16 +10,6 @@
 import verification from './mixins/verification.js';
 
 export default {
-    //Boolean要怎麼接受後，要怎麼觸發function判斷
-    //使用mixins回傳ture或false，就不用寫ifelse，目的是要讓程式減少重複性
-    props: {
-        input_class:{
-            type:String
-        },
-        small_class:{
-            type:String
-        }
-    },
     mixins: [verification],
     data:function(){
         return {
@@ -31,15 +21,18 @@ export default {
             smallClass: this.getTextClass()
         }
     },
+    methods: {
+        getNameIsError: function(){
+            this.isError = this.isValueNullOrEmpty(this.nameValue)
+            this.inputClass = this.setElementClass(this.isError, "input", false)
+            this.smallClass = this.setElementClass(this.isError, "text", false)
+
+            return this.isError
+        }
+    },
     watch:{
         nameValue(newVal){
-            this.isError = this.isValueNullOrEmpty(newVal)
-        },
-        input_class(newVal){
-            this.inputClass = newVal
-        },
-        small_class(newVal){
-            this.smallClass = newVal
+            this.getNameValueIsError()
         }
     }
 }

@@ -11,7 +11,7 @@
         <div class="form-check form-check-inline">
             <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="roadValue" placeholder="請選擇縣市與鄉鎮市區">
         </div>
-        <small id="warning" :class="smallClass">{{ incomplete ? remindText : warningText }}</small>
+        <small id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -21,35 +21,19 @@ import districts from './districts.vue';
 import verification from './mixins/verification.js';
 
 export default {
-    props: {
-        counties_select_class: {
-            type:String
-        },
-        districts_select_class: {
-            type:String
-        },
-        input_class: {
-            type:String
-        },
-        small_class: {
-            type:String
-        },
-        incomplete: {
-            type:Boolean
-        }
-    },
     mixins: [verification],
     data:function(){
         return {
             addressText: '地址',
-            countiesSelected: NaN,
+            countiesSelected: 0,
             districtsSelected: '',
             roadValue:'',
             warningText: '地址必填',
             remindText:'地址填寫不完整',
+            addressError: false,
             isCountiesError: true,
             isDistrictsError: true,
-            isInputError: true,
+            isRoadValueError: true,
             isRemind: false,
             countiesSelectClass: this.getSelectClass(),
             districtsSelectClass: this.getSelectClass(),
@@ -68,43 +52,44 @@ export default {
         updateDistricts(CountiesSelected) {
             this.countiesSelected = CountiesSelected;
         },
-        getAddressIsError:function(counties, districts, address){
-            if (counties != '' && districts != '' && address != ''){
+        isRemindError: function(){
+            if (this.countiesSelected != '' && this.districtsSelected != '' && this.roadValue != ''){
                 this.isRemind = false
             }else{
-                if (counties == '' && districts == '' && address == ''){
+                if (this.countiesSelected == '' && this.districtsSelected == '' && this.roadValue == ''){
                     this.isRemind = false
                 }else{
                     this.isRemind = true
                 }
             }
+
+            return this.isRemind
+        },
+        getAddressIsError: function(){
+            let isRemindError = this.isRemindError()
+            this.isCountiesError = this.isValueNullOrEmpty(this.countiesSelected)
+            this.isDistrictsError = this.isValueNullOrEmpty(this.districtsSelected)
+            this.isRoadValueError = this.isValueNullOrEmpty(this.roadValue)
+
+            let addressError = (this.isCountiesError && this.isDistrictsError && this.isRoadValueError) ? true : false
+            this.countiesSelectClass = this.setElementClass(this.isCountiesError, "select", isRemindError)
+            this.districtsSelectClass = this.setElementClass(this.isDistrictsError, "select", isRemindError)
+            this.inputClass = this.setElementClass(this.isRoadValueError, "input", isRemindError)
+            this.smallClass = this.setElementClass(addressError, "text", isRemindError)
+
+            return addressError
         }
     },
     watch:{
         countiesSelected(newVal){
-            this.isCountiesError = this.isValueNullOrEmpty(newVal)
             this.districtsSelected = ''
-            this.getAddressIsError(newVal, this.districtsSelected, this.roadValue)
+            this.getAddressIsError()
         },
         districtsSelected(newVal){
-            this.isDistrictsError = this.isValueNullOrEmpty(newVal)
-            this.getAddressIsError(this.countiesSelected, newVal, this.roadValue)
+            this.getAddressIsError()
         },
         roadValue(newVal){
-            this.isInputError = this.isValueNullOrEmpty(newVal)
-            this.getAddressIsError(this.countiesSelected, this.districtsSelected, newVal)
-        },
-        counties_select_class(newVal){
-            this.countiesSelectClass = newVal
-        },
-        districts_select_class(newVal){
-            this.districtsSelectClass = newVal
-        },
-        input_class(newVal){
-            this.inputClass = newVal
-        },
-        small_class(newVal){
-            this.smallClass = newVal
+            this.getAddressIsError()
         }
     }
 }
