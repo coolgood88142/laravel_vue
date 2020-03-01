@@ -36,7 +36,7 @@
                 </li>
             </ul>
         </nav>
-        </div>
+    </div>
 </template>
 
 <script>
@@ -44,6 +44,7 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props: ['items'],
     data:function(){
         return {
             items: [],
@@ -81,15 +82,9 @@ export default {
             return pagesArray;
         }
 	},
-	mounted(){
-		console.log(this.items)
-	},
-    ready : function(){
-        this.getUserData(this.pagination.current_page);
-  	},
     methods:{
         getUserData:function(page){
-            this.$http.get('/selectUser?page='+page).then((response) => {
+            this.$http.get('/select?page='+page).then((response) => {
             this.$set('items', response.data.data);
             this.$set('pagination', response.data.pagination);
           });

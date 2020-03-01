@@ -108,19 +108,25 @@ export default {
                 }
             }
         }
+        //新增function做設定class
+        //有提示文字時，選單全部有選擇時要變回預設值
+        //this.smallClass = this.setElementClass(birthdayError, "text", this.birthday.icomplete)
     },
     watch:{
         yearsSelected(newVal){
             this.isYearError = this.isValueNullOrEmpty(newVal)
             this.getBirthdayIsError(newVal, this.monthsSelected, this.daysSelected)
+            this.yearSelectClass = this.getSelectClass()
         },
         monthsSelected(newVal){
             this.isMonthError = this.isValueNullOrEmpty(newVal)
             this.getBirthdayIsError(this.yearsSelected, newVal, this.daysSelected)
+            this.monthSelectClass = this.getSelectClass()
         },
         daysSelected(newVal){
             this.isDayError = this.isValueNullOrEmpty(newVal)
             this.getBirthdayIsError(this.yearsSelected, this.monthsSelected, newVal)
+            this.daySelectClass = this.getSelectClass()
         },
         year_select_class(newVal){
             this.yearSelectClass = newVal
