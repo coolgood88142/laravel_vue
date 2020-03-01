@@ -107,6 +107,9 @@ export default {
             
             return birthdayError
         }
+        //新增function做設定class
+        //有提示文字時，選單全部有選擇時要變回預設值
+        //this.smallClass = this.setElementClass(birthdayError, "text", this.birthday.icomplete)
     },
     watch:{
         yearsSelected(newVal){

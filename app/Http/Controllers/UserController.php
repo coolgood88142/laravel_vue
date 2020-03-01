@@ -23,7 +23,7 @@ class UserController extends Controller
             ],
             'data' => $users
         ];
-
+        dd($response);
         return $response['data'];
     }
 
@@ -59,6 +59,7 @@ class UserController extends Controller
         $us_districts = $request->us_districts;
         $us_road = $request->us_road;
         $us_address = $us_counties . $us_districts . $us_road;
+        dd($us_address);
 
         $us_gender = $request->us_gender;
         $us_email = $request->us_email;

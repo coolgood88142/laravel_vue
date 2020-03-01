@@ -25,6 +25,9 @@ let defaultClass = {
     checklabel: elementClass.checklabel + changeClass.textError
 }
 
+//新增type變數元素，寫一個集合
+//確認是否寫取得components的template做迴圈，設定class
+
 export default {
     methods: {
         setElementClass: function (isError, type, isRemind) {

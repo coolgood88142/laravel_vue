@@ -1,9 +1,14 @@
 {
-    "/js/app.js": "/js/app.js?id=ef2267f6fe381143edcf",
+    "/js/app.js": "/js/app.js?id=182558db6b93ae780e95",
     "/css/app.css": "/css/app.css?id=2a4461fc35df4e8d0a06",
     "/js/button.js": "/js/button.js?id=24ae62ec306d119e16b5",
     "/js/city.js": "/js/city.js?id=915aa0bd5c627179febe",
     "/js/date.js": "/js/date.js?id=30e9a2188763547ccf0d",
+<<<<<<< HEAD
     "/js/style.js": "/js/style.js?id=196a9ef81b6dd6d49279",
     "/js/verification.js": "/js/verification.js?id=a47c09dfbbc3e02d172e"
+=======
+    "/js/style.js": "/js/style.js?id=01e28726e36267980234",
+    "/js/verification.js": "/js/verification.js?id=9104277f5f606b024a4b"
+>>>>>>> 70a0e895b05ff9bfe45ab3fca95e8e64ef251007
 }
