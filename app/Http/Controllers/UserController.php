@@ -55,18 +55,16 @@ class UserController extends Controller
         $us_day= $us_month < 10 ? '0' . $us_day : $us_day;
         $us_birthday = $us_year . '-' . $us_month . '-' . $us_day;
 
-        $us_counties = $request->us_counties;
+        $us_city = Config::get('city');
+        $us_counties = $us_city[($request->us_counties) - 1];
         $us_districts = $request->us_districts;
         $us_road = $request->us_road;
-        $us_address = $us_counties . $us_districts . $us_road;
-        dd($us_address);
 
         $us_gender = $request->us_gender;
         $us_email = $request->us_email;
         $us_interest = $request->us_interest;
-        $datetime = Carbon::now();
 
-        $users = DB::table('vueUser')->insert(
+        $users = DB::table('user')->insert(
             ['us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
              'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender, 
              'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1]
