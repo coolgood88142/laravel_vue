@@ -32,7 +32,7 @@
         <div class="container d-flex wrap-contact">
             <div class="row w-100">
                 <div class="mx-auto">
-                    <form action="{{ route('add')}}" method="POST">
+                    <form action="{{ route('add')}}" method="POST" id="addForm">
                         {{ csrf_field() }}
                         <div id="app" class="card bg-light">
                             <div class="card-body">

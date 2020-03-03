@@ -42,6 +42,7 @@ let app = new Vue({
 
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){
                 alert('送出成功!')
+                document.getElementById("addForm").submit();
             }
             
         }

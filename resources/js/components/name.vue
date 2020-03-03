@@ -32,7 +32,7 @@ export default {
     },
     watch:{
         nameValue(newVal){
-            this.getNameValueIsError()
+            this.getNameIsError()
         }
     }
 }

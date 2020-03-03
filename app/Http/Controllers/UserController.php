@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Config;
 
 class UserController extends Controller
 {
@@ -56,13 +57,23 @@ class UserController extends Controller
         $us_birthday = $us_year . '-' . $us_month . '-' . $us_day;
 
         $us_city = Config::get('city');
-        $us_counties = $us_city[($request->us_counties) - 1];
-        $us_districts = $request->us_districts;
+        $counties_array = $us_city[(($request->us_counties) - 1)];
+        $us_counties = $counties_array['counties'];
+
+        $districts_index = array_search(($request->us_districts), $counties_array['value']); 
+        $us_districts = $counties_array['districts'][$districts_index];
         $us_road = $request->us_road;
 
         $us_gender = $request->us_gender;
         $us_email = $request->us_email;
-        $us_interest = $request->us_interest;
+        $interest_array = $request->input('us_interest');
+
+        $us_interest = '';
+        foreach ($interest_array as $interest){
+            $us_interest = $us_interest . $interest . '、';
+        }
+        // $us_interest = substr($us_interest,0,-1);
+        // dd($us_interest);
 
         $users = DB::table('user')->insert(
             ['us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
