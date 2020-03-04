@@ -39,7 +39,7 @@ Route::get('/user', function () {
     return view('user');
 });
 
-Route::get('/select','userController@select');
+Route::get('/user','userController@select');
 
 Route::resource('selectUser','userController');
 

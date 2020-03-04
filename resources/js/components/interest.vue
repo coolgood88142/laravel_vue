@@ -5,7 +5,7 @@
             <input class="form-check-input" type="checkbox" name="us_interest[]" :id="interest.id" :value="interest.value" v-model="interestChecked">
             <label :class="checkLabelClass" :for="interest.id">{{ interest.text }}</label>
         </div>
-        <small id="warning" :class="smallClass">{{ warningText }}</small>
+        <small v-if="isShow" id="warning" :class="smallClass">{{ warningText }}</small>
     </div>
 </template>
 
@@ -24,18 +24,20 @@ export default {
                 { id:'interest2', text: '其他', value: 2}
             ],
             warningText: '興趣必填',
-            isError: true,
+            interestError: true,
+            isShow: false,
             checkLabelClass: this.getCheckLabelClass(),
             smallClass: this.getTextClass()
         }
     },
     methods:{
         getInterestIsError: function(){
-            this.isError = this.isValueNullOrEmpty(this.interestChecked)
-            this.checkLabelClass = this.setElementClass(this.isError, "checklabel", false)
-            this.smallClass = this.setElementClass(this.isError, "text", false)
+            this.interestError = this.isValueNullOrEmpty(this.interestChecked)
+            this.isShow = this.interestError
+            this.checkLabelClass = this.setElementClass(this.interestError, "checklabel", false)
+            this.smallClass = this.setElementClass(this.interestError, "text", false)
 
-            return this.isError
+            return this.interestError
         }
     },
     watch:{

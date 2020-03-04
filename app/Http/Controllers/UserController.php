@@ -12,20 +12,24 @@ use Config;
 class UserController extends Controller
 {
     public function select(){
-        $users = DB::table('user')->paginate(5);
-        $response = [
-            'pagination' => [
-                'total' => $users->total(),
-                'per_page' => $users->perPage(),
-                'current_page' => $users->currentPage(),
-                'last_page' => $users->lastPage(),
-                'from' => $users->firstItem(),
-                'to' => $users->lastItem()
-            ],
-            'data' => $users
-        ];
-        dd($response);
-        return $response['data'];
+        // $users = DB::table('user')->paginate(5);
+        // $response = [
+        //     'pagination' => [
+        //         'total' => $users->total(),
+        //         'per_page' => $users->perPage(),
+        //         'current_page' => $users->currentPage(),
+        //         'last_page' => $users->lastPage(),
+        //         'from' => $users->firstItem(),
+        //         'to' => $users->lastItem()
+        //     ],
+        //     'data' => $users
+        // ];
+        // dd($response);
+        // return $response['data'];
+
+        $users = DB::table('user')->get();
+
+        return view('user', ['users' => $users]);
     }
 
     public function index()
@@ -69,11 +73,10 @@ class UserController extends Controller
         $interest_array = $request->input('us_interest');
 
         $us_interest = '';
-        foreach ($interest_array as $interest){
-            $us_interest = $us_interest . $interest . '、';
+        foreach ($interest_array as $value){
+            $us_interest = $us_interest . $value . ',';
         }
-        // $us_interest = substr($us_interest,0,-1);
-        // dd($us_interest);
+        $us_interest = substr($us_interest,0,-1);
 
         $users = DB::table('user')->insert(
             ['us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,

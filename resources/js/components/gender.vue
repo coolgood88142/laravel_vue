@@ -5,7 +5,7 @@
             <input class="form-check-input" type="radio" name="us_gender" v-model="genderChecked" :id="gender.id" :value="gender.value">
             <label :class="checkLabelClass" :for="gender.id">{{ gender.text }}</label>
         </div>
-        <small id="warning" :class="smallClass">{{ warningText }}</small>
+        <small v-if="isShow" id="warning" :class="smallClass">{{ warningText }}</small>
     </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
                 { id:'gender1', text: '女', value: 'S' }
             ],
             warningText: '性別必填',
-            isError: true,
+            genderError: true,
+            isShow: false,
             checkLabelClass:this.getCheckLabelClass(),
             smallClass:this.getTextClass()
 
@@ -31,11 +32,12 @@ export default {
     },
     methods:{
         getGenderIsError: function(){
-            this.isError = this.isValueNullOrEmpty(this.genderChecked)
-            this.checkLabelClass = this.setElementClass(this.isError, "checklabel", false)
-            this.smallClass = this.setElementClass(this.isError, "text", false)
+            this.genderError = this.isValueNullOrEmpty(this.genderChecked)
+            this.checkLabelClass = this.setElementClass(this.genderError, "checklabel", false)
+            this.smallClass = this.setElementClass(this.genderError, "text", false)
+            this.isShow = this.genderError
 
-            return this.isError
+            return this.genderError
        }
     },
     watch:{

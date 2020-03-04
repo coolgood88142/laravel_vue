@@ -41,12 +41,12 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox ref="nameRef"></name_textbox>
-                                <birthday_select ref="birthdayRef"></birthday_select>
-                                <address_select ref="addressRef"></address_select>
-                                <gender_radio ref="genderRef"></gender_radio>
-                                <email_textbox ref="emailRef"></email_textbox>
-                                <interest_checkbox ref="interestRef"></interest_checkbox>
+                                <name_textbox ref="name"></name_textbox>
+                                <birthday_select ref="birthday"></birthday_select>
+                                <address_select ref="address"></address_select>
+                                <gender_radio ref="gender"></gender_radio>
+                                <email_textbox ref="email"></email_textbox>
+                                <interest_checkbox ref="interest"></interest_checkbox>
                                 <div class="form-group">
                                     <input type="button" :class="btnStyle" :value="btnText" v-on:click="send()">
                                 </div>

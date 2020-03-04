@@ -33,12 +33,12 @@ let app = new Vue({
     },
     methods: {
         send: function () {
-            let nameError = this.$refs.nameRef.getNameIsError()
-            let birthdayError = this.$refs.birthdayRef.getBirthdayIsError()
-            let addressError = this.$refs.addressRef.getAddressIsError()
-            let genderError = this.$refs.genderRef.getGenderIsError()
-            let emailError = this.$refs.emailRef.getEmailIsError()
-            let interestError = this.$refs.interestRef.getInterestIsError()
+            let nameError = this.$refs.name.nameError
+            let birthdayError = this.$refs.birthday.birthdayError
+            let addressError = this.$refs.address.addressError
+            let genderError = this.$refs.gender.genderError
+            let emailError = this.$refs.email.emailError
+            let interestError = this.$refs.interest.interestError
 
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){
                 alert('送出成功!')

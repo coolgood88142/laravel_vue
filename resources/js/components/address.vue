@@ -3,15 +3,15 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
-            <counties_select v-on:change-counties="updateDistricts" :select_class="countiesSelectClass"></counties_select>
+            <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass"></counties>
         </div>
         <div class="form-check form-check-inline">
-            <districts_select v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected="countiesSelected"></districts_select>
+            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected="countiesSelected"></districts>
         </div>
         <div class="form-check form-check-inline">
             <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="roadValue" placeholder="請選擇縣市與鄉鎮市區">
         </div>
-        <small id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
+        <small v-if="isShow" id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -35,6 +35,7 @@ export default {
             isDistrictsError: true,
             isRoadValueError: true,
             isRemind: false,
+            isShow: false,
             countiesSelectClass: this.getSelectClass(),
             districtsSelectClass: this.getSelectClass(),
             inputClass: this.getInputClass(),
@@ -42,8 +43,8 @@ export default {
         }
     },
     components:{
-        'counties_select': counties,
-        'districts_select': districts
+        'counties': counties,
+        'districts': districts
     },
     methods: {
         getDistrictsSelected(DistrictsSelected) {
@@ -52,32 +53,35 @@ export default {
         updateDistricts(CountiesSelected) {
             this.countiesSelected = CountiesSelected;
         },
-        isRemindError: function(){
-            if (this.countiesSelected != '' && this.districtsSelected != '' && this.roadValue != ''){
+        isAddressError: function(){
+            if (!this.isCountiesError && !this.isDistrictsError && !this.isRoadValueError){
+                this.addressError = false
                 this.isRemind = false
+                this.isShow = false
             }else{
-                if (this.countiesSelected == '' && this.districtsSelected == '' && this.roadValue == ''){
+                if (this.isCountiesError && this.isDistrictsError && this.isRoadValueError){
+                    this.addressError = true
                     this.isRemind = false
+                    this.isShow = true
                 }else{
+                    this.addressError = false
                     this.isRemind = true
+                    this.isShow = true
                 }
             }
-
-            return this.isRemind
         },
         getAddressIsError: function(){
-            let isRemindError = this.isRemindError()
             this.isCountiesError = this.isValueNullOrEmpty(this.countiesSelected)
             this.isDistrictsError = this.isValueNullOrEmpty(this.districtsSelected)
             this.isRoadValueError = this.isValueNullOrEmpty(this.roadValue)
+            this.isAddressError()
 
-            let addressError = (this.isCountiesError && this.isDistrictsError && this.isRoadValueError) ? true : false
-            this.countiesSelectClass = this.setElementClass(this.isCountiesError, "select", isRemindError)
-            this.districtsSelectClass = this.setElementClass(this.isDistrictsError, "select", isRemindError)
-            this.inputClass = this.setElementClass(this.isRoadValueError, "input", isRemindError)
-            this.smallClass = this.setElementClass(addressError, "text", isRemindError)
+            this.countiesSelectClass = this.setElementClass(this.isCountiesError, "select", this.isRemind)
+            this.districtsSelectClass = this.setElementClass(this.isDistrictsError, "select", this.isRemind)
+            this.inputClass = this.setElementClass(this.isRoadValueError, "input", this.isRemind)
+            this.smallClass = this.setElementClass(this.addressError, "text", this.isRemind)
 
-            return addressError
+            return this.addressError
         }
     },
     watch:{

@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ nameText }}</h3>
         <input type="textbox" :class="inputClass" id="us_name" name="us_name" v-model="nameValue"/>
-        <small id="warning" :class="smallClass">{{ warningText }}</small>
+        <small v-if="isShow" id="warning" :class="smallClass">{{ warningText }}</small>
      </div>
 </template>
 
@@ -16,18 +16,20 @@ export default {
             nameText: '姓名',
             warningText: '姓名必填',
             nameValue: '',
-            isError: true,
+            nameError: true,
+            isShow: false,
             inputClass: this.getInputClass(),
             smallClass: this.getTextClass()
         }
     },
     methods: {
         getNameIsError: function(){
-            this.isError = this.isValueNullOrEmpty(this.nameValue)
-            this.inputClass = this.setElementClass(this.isError, "input", false)
-            this.smallClass = this.setElementClass(this.isError, "text", false)
+            this.nameError = this.isValueNullOrEmpty(this.nameValue)
+            this.isShow = this.nameError
+            this.inputClass = this.setElementClass(this.nameError, "input", false)
+            this.smallClass = this.setElementClass(this.nameError, "text", false)
 
-            return this.isError
+            return this.nameError
         }
     },
     watch:{

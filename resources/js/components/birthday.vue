@@ -22,7 +22,7 @@
             </select>
             <label class="form-check-label">日</label>
         </div>
-        <small id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
+        <small v-if="isShow" id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -56,10 +56,12 @@ export default {
             daysSelected: '',
             warningText: '生日必填',
             remindText:'生日填寫不完整',
+            birthdayError: false,
             isYearError: true,
             isMonthError: true,
             isDayError: true,
             isRemind: false,
+            isShow: false,
             yearSelectClass: this.getSelectClass(),
             monthSelectClass: this.getSelectClass(),
             daySelectClass: this.getSelectClass(),
@@ -80,36 +82,36 @@ export default {
                 this.days = new Date(year, month, 0).getDate()
             }
         },
-        isRemindError: function(){
-            if (this.yearsSelected != '' && this.monthsSelected != '' && this.daysSelected != ''){
+        isBirthdayError: function(){
+            if (!this.isYearError && !this.isMonthError && !this.isDayError){
+                this.birthdayError = false
                 this.isRemind = false
+                this.isShow = false
             }else{
-                if (this.yearsSelected == '' && this.monthsSelected == '' && this.daysSelected == ''){
+                if (this.isYearError && this.isMonthError && this.isDayError){
+                    this.birthdayError = true
                     this.isRemind = false
+                    this.isShow = true
                 }else{
+                    this.birthdayError = false
                     this.isRemind = true
+                    this.isShow = true
                 }
             }
-
-            return this.isRemind
         },
         getBirthdayIsError: function(){
-            let isRemindError = this.isRemindError()
             this.isYearError = this.isValueNullOrEmpty(this.yearsSelected)
             this.isMonthError = this.isValueNullOrEmpty(this.monthsSelected)
             this.isDayError = this.isValueNullOrEmpty(this.daysSelected)
+            this.isBirthdayError()
 
-            let birthdayError = (this.isYearError && this.isMonthError && this.isDayError) ? true : false
-            this.yearSelectClass = this.setElementClass(this.isYearError, "select", isRemindError)
-            this.monthSelectClass = this.setElementClass(this.isMonthError, "select", isRemindError)
-            this.daySelectClass = this.setElementClass(this.isDayError, "select", isRemindError)
-            this.smallClass = this.setElementClass(birthdayError, "text", isRemindError)
+            this.yearSelectClass = this.setElementClass(this.isYearError, "select", this.isRemind)
+            this.monthSelectClass = this.setElementClass(this.isMonthError, "select", this.isRemind)
+            this.daySelectClass = this.setElementClass(this.isDayError, "select", this.isRemind)
+            this.smallClass = this.setElementClass(this.birthdayError, "text", this.isRemind)
             
-            return birthdayError
+            return this.birthdayError
         }
-        //新增function做設定class
-        //有提示文字時，選單全部有選擇時要變回預設值
-        //this.smallClass = this.setElementClass(birthdayError, "text", this.birthday.icomplete)
     },
     watch:{
         yearsSelected(newVal){
