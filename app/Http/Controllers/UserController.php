@@ -44,7 +44,7 @@ class UserController extends Controller
                 'from' => $users->firstItem(),
                 'to' => $users->lastItem()
             ],
-            'data' => $users
+            'users' => $users
         ];
 
         return response()->json($response);

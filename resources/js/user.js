@@ -9,7 +9,8 @@ let user = new Vue({
             to: 0,
             current_page: 1
         },
-        offset: 4
+        offset: 4,
+        newItem: { 'title': '', 'description': '' },
     },
     computed: {
         isActived: function () {
@@ -40,9 +41,19 @@ let user = new Vue({
     },
     methods: {
         getUserData: function (page) {
-            this.$http.get('/selectUser?page=' + page).then((response) => {
-                this.$set('items', response.data.data.data);
-                this.$set('pagination', response.data.pagination);
+            this.$http.get('/user').then((response) => {
+                this.$set('user', response.data.user);
+            });
+        },
+        createItem: function () {
+            var input = this.newItem;
+            this.$http.post('/user', input).then((response) => {
+                this.changePage(this.pagination.current_page);
+                this.newItem = { 'title': '', 'description': '' };
+                $("#create-item").modal('hide');
+                // toastr.success('Item Created Successfully.', 'Success Alert', { timeOut: 5000 });
+            }, (response) => {
+                this.formErrors = response.data;
             });
         },
         changePage: function (page) {
