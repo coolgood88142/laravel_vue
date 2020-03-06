@@ -18,16 +18,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
-                    <tr>
-                        <td>{{ $user->us_id }}</td>
-                        <td>{{ $user->us_name }}</td>
-                        <td>{{ $user->us_email }}</td>
-                        <td>{{ ($user->us_status == 1 ? '正常' : '停用')  }}</td>
+                    <tr v-for="user in users">
+                        <td>@{{ user.us_id }}</td>
+                        <td>@{{ userus_name }}</td>
+                        <td>@{{ user.us_email }}</td>
+                        <td>@{{ (user.us_status == 1 ? '正常' : '停用')  }}</td>
                     </tr>
-                    @endforeach
                 </tbody>
             </table>
+
+            <nav>
+                <ul class="pagination">
+                    <li v-if="pagination.current_page > 1">
+                        <a href="#" aria-label="Previous" v-on:click="changePage(pagination.current_page - 1)">
+                            <span aria-hidden="true">«</span>
+                        </a>
+                    </li>
+                    <li v-for="page in pagesNumber" v-bind:class="[ page == isActived ? 'active' : '']">
+                        <a href="#" v-on:click="changePage(page)">@{{ page }}</a>
+                    </li>
+                    <li v-if="pagination.current_page < pagination.last_page">
+                        <a href="#" aria-label="Next" v-on:click="changePage(pagination.current_page + 1)">
+                            <span aria-hidden="true">»</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
     <script src="{{mix('js/app.js')}}"></script>

@@ -41,8 +41,9 @@ let user = new Vue({
     },
     methods: {
         getUserData: function (page) {
-            this.$http.get('/user').then((response) => {
-                this.$set('user', response.data.user);
+            this.$http.get('/user?page='+page).then((response) => {
+                this.$set('users', response.data.users);
+                this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {

@@ -39,8 +39,8 @@ Route::get('/user', function () {
     return view('user');
 });
 
-Route::get('/user','userController@select');
+Route::get('/user','userController@userVue');
 
-Route::resource('selectUser','userController');
+Route::resource('user','userController');
 
 Route::post('/form', 'UserController@addData')->name('add');

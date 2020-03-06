@@ -11,6 +11,10 @@ use Config;
 
 class UserController extends Controller
 {
+    public function userVue(){
+        view('user');
+    }
+
     public function select(){
         // $users = DB::table('user')->paginate(5);
         // $response = [
@@ -27,7 +31,7 @@ class UserController extends Controller
         // dd($response);
         // return $response['data'];
 
-        $users = DB::table('user')->get();
+        $users = DB::table('user')->paginate(5);
 
         return view('user', ['users' => $users]);
     }
