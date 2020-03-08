@@ -11,26 +11,11 @@ use Config;
 
 class UserController extends Controller
 {
-    public function userVue(){
+    public function userView(){
         return view('user');
     }
 
     public function select(){
-        // $users = DB::table('user')->paginate(5);
-        // $response = [
-        //     'pagination' => [
-        //         'total' => $users->total(),
-        //         'per_page' => $users->perPage(),
-        //         'current_page' => $users->currentPage(),
-        //         'last_page' => $users->lastPage(),
-        //         'from' => $users->firstItem(),
-        //         'to' => $users->lastItem()
-        //     ],
-        //     'data' => $users
-        // ];
-        // dd($response);
-        // return $response['data'];
-
         $users = DB::table('user')->paginate(5);
 
         return view('user', ['users' => $users]);

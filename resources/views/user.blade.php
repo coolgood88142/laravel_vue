@@ -20,7 +20,7 @@
                 <tbody>
                     <tr v-for="user in users">
                         <td>@{{ user.us_id }}</td>
-                        <td>@{{ userus_name }}</td>
+                        <td>@{{ user.us_name }}</td>
                         <td>@{{ user.us_email }}</td>
                         <td>@{{ (user.us_status == 1 ? '正常' : '停用')  }}</td>
                     </tr>

@@ -7,6 +7,9 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
+let axios = require('axios');
+Vue.use(axios)
+
 Vue.config.productionTip = false;
 
 //防止顯示生產訊息，vue預設會顯示

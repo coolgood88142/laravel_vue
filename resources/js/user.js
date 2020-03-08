@@ -1,7 +1,9 @@
+import 'bootstrap/dist/css/bootstrap.css'
+
 let user = new Vue({
     el: '#app',
     data: {
-        items: [],
+        users: [],
         pagination: {
             total: 0,
             per_page: 2,
@@ -41,10 +43,10 @@ let user = new Vue({
     },
     methods: {
         getUserData: function (page) {
-            this.$http.get('/vueitems?page='+page).then((response) => {
-                this.$set('users', response.data.users);
-                this.$set('pagination', response.data.pagination);
-            });
+            axios.get('/vueitems?page=' + page).then(response => {
+                this.users = response.data.users.data,
+                this.pagination = response.data.pagination
+            })
         },
         createItem: function () {
             var input = this.newItem;

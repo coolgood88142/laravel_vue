@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ emailText }}</h3>
         <input type="email" :class="inputClass" id="us_email" name="us_email" v-model="emailValue">
-        <small v-if="isShow" id="warning" :class="smallClass">{{ isFormat ? remindText : warningText }}</small>
+        <small v-if="emailError" id="warning" :class="smallClass">{{ isFormat ? remindText : warningText }}</small>
     </div>
 </template>
 
@@ -19,21 +19,20 @@ export default {
             remindText:'email格式錯誤',
             emailError: true,
             isFormat: false,
-            isShow: false,
             inputClass: this.getInputClass(),
             smallClass: this.getTextClass()
         }
     },
-    methods:{
-        getEmailIsError: function(){
-            let emailError = this.isValueNullOrEmpty(this.emailValue)
+    watch:{
+        emailValue(newVal){
+            let emailError = this.isValueNullOrEmpty(newVal)
             
             if(emailError){
                 this.emailError = true
                 this.isFormat = false
             }else{
                 let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                if (!isMail.test(this.emailValue)) {
+                if (!isMail.test(newVal)) {
                     this.emailError = true
                     this.isFormat = true
                 }else{
@@ -45,13 +44,6 @@ export default {
             this.isShow = this.emailError
             this.inputClass = this.setElementClass(emailError, "input", false)
             this.smallClass = this.setElementClass(emailError, "text", this.isFormat)
-
-            return this.emailError
-        }
-    },
-    watch:{
-        emailValue(newVal){
-            this.getEmailIsError()
         }
     }
 }

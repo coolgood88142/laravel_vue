@@ -39,7 +39,7 @@ Route::get('/user', function () {
     return view('user');
 });
 
-Route::get('/user','userController@userVue');
+Route::get('/user','userController@userView');
 
 Route::resource('vueitems','userController');
 
