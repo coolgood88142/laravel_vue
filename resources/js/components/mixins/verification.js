@@ -33,21 +33,20 @@ export default {
         setElementClass: function (isError, type, isRemind) {
             let newClass = ''
 
-            Object.keys(elementClass).forEach((item, index) => {
-                if (item === type){
+            elementClass.forEach((item, index) => {
+                if (index === type){
                     if(!isError){
-                        newClass = elementClass[item]
-                        if (item === "text"){
+                        newClass = item
+                        if (index === "text"){
                             newClass += (isRemind ? changeClass.textRemind : changeClass.hide)
                         }
                     }else{
-                        if (item === "text"){
+                        if (index === "text"){
                             newClass = defaultClass.textError
                         }else{
-                            newClass = defaultClass[item]
+                            newClass = defaultClass[index]
                         }
                     }
-                    return false
                 }
             })
 

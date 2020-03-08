@@ -41,6 +41,6 @@ Route::get('/user', function () {
 
 Route::get('/user','userController@userVue');
 
-Route::resource('user','userController');
+Route::resource('vueitems','userController');
 
 Route::post('/form', 'UserController@addData')->name('add');

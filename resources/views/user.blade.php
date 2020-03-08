@@ -47,7 +47,7 @@
         </div>
     </div>
     <script src="{{mix('js/app.js')}}"></script>
-    <script src="{{mix('js/style.js')}}"></script>
+    <script src="{{mix('js/user.js')}}"></script>
 </body>
 
 </html>

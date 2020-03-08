@@ -85,6 +85,7 @@ export default {
         }
     },
     watch:{
+        //3個選單與文字框，改用function(isAddressError)，watch用一個object去處理(設定class)
         countiesSelected(newVal){
             this.districtsSelected = ''
             this.getAddressIsError()

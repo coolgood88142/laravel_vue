@@ -1,5 +1,5 @@
 let user = new Vue({
-    el: '#user',
+    el: '#app',
     data: {
         items: [],
         pagination: {
@@ -36,12 +36,12 @@ let user = new Vue({
             return pagesArray;
         }
     },
-    ready: function () {
+    created: function () {
         this.getUserData(this.pagination.current_page);
     },
     methods: {
         getUserData: function (page) {
-            this.$http.get('/user?page='+page).then((response) => {
+            this.$http.get('/vueitems?page='+page).then((response) => {
                 this.$set('users', response.data.users);
                 this.$set('pagination', response.data.pagination);
             });

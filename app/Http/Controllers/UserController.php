@@ -12,7 +12,7 @@ use Config;
 class UserController extends Controller
 {
     public function userVue(){
-        view('user');
+        return view('user');
     }
 
     public function select(){
