@@ -38,8 +38,8 @@ let user = new Vue({
             return pagesArray;
         }
     },
-    created: function () {
-        this.getUserData(this.pagination.current_page);
+    mounted: function () {
+        this.getUserData(this.pagination.current_page)
     },
     methods: {
         getUserData: function (page) {
@@ -48,20 +48,12 @@ let user = new Vue({
                 this.pagination = response.data.pagination
             })
         },
-        createItem: function () {
-            var input = this.newItem;
-            this.$http.post('/user', input).then((response) => {
-                this.changePage(this.pagination.current_page);
-                this.newItem = { 'title': '', 'description': '' };
-                $("#create-item").modal('hide');
-                // toastr.success('Item Created Successfully.', 'Success Alert', { timeOut: 5000 });
-            }, (response) => {
-                this.formErrors = response.data;
-            });
-        },
         changePage: function (page) {
-            this.pagination.current_page = page;
-            this.getUserData(page);
+            this.pagination.current_page = page
+            this.getUserData(page)
+        },
+        editUserData: function (id){
+            console.log(id)
         }
     }
 })

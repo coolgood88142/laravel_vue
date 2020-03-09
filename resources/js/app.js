@@ -7,8 +7,7 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
-let axios = require('axios');
-Vue.use(axios)
+window.axios = require('axios');
 
 Vue.config.productionTip = false;
 

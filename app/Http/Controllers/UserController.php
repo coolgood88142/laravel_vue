@@ -38,6 +38,30 @@ class UserController extends Controller
 
         return response()->json($response);
     }
+    public function getCityData()
+    {
+        $city = Config::get('city');
+        $city_array = array();
+        $counties = array();
+        $i=0;
+        foreach($city as $key => $value){
+            $counties[$i][0] = $city[$key]['counties'];
+            $counties[$i][1] = ($i+1);
+            $districts = array();
+            $j=0;
+            foreach($city[$key]['district'] as $district){
+                $districts[$j][0] = $data['district'][$j];
+                $districts[$j][1] = $data['value'][$j];
+                $j++;
+            }
+            $city_array[$i][0] = $counties;
+            $city_array[$i][1] = $districts;
+            $i++;
+        }
+        dd($city_array);
+
+        return $city_array;
+    }
 
     public function addData(Request $request)
     {
