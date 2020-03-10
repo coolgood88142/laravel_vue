@@ -169,14 +169,20 @@ export default {
         districts_array(){
             if (this.counties_selected != NaN ){
                 this.districts_selected = '';
-                return districts[(this.counties_selected) - 1];
+                return this.districts[(this.counties_selected) - 1];
             }
         }
     },
     data:function(){
         return {
-            districts_selected: ''
+            districts_selected: '',
+            districts:[]
         }
+    },
+    mounted: function(){
+        axios.get('/getcitydata?').then(response => {
+            this.districts = response.data.districts
+        })
     }
 }
 </script>>

@@ -40,6 +40,7 @@ Route::get('/user', function () {
 });
 
 Route::get('/user','userController@userView');
+
 Route::get('/getcitydata','userController@getCityData');
 
 Route::resource('vueitems','userController');

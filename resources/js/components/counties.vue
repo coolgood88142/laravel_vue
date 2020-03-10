@@ -35,13 +35,19 @@ export default {
     props: {
         select_class: {
             type:String
-        }
+        },
+        
     },
     data:function(){
         return {
-            counties_array: counties_data,
+            counties_array: [],
             counties_selected: ''
         }
+    },
+    mounted: function(){
+        axios.get('/getcitydata?').then(response => {
+            this.counties_array = response.data.counties
+        })
     }
 }
 </script>
