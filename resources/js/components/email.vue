@@ -23,16 +23,16 @@ export default {
             smallClass: this.getTextClass()
         }
     },
-    watch:{
-        emailValue(newVal){
-            let emailError = this.isValueNullOrEmpty(newVal)
-            
+    methods: {
+        getEmailIsError(){
+            let emailError = this.isValueNullOrEmpty(this.emailValue)
+        
             if(emailError){
                 this.emailError = true
                 this.isFormat = false
             }else{
                 let isMail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                if (!isMail.test(newVal)) {
+                if (!isMail.test(this.emailValue)) {
                     this.emailError = true
                     this.isFormat = true
                 }else{
@@ -44,6 +44,12 @@ export default {
             this.isShow = this.emailError
             this.inputClass = this.setElementClass(emailError, "input", false)
             this.smallClass = this.setElementClass(emailError, "text", this.isFormat)
+            return this.emailError
+        }
+    },
+    watch:{
+        emailValue(newVal){
+            this.getEmailIsError()
         }
     }
 }

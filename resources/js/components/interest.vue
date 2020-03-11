@@ -29,11 +29,17 @@ export default {
             smallClass: this.getTextClass()
         }
     },
-    watch:{
-        interestChecked(newVal){
-            this.interestError = this.isValueNullOrEmpty(newVal)
+    methods: {
+        getInterestIsError(){
+            this.interestError = this.isValueNullOrEmpty(this.interestChecked)
             this.checkLabelClass = this.setElementClass(this.interestError, "checklabel", false)
             this.smallClass = this.setElementClass(this.interestError, "text", false)
+            return this.interestError
+        }
+    },
+    watch:{
+        interestChecked(newVal){
+            this.getInterestIsError()
         }
     }
 }

@@ -21,11 +21,17 @@ export default {
             smallClass: this.getTextClass()
         }
     },
-    watch:{
-        nameValue(newVal){
-            this.nameError = this.isValueNullOrEmpty(newVal)
+    methods: {
+        getNameIsError(){
+            this.nameError = this.isValueNullOrEmpty(this.nameValue)
             this.inputClass = this.setElementClass(this.nameError, "input", false)
             this.smallClass = this.setElementClass(this.nameError, "text", false)
+            return this.nameError
+        }
+    },
+    watch:{
+        nameValue(newVal){
+            this.getNameIsError()
         }
     }
 }

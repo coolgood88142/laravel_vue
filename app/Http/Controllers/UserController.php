@@ -35,6 +35,7 @@ class UserController extends Controller
             ],
             'users' => $users
         ];
+        //確認user資料是否為重複，要補上文件
 
         return response()->json($response);
     }
@@ -63,7 +64,7 @@ class UserController extends Controller
         }
 
 
-        return ['counties' => $counties, 'districts' => $districts];
+        return view('form', ['counties' => $counties, 'districts' => $districts]);
     }
 
     public function addData(Request $request)

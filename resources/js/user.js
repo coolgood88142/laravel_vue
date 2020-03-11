@@ -11,8 +11,7 @@ let user = new Vue({
             to: 0,
             current_page: 1
         },
-        offset: 4,
-        newItem: { 'title': '', 'description': '' },
+        offset: 4
     },
     computed: {
         isActived: function () {
@@ -43,9 +42,21 @@ let user = new Vue({
     },
     methods: {
         getUserData: function (page) {
-            axios.get('/vueitems?page=' + page).then(response => {
+            axios.get('/getUserData?page=' + page).then(response => {
                 this.users = response.data.users.data,
                 this.pagination = response.data.pagination
+            }).catch((error) => {
+                //顯示請求資料失敗的錯誤訊息
+                if (error.response){
+                    //在log顯示response錯誤的資料、狀態、表頭
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }else{
+                    //在log顯示r錯誤訊息
+                    console.log('Error',error.message);
+                }
+                
             })
         },
         changePage: function (page) {

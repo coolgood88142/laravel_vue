@@ -31,9 +31,6 @@ Route::get('/style', function () {
     return view('style');
 });
 
-Route::get('/form', function () {
-    return view('form');
-});
 
 Route::get('/user', function () {
     return view('user');
@@ -41,8 +38,8 @@ Route::get('/user', function () {
 
 Route::get('/user','userController@userView');
 
-Route::get('/getcitydata','userController@getCityData');
+Route::get('/form','userController@getCityData');
 
-Route::resource('vueitems','userController');
+Route::get('/getUserData','userController@index');
 
 Route::post('/form', 'UserController@addData')->name('add');

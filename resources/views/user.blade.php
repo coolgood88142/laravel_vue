@@ -3,10 +3,9 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-
 <body>
     <div class="container">
-        <div id="app" class="content">
+        <div v-cloak id="app" class="content">
             <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">使用者資料</h2>
             <div style="text-align:right">
             <input type="button" id="btn_insert" class="btn btn-primary" v-on:click="addUserData()" value="新增" />
@@ -27,7 +26,7 @@
                         <td>@{{ user.us_id }}</td>
                         <td>@{{ user.us_name }}</td>
                         <td>@{{ user.us_email }}</td>
-                        <td>@{{ (user.us_status == 1 ? '正常' : '停用')  }}</td>
+                        <td>@{{ user.us_status == 1 ? '正常' : '停用'  }}</td>
                         <td><input type="button" class="btn btn-primary" value="編輯" v-on:click="editUserData(user.us_id)" /></td>
                     </tr>
                 </tbody>
@@ -40,7 +39,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item" v-for="page in pagesNumber" v-bind:class="[ page == isActived ? 'active' : '']">
+                    <li class="page-item" v-for="page in pagesNumber" :class="[ page == isActived ? 'active' : '']">
                         <a class="page-link" href="#" v-on:click="changePage(page)">@{{ page }}</a>
                     </li>
                     <li class="page-item" v-if="pagination.current_page < pagination.last_page">

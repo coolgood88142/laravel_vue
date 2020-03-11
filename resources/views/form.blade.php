@@ -43,7 +43,7 @@
                                 </div>
                                 <name_textbox ref="name"></name_textbox>
                                 <birthday_select ref="birthday"></birthday_select>
-                                <address_select ref="address"></address_select>
+                                <address_select ref="address" :counties_data="{{ json_encode($counties) }}" :districts_data="{{ json_encode($districts) }}"></address_select>
                                 <gender_radio ref="gender"></gender_radio>
                                 <email_textbox ref="email"></email_textbox>
                                 <interest_checkbox ref="interest"></interest_checkbox>

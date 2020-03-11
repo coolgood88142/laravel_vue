@@ -29,11 +29,17 @@ export default {
 
         }
     },
-    watch:{
-        genderChecked(newVal){
-            this.genderError = this.isValueNullOrEmpty(newVal)
+    methods: {
+        getGenderIsError(){
+            this.genderError = this.isValueNullOrEmpty(this.genderChecked)
             this.checkLabelClass = this.setElementClass(this.genderError, "checklabel", false)
             this.smallClass = this.setElementClass(this.genderError, "text", false)
+            return this.genderError
+        }
+    },
+    watch:{
+        genderChecked(newVal){
+            this.getGenderIsError()
         }
     }
 }

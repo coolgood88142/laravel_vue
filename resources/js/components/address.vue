@@ -3,10 +3,10 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
-            <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass"></counties>
+            <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass" :counties_data="counties_data"></counties>
         </div>
         <div class="form-check form-check-inline">
-            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected="countiesSelected"></districts>
+            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected="countiesSelected" :districts_data="districts_data"></districts>
         </div>
         <div class="form-check form-check-inline">
             <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="roadValue" placeholder="請選擇縣市與鄉鎮市區">
@@ -22,6 +22,14 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props:{
+        counties_data:{
+            type:Array
+        },
+        districts_data:{
+            type:Array
+        }
+    },
     data:function(){
         return {
             addressText: '地址',
