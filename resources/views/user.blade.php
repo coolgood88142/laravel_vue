@@ -22,6 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!--用checkbox可以做到刪除多個-->
                     <tr v-for="user in users">
                         <td>@{{ user.us_id }}</td>
                         <td>@{{ user.us_name }}</td>

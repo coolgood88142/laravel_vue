@@ -103,4 +103,25 @@ class UserController extends Controller
         
         return redirect('user');
     }
+
+    public function deleteUserData(Request $request){
+        $us_id = $request->us_id;
+        $user = DB::table('user')->where('us_id', $us_id)->delete();
+    }
+
+    //save新增與更新都可以使用，之後看看要怎麼改寫
+    public function updateUserData(Request $request){
+        $user = DB::table('user');
+
+        $user->us_name = $request->us_name;
+        $user->us_year = $request->us_year;
+        $user->us_month = $request->us_month;
+        $user->us_day = $request->us_day;
+        $user->us_districts = $request->us_districts;
+        $user->us_road = $request->us_road;
+        $user->us_gender = $request->us_gender;
+        $user->us_email = $request->us_email;
+        $user->us_interest = $request->us_interest; 
+        $user->save();
+    }
 }
