@@ -63,8 +63,15 @@ let user = new Vue({
             this.pagination.current_page = page
             this.getUserData(page)
         },
+        addUserData:function (){
+            window.location.href = './form'
+        },
         editUserData: function (id){
-            console.log(id)
+            // 用ajax開啟新頁面顯示編輯畫面，資料要全部套好
+            axios.get('/editUserData?us_id=' + id).then(response => {
+                // this.users = response.data.users.data,
+                // this.pagination = response.data.pagination
+            })
         }
     }
 })

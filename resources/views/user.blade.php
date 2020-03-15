@@ -8,6 +8,7 @@
         <div v-cloak id="app" class="content">
             <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">使用者資料</h2>
             <div style="text-align:right">
+            <!--新增改用url-->
             <input type="button" id="btn_insert" class="btn btn-primary" v-on:click="addUserData()" value="新增" />
             <input type="button" id="btn_delete" class="btn btn-primary" v-on:click="deleteUserData()" value="刪除" />
             </div><br />

@@ -40,8 +40,14 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-    public function getCityData()
+    public function getFormData()
     {
+        $city_data = $this->getCityData();
+
+        return view('form', ['counties' => $city_data['counties'], 'districts' => $city_data['districts']]);
+    }
+
+    public function getCityData(){
         $city = Config::get('city');
         $counties = array();
         $districts = array();
@@ -64,7 +70,7 @@ class UserController extends Controller
         }
 
 
-        return view('form', ['counties' => $counties, 'districts' => $districts]);
+        return ['counties' => $counties, 'districts' => $districts];
     }
 
     public function addData(Request $request)
@@ -104,6 +110,28 @@ class UserController extends Controller
         return redirect('user');
     }
 
+    public function selectUserData(Request $request){
+        $us_id = $request->us_id;
+        $user = DB::table('user')->where('us_id', $us_id)->get();
+        $name_value = $user->us_name;
+        $years_selected = $user->us_year;
+        $months_selected = $user->us_month;
+        $days_selected = $user->us_day;
+        $counties_selected = $user->us_counties;
+        $districts_selected = $user->us_districts;
+        $road_value = $user->us_road;
+        $gender_value = $user->us_gender;
+        $email_value = $user->us_email;
+        $interest_value = $user->us_interest;
+        $city_data = $this.getCityData();
+        dd($city_data);
+
+        return response()->json(['name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => $months_selected
+        , 'days_selected' => $days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
+        , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
+        , 'interest_value' => $interest_value, 'counties' => $city_data.counties, 'districts' => $city_data.districts]);
+    }
+
     public function deleteUserData(Request $request){
         $us_id = $request->us_id;
         $user = DB::table('user')->where('us_id', $us_id)->delete();
@@ -117,6 +145,7 @@ class UserController extends Controller
         $user->us_year = $request->us_year;
         $user->us_month = $request->us_month;
         $user->us_day = $request->us_day;
+        $user->us_counties = $request->us_counties;
         $user->us_districts = $request->us_districts;
         $user->us_road = $request->us_road;
         $user->us_gender = $request->us_gender;

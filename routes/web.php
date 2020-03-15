@@ -38,8 +38,11 @@ Route::get('/user', function () {
 
 Route::get('/user','userController@userView');
 
-Route::get('/form','userController@getCityData');
+Route::get('/form','userController@getFormData');
 
 Route::get('/getUserData','userController@index');
 
 Route::post('/form', 'UserController@addData')->name('add');
+
+Route::get('/editUserData','userController@selectUserData');
+

@@ -49,7 +49,7 @@
                                 <interest_checkbox ref="interest" :interestChecked="{{ json_encode($interest_value) }}"></interest_checkbox>
                                 <!-- 送出要研究看看怎麼使用同一個funcrion做到新增與更新(可以用save)-->
                                 <div class="form-group">
-                                    <input type="button" :class="btnStyle" :value="btnText" v-on:click="send()">
+                                    <input type="submit" :class="btnStyle" :value="btnText">
                                 </div>
                             </div>
                         </div>
