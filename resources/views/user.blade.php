@@ -9,12 +9,13 @@
             <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">使用者資料</h2>
             <div style="text-align:right">
             <!--新增改用url-->
-            <input type="button" id="btn_insert" class="btn btn-primary" v-on:click="addUserData()" value="新增" />
+            <input type="button" id="btn_insert" class="btn btn-primary" url="add_action" value="新增" />
             <input type="button" id="btn_delete" class="btn btn-primary" v-on:click="deleteUserData()" value="刪除" />
             </div><br />
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>ID</th>
                         <th>姓名</th>
                         <th>信箱</th>
@@ -25,6 +26,7 @@
                 <tbody>
                     <!--用checkbox可以做到刪除多個-->
                     <tr v-for="user in users">
+                        <td><input type="checkbox" name="us_id" value="user.us_id"></td>
                         <td>@{{ user.us_id }}</td>
                         <td>@{{ user.us_name }}</td>
                         <td>@{{ user.us_email }}</td>

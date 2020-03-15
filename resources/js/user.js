@@ -11,7 +11,8 @@ let user = new Vue({
             to: 0,
             current_page: 1
         },
-        offset: 4
+        offset: 4,
+        add_action:''
     },
     computed: {
         isActived: function () {
@@ -45,6 +46,7 @@ let user = new Vue({
             axios.get('/getUserData?page=' + page).then(response => {
                 this.users = response.data.users.data,
                 this.pagination = response.data.pagination
+                this.add_action = response.data.add_action
             }).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息
                 if (error.response){

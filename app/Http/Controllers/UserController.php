@@ -33,7 +33,8 @@ class UserController extends Controller
                 'from' => $users->firstItem(),
                 'to' => $users->lastItem()
             ],
-            'users' => $users
+            'users' => $users,
+            'add_action' => view('edit')
         ];
         //確認user資料是否為重複，要補上文件
 
@@ -42,36 +43,11 @@ class UserController extends Controller
 
     public function getFormData()
     {
-        $city_data = $this->getCityData();
-
-        return view('form', ['counties' => $city_data['counties'], 'districts' => $city_data['districts']]);
-    }
-
-    public function getCityData(){
         $city = Config::get('city');
-        $counties = array();
-        $districts = array();
-        $i=0;$j=0;
 
-        foreach($city as $key => $value){
-            $counties[$i]['text'] = $city[$key]['counties'];
-            $counties[$i]['value'] = ($i+1);
-            $k=0;
-            $city_districts = array();
-            foreach($city[$key]['districts'] as $district){
-                $value = $city[$key]['value'];
-                $city_districts[$j]['text'] = $district;
-                $city_districts[$j]['value'] = $value[$k];
-                $k++;
-                $j++;
-            }
-            $districts[$i] = $city_districts;
-            $i++;
-        }
-
-
-        return ['counties' => $counties, 'districts' => $districts];
+        return view('form', ['counties' => $city['counties'], 'districts' => $city['districts']]);
     }
+
 
     public function addData(Request $request)
     {
