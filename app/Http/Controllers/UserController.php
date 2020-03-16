@@ -33,8 +33,7 @@ class UserController extends Controller
                 'from' => $users->firstItem(),
                 'to' => $users->lastItem()
             ],
-            'users' => $users,
-            'add_action' => view('edit')
+            'users' => $users
         ];
         //確認user資料是否為重複，要補上文件
 
@@ -111,6 +110,8 @@ class UserController extends Controller
     public function deleteUserData(Request $request){
         $us_id = $request->us_id;
         $user = DB::table('user')->where('us_id', $us_id)->delete();
+        
+        return redirect('user');
     }
 
     //save新增與更新都可以使用，之後看看要怎麼改寫

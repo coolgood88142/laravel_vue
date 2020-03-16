@@ -31,18 +31,19 @@ Route::get('/style', function () {
     return view('style');
 });
 
-
 Route::get('/user', function () {
     return view('user');
 });
 
 Route::get('/user','userController@userView');
 
-Route::get('/form','userController@getFormData');
+Route::get('/form','userController@getFormData')->name('getForm');
 
 Route::get('/getUserData','userController@index');
 
 Route::post('/form', 'UserController@addData')->name('add');
 
 Route::get('/editUserData','userController@selectUserData');
+
+Route::post('/deleteUserData','userController@deleteUserData')->name('delete');
 
