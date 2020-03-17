@@ -58,12 +58,14 @@ class UserController extends Controller
         $us_day= $us_month < 10 ? '0' . $us_day : $us_day;
         $us_birthday = $us_year . '-' . $us_month . '-' . $us_day;
 
-        $us_city = Config::get('city');
-        $counties_array = $us_city[(($request->us_counties) - 1)];
-        $us_counties = $counties_array['counties'];
-
-        $districts_index = array_search(($request->us_districts), $counties_array['value']); 
-        $us_districts = $counties_array['districts'][$districts_index];
+        $city = Config::get('city');
+        $counties_data = $city['counties'][(($request->us_counties) - 1)];
+        $us_counties = $counties_data['text'];
+        
+        $counties_index = $counties_data['value'];
+        $districts_data = $city['districts'][$counties_index];
+        $districts_index = array_search(($request->us_districts), $districts_data); 
+        $us_districts = $districts_data[$districts_index]['text'];
         $us_road = $request->us_road;
 
         $us_gender = $request->us_gender;
@@ -87,24 +89,31 @@ class UserController extends Controller
 
     public function selectUserData(Request $request){
         $us_id = $request->us_id;
-        $user = DB::table('user')->where('us_id', $us_id)->get();
+        $user = DB::table('user')->where('us_id', $us_id)->first();
         $name_value = $user->us_name;
-        $years_selected = $user->us_year;
-        $months_selected = $user->us_month;
-        $days_selected = $user->us_day;
+
+        $birthday = explode("-",$user->us_birthday);
+        $years_selected = $birthday[0];
+        $months_selected = $birthday[1];
+        $days_selected = $birthday[2];
         $counties_selected = $user->us_counties;
         $districts_selected = $user->us_districts;
         $road_value = $user->us_road;
         $gender_value = $user->us_gender;
         $email_value = $user->us_email;
         $interest_value = $user->us_interest;
-        $city_data = $this.getCityData();
-        dd($city_data);
+        $city = Config::get('city');
 
-        return response()->json(['name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => $months_selected
+        $users = ['name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => $months_selected
         , 'days_selected' => $days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
         , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
-        , 'interest_value' => $interest_value, 'counties' => $city_data.counties, 'districts' => $city_data.districts]);
+        , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
+
+        $response = [
+            'user' => $users
+        ];
+
+        return response()->json($response);
     }
 
     public function deleteUserData(Request $request){

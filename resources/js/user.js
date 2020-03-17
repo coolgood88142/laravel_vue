@@ -59,18 +59,26 @@ let user = new Vue({
                 
             })
         },
-        changePage: function (page) {
-            this.pagination.current_page = page
-            this.getUserData(page)
-        },
         addUserData:function (){
             window.location.href = './form'
         },
         editUserData: function (id){
             // 用ajax開啟新頁面顯示編輯畫面，資料要全部套好
             axios.get('/editUserData?us_id=' + id).then(response => {
-                // this.users = response.data.users.data,
-                // this.pagination = response.data.pagination
+                this.user = response.data.user.data
+                console.log(this.user)
+            }).catch((error) => {
+                //顯示請求資料失敗的錯誤訊息
+                if (error.response) {
+                    //在log顯示response錯誤的資料、狀態、表頭
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else {
+                    //在log顯示r錯誤訊息
+                    console.log('Error', error.message);
+                }
+
             })
         }
     }

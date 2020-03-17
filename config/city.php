@@ -203,22 +203,22 @@
 
 $counties = array();
 $districts = array();
-$i=0;$j=0;
+$i=0;
 
 foreach($city as $key => $value){
     $counties[$i]['text'] = $city[$key]['counties'];
     $counties[$i]['value'] = ($i+1);
-    $k=0;
+    $k=0;$j=0;
     
-    $city_districts = array();
+    $district_array = array();
     foreach($city[$key]['districts'] as $district){
         $value = $city[$key]['value'];
-        $city_districts[$j]['text'] = $district;
-        $city_districts[$j]['value'] = $value[$k];
+        $district_array[$j]['text'] = $district;
+        $district_array[$j]['value'] = $value[$k];
         $k++;
         $j++;
     }
-    $districts[$i] = $city_districts;
+    $districts[$i] = $district_array;
     $i++;
 }
 
