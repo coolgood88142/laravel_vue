@@ -8,27 +8,27 @@
 <script>
 export default {
     props: {
-        counties_selected:{
-            type:Number
+        counties_selected_text:{
+            type:String
         },
         select_class: {
             type:String
         },
         districts_data:{
-            type:Array
+            type:Object
         }
     },
     computed: {
         districts_array(){
-            if (this.counties_selected != NaN ){
+            if (this.counties_selected_text != '' ){
                 this.districts_selected = '';
-                return this.districts_data[(this.counties_selected) - 1];
+                return this.districts_data[this.counties_selected_text];
             }
         }
     },
     data:function(){
         return {
-            districts_selected: this.districts_data,
+            districts_selected: '',
             districts:[]
         }
     }

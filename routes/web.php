@@ -35,15 +35,16 @@ Route::get('/user', function () {
     return view('user');
 });
 
-Route::get('/user','userController@userView');
+//每個route都要寫name命名
+Route::get('/user','userController@userView')->name('getUserView');
 
 Route::get('/form','userController@getFormData')->name('getForm');
 
-Route::get('/getUserData','userController@index');
+Route::get('/getUserData','userController@index')->name('getUserData');
 
 Route::post('/form', 'UserController@addData')->name('add');
 
-Route::get('/editUserData','userController@selectUserData');
+Route::get('/editUserData','userController@selectUserData')->name('editUserData');
 
 Route::post('/deleteUserData','userController@deleteUserData')->name('delete');
 

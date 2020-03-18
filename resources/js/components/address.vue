@@ -6,7 +6,7 @@
             <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass" :counties_data="counties_data"></counties>
         </div>
         <div class="form-check form-check-inline">
-            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected="countiesSelected" :districts_data="districts_data"></districts>
+            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected_text="countiesSelectedText" :districts_data="districts_data"></districts>
         </div>
         <div class="form-check form-check-inline">
             <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="roadValue" placeholder="請選擇縣市與鄉鎮市區">
@@ -27,13 +27,14 @@ export default {
             type:Array
         },
         districts_data:{
-            type:Array
+            type:Object
         }
     },
     data:function(){
         return {
             addressText: '地址',
             countiesSelected: 0,
+            countiesSelectedText: '',
             districtsSelected: '',
             roadValue:'',
             warningText: '地址必填',
@@ -60,6 +61,7 @@ export default {
         },
         updateDistricts(CountiesSelected) {
             this.countiesSelected = CountiesSelected;
+            this.countiesSelectedText = this.counties_data[CountiesSelected]['text'];
         },
         isAddressError: function(){
             if (!this.isCountiesError && !this.isDistrictsError && !this.isRoadValueError){

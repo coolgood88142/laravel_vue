@@ -4,14 +4,15 @@
         <div class="form-check form-check-inline">
             <select v-model="yearsSelected" id="us_year" name="us_year" :class="yearSelectClass" v-on:change="clearOptions">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(year, index) in years" :key="index" :value="index">{{ year.value }}</option>
+                <!--下拉選單不要拿index當value-->
+                <option v-for="(year, index) in years" :key="index" :value="year.value">{{ year.value }}</option>
             </select>
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
             <select v-model="monthsSelected" id="us_month" name="us_month" :class="monthSelectClass" v-on:change="onChange">
                 <option value="" disabled selected>--請選擇--</option>
-                <option v-for="(month, index) in months" :key="index" :value="index">{{ month.value }}</option>
+                <option v-for="(month, index) in months" :key="index" :value="month.value">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
@@ -77,9 +78,7 @@ export default {
         onChange: function () {
             this.daysSelected = ''
             if (this.yearsSelected  != ''){
-                let year = this.years[this.yearsSelected].value;
-                let month = this.months[this.monthsSelected].value;
-                this.days = new Date(year, month, 0).getDate()
+                this.days = new Date(this.yearsSelected, this.monthsSelected, 0).getDate()
             }
         },
         isBirthdayError: function(){

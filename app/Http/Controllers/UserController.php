@@ -51,19 +51,13 @@ class UserController extends Controller
     public function addData(Request $request)
     {
         $us_name = $request->us_name;
-        $us_year = ((int)($request->us_year) + 1900);
-        $us_month = $request->us_month;
-        $us_month= $us_month < 10 ? '0' . $us_month : $us_month;
-        $us_day = $request->us_day;
-        $us_day= $us_month < 10 ? '0' . $us_day : $us_day;
-        $us_birthday = $us_year . '-' . $us_month . '-' . $us_day;
+        $us_birthday = $request->us_month . '-' . $request->us_month . '-' . $request->us_day;
 
         $city = Config::get('city');
-        $counties_data = $city['counties'][(($request->us_counties) - 1)];
+        $counties_data = $city['counties'][($request->us_counties)];
         $us_counties = $counties_data['text'];
         
-        $counties_index = $counties_data['value'];
-        $districts_data = $city['districts'][$counties_index];
+        $districts_data = $city['districts'][$us_counties];
         $districts_index = array_search(($request->us_districts), $districts_data); 
         $us_districts = $districts_data[$districts_index]['text'];
         $us_road = $request->us_road;
@@ -84,7 +78,7 @@ class UserController extends Controller
              'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1]
         );
         
-        return redirect('user');
+        return view('user');
     }
 
     public function selectUserData(Request $request){
@@ -109,18 +103,14 @@ class UserController extends Controller
         , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
         , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
 
-        $response = [
-            'user' => $users
-        ];
-
-        return response()->json($response);
+        return view('edit', ['users' => $users]);
     }
 
     public function deleteUserData(Request $request){
         $us_id = $request->us_id;
         $user = DB::table('user')->where('us_id', $us_id)->delete();
         
-        return redirect('user');
+        return view('user');
     }
 
     //save新增與更新都可以使用，之後看看要怎麼改寫

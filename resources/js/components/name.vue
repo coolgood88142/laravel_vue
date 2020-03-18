@@ -11,6 +11,18 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props:{
+        editNameValue:{
+            type:String
+        }
+    },
+    computed:{
+        nameValue(){
+            if(editNameValue != '' && editNameValue != null && editNameValue != undefined){
+                this.nameValue = this.editNameValue
+            }
+        }
+    },
     data:function(){
         return {
             nameText: '姓名',

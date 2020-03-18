@@ -59,15 +59,13 @@ let user = new Vue({
                 
             })
         },
-        addUserData:function (){
-            window.location.href = './form'
+        changePage: function (page) {
+            this.pagination.current_page = page
+            this.getUserData(page)
         },
         editUserData: function (id){
             // 用ajax開啟新頁面顯示編輯畫面，資料要全部套好
-            axios.get('/editUserData?us_id=' + id).then(response => {
-                this.user = response.data.user.data
-                console.log(this.user)
-            }).catch((error) => {
+            axios.get('/editUserData?us_id=' + id).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息
                 if (error.response) {
                     //在log顯示response錯誤的資料、狀態、表頭
