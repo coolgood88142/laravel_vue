@@ -102,13 +102,14 @@ class UserController extends Controller
         , 'days_selected' => $days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
         , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
         , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
+        
 
-        return view('edit', ['users' => $users]);
+        return response()->json($users);
     }
 
     public function deleteUserData(Request $request){
         $us_id = $request->us_id;
-        $user = DB::table('user')->where('us_id', $us_id)->delete();
+        $user = DB::table('user')->whereIn('us_id', $us_id)->delete();
         
         return view('user');
     }

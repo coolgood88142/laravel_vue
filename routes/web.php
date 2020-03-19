@@ -35,7 +35,6 @@ Route::get('/user', function () {
     return view('user');
 });
 
-//每個route都要寫name命名
 Route::get('/user','userController@userView')->name('getUserView');
 
 Route::get('/form','userController@getFormData')->name('getForm');
