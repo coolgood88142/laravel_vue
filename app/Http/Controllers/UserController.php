@@ -104,7 +104,7 @@ class UserController extends Controller
         , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
         
 
-        return response()->json($users);
+        return view('edit', $users);
     }
 
     public function deleteUserData(Request $request){

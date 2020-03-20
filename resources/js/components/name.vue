@@ -19,7 +19,7 @@ export default {
     computed:{
         nameValue(){
             if(editNameValue != '' && editNameValue != null && editNameValue != undefined){
-                this.nameValue = this.editNameValue
+                return this.editNameValue
             }
         }
     },

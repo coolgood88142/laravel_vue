@@ -11,6 +11,18 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props:{
+        editEmailValue:{
+            type:String
+        }
+    },
+    computed:{
+        emailValue(){
+            if(editEmailValue != '' && editEmailValue != null && editEmailValue != undefined){
+                return this.editEmailValue
+            }
+        }
+    },
     data:function(){
         return {
             emailText: 'email',
