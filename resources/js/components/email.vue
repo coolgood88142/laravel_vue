@@ -16,13 +16,6 @@ export default {
             type:String
         }
     },
-    computed:{
-        emailValue(){
-            if(editEmailValue != '' && editEmailValue != null && editEmailValue != undefined){
-                return this.editEmailValue
-            }
-        }
-    },
     data:function(){
         return {
             emailText: 'email',
@@ -62,6 +55,9 @@ export default {
     watch:{
         emailValue(newVal){
             this.getEmailIsError()
+        },
+        editEmailValue(newVal){
+            this.emailValue = newVal
         }
     }
 }

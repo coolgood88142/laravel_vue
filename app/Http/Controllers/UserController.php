@@ -102,7 +102,7 @@ class UserController extends Controller
         , 'days_selected' => $days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
         , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
         , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
-        
+        // dd($users);
 
         return view('edit', $users);
     }

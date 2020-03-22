@@ -12,14 +12,14 @@ import verification from './mixins/verification.js';
 export default {
     mixins: [verification],
     props:{
-        editNameValue:{
+        editnamevalue:{
             type:String
         }
     },
     computed:{
         nameValue(){
-            if(editNameValue != '' && editNameValue != null && editNameValue != undefined){
-                return this.editNameValue
+            if(this.editnamevalue != '' && this.editnamevalue != null && this.editnamevalue != undefined){
+                return this.editnamevalue
             }
         }
     },
