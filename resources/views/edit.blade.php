@@ -41,7 +41,8 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <name_textbox ref="name" :nameValue="'{{ json_encode($name_value) }}'"></name_textbox>
+                                <input type="textbox" :class="inputClass" id="name1" name="name1" :value="'{{ $name_value }}'" />
+                                <name_textbox ref="name" :nameValue="'{{ $name_value }}'"></name_textbox>
                                 <birthday_select ref="birthday" :yearsSelected="'{{ $years_selected }}'" :monthsSelected="'{{ $months_selected }}'" :daysSelected="'{{ $days_selected }}'"></birthday_select>
                                 <address_select ref="address" :countiesSelected="'{{ $counties_selected }}'" :districtsSelected="'{{ $districts_selected }}'" :roadValue="'{{ $road_value }}'" :counties_data="{{ json_encode($counties) }}" :districts_data="{{ json_encode($districts) }}"></address_select>
                                 <gender_radio ref="gender" :genderChecked="'{{ $gender_value }}'"></gender_radio>
