@@ -23,6 +23,15 @@ import verification from './mixins/verification.js';
 export default {
     mixins: [verification],
     props:{
+        countiesSelected:{
+            type:Number
+        },
+        districtsSelected:{
+            type:String
+        },
+        roadValue:{
+            type:String
+        },
         counties_data:{
             type:Array
         },
@@ -33,10 +42,7 @@ export default {
     data:function(){
         return {
             addressText: '地址',
-            countiesSelected: 0,
             countiesSelectedText: '',
-            districtsSelected: '',
-            roadValue:'',
             warningText: '地址必填',
             remindText:'地址填寫不完整',
             addressError: false,

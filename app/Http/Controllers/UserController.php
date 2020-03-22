@@ -43,8 +43,12 @@ class UserController extends Controller
     public function getFormData()
     {
         $city = Config::get('city');
+        $users = ['name_value' => '', 'years_selected' => '', 'months_selected' => ''
+        , 'days_selected' => '', 'counties_selected' => 0, 'districts_selected' => ''
+        , 'road_value' => '', 'gender_value' => '', 'email_value' => ''
+        , 'interest_value' => '', 'counties' => $city['counties'], 'districts' => $city['districts']];
 
-        return view('form', ['counties' => $city['counties'], 'districts' => $city['districts']]);
+        return view('edit', $users);
     }
 
 

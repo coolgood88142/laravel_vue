@@ -47,14 +47,22 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props:{
+        yearsSelected:{
+            type:String
+        },
+        monthsSelected:{
+            type:String
+        },
+        daysSelected:{
+            type:String
+        }
+    },
     data:function(){
         return {
             years: DefaultDateData(begin_year, end_year),
             months: DefaultDateData(begin_month, end_month),
             days: '',
-            yearsSelected:'',
-            monthsSelected: '',
-            daysSelected: '',
             warningText: '生日必填',
             remindText:'生日填寫不完整',
             birthdayError: false,

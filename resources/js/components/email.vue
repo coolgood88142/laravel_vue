@@ -12,14 +12,13 @@ import verification from './mixins/verification.js';
 export default {
     mixins: [verification],
     props:{
-        editEmailValue:{
+        emailValue:{
             type:String
         }
     },
     data:function(){
         return {
             emailText: 'email',
-            emailValue: '',
             warningText: 'email必填',
             remindText:'email格式錯誤',
             emailError: true,
@@ -55,9 +54,6 @@ export default {
     watch:{
         emailValue(newVal){
             this.getEmailIsError()
-        },
-        editEmailValue(newVal){
-            this.emailValue = newVal
         }
     }
 }

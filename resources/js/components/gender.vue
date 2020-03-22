@@ -14,10 +14,14 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props:{
+        genderChecked:{
+            type:String
+        }
+    },
     data:function(){
         return {
             genderText: '性別',
-            genderChecked: '',
             gender_array:[
                 { id:'gender0', text: '男', value: 'R' },
                 { id:'gender1', text: '女', value: 'S' }

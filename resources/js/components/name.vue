@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ nameText }}</h3>
-        <input type="textbox" :class="inputClass" id="us_name" name="us_name" v-model="nameValue"/>
+        <input type="textbox" :class="inputClass" id="us_name" name="us_name" :value="nameValue"/>
         <small v-if="nameError" id="warning" :class="smallClass">{{ warningText }}</small>
      </div>
 </template>
@@ -12,22 +12,14 @@ import verification from './mixins/verification.js';
 export default {
     mixins: [verification],
     props:{
-        editnamevalue:{
+        nameValue:{
             type:String
-        }
-    },
-    computed:{
-        nameValue(){
-            if(this.editnamevalue != '' && this.editnamevalue != null && this.editnamevalue != undefined){
-                return this.editnamevalue
-            }
         }
     },
     data:function(){
         return {
             nameText: '姓名',
             warningText: '姓名必填',
-            nameValue: '',
             nameError: false,
             inputClass: this.getInputClass(),
             smallClass: this.getTextClass()

@@ -14,10 +14,14 @@ import verification from './mixins/verification.js';
 
 export default {
     mixins: [verification],
+    props:{
+        interestChecked:{
+            type:Array
+        }
+    },
     data:function(){
         return {
             interestText: '興趣(複)',
-            interestChecked: [],
             interest_array: [
                 { id:'interest0', text: '運動', value: 0 },
                 { id:'interest1', text: '上網', value: 1 },
