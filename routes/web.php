@@ -35,6 +35,10 @@ Route::get('/user', function () {
     return view('user');
 });
 
+Route::get('/api', function () {
+    return view('api');
+});
+
 Route::get('/user','userController@userView')->name('getUserView');
 
 Route::get('/form','userController@getFormData')->name('getForm');

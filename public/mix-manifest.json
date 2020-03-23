@@ -1,4 +1,5 @@
 {
+    "/js/api.js": "/js/api.js?id=2a5a13fd052d196403e5",
     "/js/app.js": "/js/app.js?id=15b64a8c92f8181d9c6c",
     "/css/app.css": "/css/app.css?id=2a4461fc35df4e8d0a06",
     "/js/button.js": "/js/button.js?id=24ae62ec306d119e16b5",
@@ -6,5 +7,5 @@
     "/js/date.js": "/js/date.js?id=30e9a2188763547ccf0d",
     "/js/style.js": "/js/style.js?id=b57cd1ce37e601564e88",
     "/js/user.js": "/js/user.js?id=77cff9c50f8f07194f51",
-    "/js/verification.js": "/js/verification.js?id=5a36be250318a1c00509"
+    "/js/verification.js": "/js/verification.js?id=30cfeb555047f1196dcf"
 }
