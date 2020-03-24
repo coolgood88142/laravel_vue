@@ -2,6 +2,7 @@
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
 </head>
 
 <body>

@@ -89,24 +89,26 @@ class UserController extends Controller
         $us_id = $request->us_id;
         $user = DB::table('user')->where('us_id', $us_id)->first();
         $name_value = $user->us_name;
+        $city = Config::get('city');
 
         $birthday = explode("-",$user->us_birthday);
         $years_selected = $birthday[0];
-        $months_selected = $birthday[1];
-        $days_selected = $birthday[2];
+        $months_selected = (int)$birthday[1];
+        $days_selected = (int)$birthday[2];
+        $counties_index = array_keys($city['districts'],$user->us_counties);
+        dd($city['districts']);
         $counties_selected = $user->us_counties;
         $districts_selected = $user->us_districts;
         $road_value = $user->us_road;
         $gender_value = $user->us_gender;
         $email_value = $user->us_email;
         $interest_value = $user->us_interest;
-        $city = Config::get('city');
 
-        $users = ['name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => $months_selected
-        , 'days_selected' => $days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
+        $users = ['name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => (string)$months_selected
+        , 'days_selected' => (string)$days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
         , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
         , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
-        // dd($users);
+        dd($users);
 
         return view('edit', $users);
     }

@@ -41,13 +41,12 @@
                                         <h2 id="title" class="text-center text-black font-weight-bold">@{{ title }}</h2>
                                     </div>
                                 </div>
-                                <input type="textbox" :class="inputClass" id="name1" name="name1" :value="'{{ $name_value }}'" />
-                                <name_textbox ref="name" :nameValue="'{{ $name_value }}'"></name_textbox>
-                                <birthday_select ref="birthday" :yearsSelected="'{{ $years_selected }}'" :monthsSelected="'{{ $months_selected }}'" :daysSelected="'{{ $days_selected }}'"></birthday_select>
-                                <address_select ref="address" :countiesSelected="'{{ $counties_selected }}'" :districtsSelected="'{{ $districts_selected }}'" :roadValue="'{{ $road_value }}'" :counties_data="{{ json_encode($counties) }}" :districts_data="{{ json_encode($districts) }}"></address_select>
-                                <gender_radio ref="gender" :genderChecked="'{{ $gender_value }}'"></gender_radio>
-                                <email_textbox ref="email" :emailValue="'{{ $email_value }}'"></email_textbox>
-                                <interest_checkbox ref="interest" :interestChecked="'{{ $interest_value }}'"></interest_checkbox>
+                                <name_textbox ref="name" :name-value="'{{ $name_value }}'"></name_textbox>
+                                <birthday_select ref="birthday" :years-selected="'{{ $years_selected }}'" :months-selected="'{{ $months_selected }}'" :days-selected="'{{ $days_selected }}'"></birthday_select>
+                                <address_select ref="address" :counties-selected="'{{ $counties_selected }}'" :districts-selected="'{{ $districts_selected }}'" :road-value="'{{ $road_value }}'" :counties_data="{{ json_encode($counties) }}" :districts_data="{{ json_encode($districts) }}"></address_select>
+                                <gender_radio ref="gender" :gender-checked="'{{ $gender_value }}'"></gender_radio>
+                                <email_textbox ref="email" :email-value="'{{ $email_value }}'"></email_textbox>
+                                <interest_checkbox ref="interest" :interest-checked="'{{ $interest_value }}'"></interest_checkbox>
                                 <!-- 送出要研究看看怎麼使用同一個funcrion做到新增與更新(可以用save)-->
                                 <div class="form-group">
                                     <input type="submit" :class="btnStyle" :value="btnText">
