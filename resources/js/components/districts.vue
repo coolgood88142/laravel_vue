@@ -1,5 +1,5 @@
 <template>
-    <select v-model="districts_selected" id="us_districts" name="us_districts" :class="select_class" @change="$emit('change-districts', districts_selected)">
+    <select v-model="districtsSelected" id="us_districts" name="us_districts" :class="select_class" @change="$emit('change-districts', districtsSelected)">
         <option value="" disabled selected>--請選擇--</option>
         <option v-for="(districts, index) in districts_array" :key="index" :value="districts.value">{{ districts.text }}</option>
     </select>
@@ -16,19 +16,20 @@ export default {
         },
         districts_data:{
             type:Object
+        },
+        districtsSelected:{
+            type:Number
         }
     },
     computed: {
         districts_array(){
             if (this.counties_selected_text != '' ){
-                this.districts_selected = '';
                 return this.districts_data[this.counties_selected_text];
             }
         }
     },
     data:function(){
         return {
-            districts_selected: '',
             districts:[]
         }
     }

@@ -55,7 +55,7 @@ class UserController extends Controller
     public function addData(Request $request)
     {
         $us_name = $request->us_name;
-        $us_birthday = $request->us_month . '-' . $request->us_month . '-' . $request->us_day;
+        $us_birthday = $request->us_year . '-' . $request->us_month . '-' . $request->us_day;
 
         $city = Config::get('city');
         $counties_data = $city['counties'][($request->us_counties)];
@@ -95,20 +95,37 @@ class UserController extends Controller
         $years_selected = $birthday[0];
         $months_selected = (int)$birthday[1];
         $days_selected = (int)$birthday[2];
-        $counties_index = array_keys($city['districts'],$user->us_counties);
-        dd($city['districts']);
-        $counties_selected = $user->us_counties;
-        $districts_selected = $user->us_districts;
+
+        $i=0;
+        foreach($city['counties'] as $key => $counties){
+            if($user->us_counties == $counties['text']){
+                $counties_selected = $i;
+                break;
+            }
+            $i++;
+        }
+
+        $districts_array = $city['districts'][$user->us_counties];
+        foreach($districts_array as $key => $districts){
+            if($user->us_districts == $districts['text']){
+                $districts_selected = $districts['value'];
+                break;
+            }
+        }
+
         $road_value = $user->us_road;
         $gender_value = $user->us_gender;
         $email_value = $user->us_email;
-        $interest_value = $user->us_interest;
+        $interests = explode(",",$user->us_interest);
+        $interest_value = [];
+        foreach($interests as $key => $value){
+            array_push($interest_value, (int)$value);
+        }
 
-        $users = ['name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => (string)$months_selected
-        , 'days_selected' => (string)$days_selected, 'counties_selected' => $counties_selected, 'districts_selected' => $districts_selected
+        $users = ['id_value' => $us_id, 'name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => $months_selected
+        , 'days_selected' => $days_selected, 'counties_selected' => (int)$counties_selected, 'districts_selected' => (int)$districts_selected
         , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
         , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
-        dd($users);
 
         return view('edit', $users);
     }
@@ -120,20 +137,46 @@ class UserController extends Controller
         return view('user');
     }
 
-    //save新增與更新都可以使用，之後看看要怎麼改寫
     public function updateUserData(Request $request){
-        $user = DB::table('user');
+        $us_name = $request->us_name;
+        $us_month = str_pad($request->us_month,2,"0",STR_PAD_LEFT);
+        $us_day = str_pad($request->us_day,2,"0",STR_PAD_LEFT);
+        $us_birthday = (String)$request->us_year . '-' . $us_month . '-' . $us_day;
 
-        $user->us_name = $request->us_name;
-        $user->us_year = $request->us_year;
-        $user->us_month = $request->us_month;
-        $user->us_day = $request->us_day;
-        $user->us_counties = $request->us_counties;
-        $user->us_districts = $request->us_districts;
-        $user->us_road = $request->us_road;
-        $user->us_gender = $request->us_gender;
-        $user->us_email = $request->us_email;
-        $user->us_interest = $request->us_interest; 
-        $user->save();
+        $city = Config::get('city');
+        $counties_data = $city['counties'][($request->us_counties)];
+        $us_counties = $counties_data['text'];
+        
+        $districts_data = $city['districts'][$us_counties];
+        $districts_index = array_search(($request->us_districts), $districts_data); 
+        $us_districts = $districts_data[$districts_index]['text'];
+
+        $us_road = $request->us_road;
+        $us_gender = $request->us_gender;
+        $us_email = $request->us_email;
+        $interest_array = $request->input('us_interest');
+
+        $us_interest = '';
+        foreach ($interest_array as $value){
+            $us_interest = $us_interest . $value . ',';
+        }
+        $us_interest = substr($us_interest,0,-1);
+
+        try {
+            $user = DB::table('user')->where('us_id', $request->us_id)->first();
+            $user->us_name = $us_name;
+            $user->us_birthday = $us_birthday;
+            $user->us_counties = $us_counties;
+            $user->us_districts = $us_districts;
+            $user->us_road = $us_road;
+            $user->us_gender = $us_gender;
+            $user->us_email = $us_email;
+            $user->us_interest = $us_interest;
+            $user->save();
+
+        } catch (Exception $e) {
+            dd($e);
+        }
+         return redirect('getUserView');
     }
 }

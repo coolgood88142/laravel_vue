@@ -51,3 +51,5 @@ Route::get('/editUserData','userController@selectUserData')->name('editUserData'
 
 Route::post('/deleteUserData','userController@deleteUserData')->name('delete');
 
+Route::post('/updateUserData','userController@updateUserData')->name('update');
+

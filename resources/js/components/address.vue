@@ -3,10 +3,10 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
-            <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass" :counties_data="counties_data"></counties>
+            <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass" :counties_data="counties_data" :counties-selected="countiesSelected"></counties>
         </div>
         <div class="form-check form-check-inline">
-            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected_text="countiesSelectedText" :districts_data="districts_data"></districts>
+            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected_text="countiesSelectedText" :districts_data="districts_data" :districts-selected="districtsSelected"></districts>
         </div>
         <div class="form-check form-check-inline">
             <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="roadValue" placeholder="請選擇縣市與鄉鎮市區">
@@ -27,7 +27,7 @@ export default {
             type:Number
         },
         districtsSelected:{
-            type:String
+            type:Number
         },
         roadValue:{
             type:String
@@ -61,13 +61,17 @@ export default {
         'counties': counties,
         'districts': districts
     },
+    mounted() {
+        this.countiesSelectedText = this.counties_data[this.countiesSelected]['text'];
+    },
     methods: {
         getDistrictsSelected(DistrictsSelected) {
             this.districtsSelected = DistrictsSelected;
         },
         updateDistricts(CountiesSelected) {
-            this.countiesSelected = CountiesSelected;
             this.countiesSelectedText = this.counties_data[CountiesSelected]['text'];
+            this.countiesSelected = CountiesSelected;
+            this.districtsSelected = '';
         },
         isAddressError: function(){
             if (!this.isCountiesError && !this.isDistrictsError && !this.isRoadValueError){

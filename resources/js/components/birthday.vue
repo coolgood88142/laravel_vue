@@ -49,13 +49,13 @@ export default {
     mixins: [verification],
     props:{
         yearsSelected:{
-            type:String
+            type:Number
         },
         monthsSelected:{
-            type:String
+            type:Number
         },
         daysSelected:{
-            type:String
+            type:Number
         }
     },
     data:function(){
@@ -77,6 +77,9 @@ export default {
             smallClass: this.getTextClass()
         }
     },
+    mounted(){
+        this.getDays(this.yearsSelected , this.monthsSelected)
+    },
     methods: {
         clearOptions: function () {
             this.monthsSelected = ''
@@ -86,7 +89,12 @@ export default {
         onChange: function () {
             this.daysSelected = ''
             if (this.yearsSelected  != ''){
-                this.days = new Date(this.yearsSelected, this.monthsSelected, 0).getDate()
+                this.getDays(this.yearsSelected , this.monthsSelected)
+            }
+        },
+        getDays: function(year, month){
+            if(year != '' && month != ''){
+                this.days = new Date(year, month, 0).getDate()
             }
         },
         isBirthdayError: function(){
