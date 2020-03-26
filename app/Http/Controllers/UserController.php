@@ -163,20 +163,17 @@ class UserController extends Controller
         $us_interest = substr($us_interest,0,-1);
 
         try {
-            $user = DB::table('user')->where('us_id', $request->us_id)->first();
-            $user->us_name = $us_name;
-            $user->us_birthday = $us_birthday;
-            $user->us_counties = $us_counties;
-            $user->us_districts = $us_districts;
-            $user->us_road = $us_road;
-            $user->us_gender = $us_gender;
-            $user->us_email = $us_email;
-            $user->us_interest = $us_interest;
-            $user->save();
+            $user = DB::table('user')->where('us_id', $request->us_id)->update(
+                array(
+                    'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
+                    'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
+                    'us_email' => $us_email, 'us_interest' => $us_interest
+                )
+            );
 
         } catch (Exception $e) {
             dd($e);
         }
-         return redirect('getUserView');
+         return view('user');
     }
 }
