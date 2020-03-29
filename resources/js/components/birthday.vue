@@ -2,8 +2,8 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="yearsSelected" id="us_year" name="us_year" :class="yearSelectClass" v-on:change="clearOptions">
-                <option value="" disabled selected>--請選擇--</option>
+            <select v-model="years_selected" id="us_year" name="us_year" :class="yearSelectClass" v-on:change="clearOptions">
+                <option value="0" disabled selected>--請選擇--</option>
                 <!--下拉選單不要拿index當value-->
                 <option v-for="(year, index) in years" :key="index" :value="year.value">{{ year.value }}</option>
             </select>
@@ -11,14 +11,14 @@
         </div>
         <div class="form-check form-check-inline">
             <select v-model="monthsSelected" id="us_month" name="us_month" :class="monthSelectClass" v-on:change="onChange">
-                <option value="" disabled selected>--請選擇--</option>
+                <option value="0" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="month.value">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
              <select v-model="daysSelected" id="us_day" name="us_day" :class="daySelectClass">
-                 <option value="" disabled selected>--請選擇--</option>
+                 <option value="0" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
             <label class="form-check-label">日</label>
@@ -74,22 +74,23 @@ export default {
             yearSelectClass: this.getSelectClass(),
             monthSelectClass: this.getSelectClass(),
             daySelectClass: this.getSelectClass(),
-            smallClass: this.getTextClass()
+            smallClass: this.getTextClass(),
+            years_selected: this.yearsSelected
         }
     },
     mounted(){
-        this.getDays(this.yearsSelected , this.monthsSelected)
+        this.getDays(this.years_selected , this.monthsSelected)
     },
     methods: {
         clearOptions: function () {
-            this.monthsSelected = ''
+            this.monthsSelected = 0
             this.days = ''
-            this.daysSelected = ''
+            this.daysSelected = 0
         },
         onChange: function () {
-            this.daysSelected = ''
-            if (this.yearsSelected  != ''){
-                this.getDays(this.yearsSelected , this.monthsSelected)
+            this.daysSelected = 0
+            if (this.years_selected  != 0){
+                this.getDays(this.years_selected , this.monthsSelected)
             }
         },
         getDays: function(year, month){
@@ -115,7 +116,7 @@ export default {
             }
         },
         getBirthdayIsError: function(){
-            this.isYearError = this.isValueNullOrEmpty(this.yearsSelected)
+            this.isYearError = this.isValueNullOrEmpty(this.years_selected)
             this.isMonthError = this.isValueNullOrEmpty(this.monthsSelected)
             this.isDayError = this.isValueNullOrEmpty(this.daysSelected)
             this.isBirthdayError()
@@ -129,7 +130,7 @@ export default {
         }
     },
     watch:{
-        yearsSelected(newVal){
+        years_selected(newVal){
             this.getBirthdayIsError()
         },
         monthsSelected(newVal){

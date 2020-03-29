@@ -1,6 +1,6 @@
 <template>
     <select v-model="districtsSelected" id="us_districts" name="us_districts" :class="select_class" @change="$emit('change-districts', districtsSelected)">
-        <option value="" disabled selected>--請選擇--</option>
+        <option value="0" disabled selected>--請選擇--</option>
         <option v-for="(districts, index) in districts_array" :key="index" :value="districts.value">{{ districts.text }}</option>
     </select>
 </template>

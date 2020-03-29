@@ -43,10 +43,10 @@ class UserController extends Controller
     public function getFormData()
     {
         $city = Config::get('city');
-        $users = ['name_value' => '', 'years_selected' => '', 'months_selected' => ''
-        , 'days_selected' => '', 'counties_selected' => 0, 'districts_selected' => ''
+        $users = ['id_value' => '', 'name_value' => '', 'years_selected' => 0, 'months_selected' => 0
+        , 'days_selected' => 0, 'counties_selected' => 0, 'districts_selected' => 0
         , 'road_value' => '', 'gender_value' => '', 'email_value' => ''
-        , 'interest_value' => '', 'counties' => $city['counties'], 'districts' => $city['districts']];
+        , 'interest_value' => [], 'counties' => $city['counties'], 'districts' => $city['districts']];
 
         return view('edit', $users);
     }
@@ -77,9 +77,11 @@ class UserController extends Controller
         $us_interest = substr($us_interest,0,-1);
 
         $users = DB::table('user')->insert(
-            ['us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
-             'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender, 
-             'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1]
+            [
+                'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
+                'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
+                'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1
+            ]
         );
         
         return view('user');
@@ -92,7 +94,7 @@ class UserController extends Controller
         $city = Config::get('city');
 
         $birthday = explode("-",$user->us_birthday);
-        $years_selected = $birthday[0];
+        $years_selected = (int)$birthday[0];
         $months_selected = (int)$birthday[1];
         $days_selected = (int)$birthday[2];
 
@@ -122,10 +124,15 @@ class UserController extends Controller
             array_push($interest_value, (int)$value);
         }
 
-        $users = ['id_value' => $us_id, 'name_value' => $name_value, 'years_selected' => $years_selected, 'months_selected' => $months_selected
-        , 'days_selected' => $days_selected, 'counties_selected' => (int)$counties_selected, 'districts_selected' => (int)$districts_selected
-        , 'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value
-        , 'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']];
+        $users = [
+            'id_value' => $us_id, 'name_value' => $name_value, 'years_selected' => $years_selected,
+            'months_selected' => $months_selected, 'days_selected' => $days_selected,
+            'counties_selected' => (int)$counties_selected, 'districts_selected' => (int)$districts_selected,
+            'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value,
+            'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']
+        ];
+
+        // dd($users);
 
         return view('edit', $users);
     }
@@ -141,6 +148,7 @@ class UserController extends Controller
         $us_name = $request->us_name;
         $us_month = str_pad($request->us_month,2,"0",STR_PAD_LEFT);
         $us_day = str_pad($request->us_day,2,"0",STR_PAD_LEFT);
+        //stringDomat轉換格式
         $us_birthday = (String)$request->us_year . '-' . $us_month . '-' . $us_day;
 
         $city = Config::get('city');
@@ -151,6 +159,7 @@ class UserController extends Controller
         $districts_index = array_search(($request->us_districts), $districts_data); 
         $us_districts = $districts_data[$districts_index]['text'];
 
+        //直接拿到下面就好(沒做計算的情況)
         $us_road = $request->us_road;
         $us_gender = $request->us_gender;
         $us_email = $request->us_email;
@@ -162,8 +171,10 @@ class UserController extends Controller
         }
         $us_interest = substr($us_interest,0,-1);
 
+        //先查詢在更新(不然us_id的值是空的話怎麼辦)
         try {
             $user = DB::table('user')->where('us_id', $request->us_id)->update(
+                //要排版(clear-code)
                 array(
                     'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
                     'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
