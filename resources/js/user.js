@@ -65,21 +65,6 @@ let user = new Vue({
         },
         editUserData: function (id){
             window.location.href = '/editUserData?us_id='+id
-
-            // 用ajax開啟新頁面顯示編輯畫面，資料要全部套好
-            // axios.get('/editUserData?us_id=' + id).catch((error) => {
-            //     //顯示請求資料失敗的錯誤訊息
-            //     if (error.response) {
-            //         //在log顯示response錯誤的資料、狀態、表頭
-            //         console.log(error.response.data);
-            //         console.log(error.response.status);
-            //         console.log(error.response.headers);
-            //     } else {
-            //         //在log顯示r錯誤訊息
-            //         console.log('Error', error.message);
-            //     }
-
-            // })
         }
     }
 })

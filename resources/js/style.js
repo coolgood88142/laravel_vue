@@ -23,16 +23,16 @@ let app = new Vue({
         btnText: '送出'
     },
     components: {
-        'name_textbox' : name,
-        'address_select' : address,
-        'birthday_select': birthday,
-        'gender_radio': gender,
-        'email_textbox': email,
-        'interest_checkbox': interest,
-        'usertable_table': usertable
+        'name-textbox' : name,
+        'address-select' : address,
+        'birthday-select': birthday,
+        'gender-radio': gender,
+        'email-textbox': email,
+        'interest-checkbox': interest,
+        'usertable-table': usertable
     },
     methods: {
-        send: function () {
+        send: function (sendName) {
             let nameError = this.$refs.name.getNameIsError()
             let birthdayError = this.$refs.birthday.getBirthdayIsError()
             let addressError = this.$refs.address.getAddressIsError()
@@ -42,7 +42,26 @@ let app = new Vue({
 
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){
                 alert('送出成功!')
-                document.getElementById("addForm").submit();
+                axios.post(sendName,
+                    {
+                        us_name: this.$refs.name.getNameValue(),
+                        us_birthday: this.$refs.birthday.getBirthdayValue(),
+                        us_address: this.$refs.address.getAddressValue(),
+                        us_gender: this.$refs.gender.getGenderValue(),
+                        us_email: this.$refs.email.getEmailValue(),
+                        us_interest: this.$refs.interest.getInterestValue()
+                    }
+                ).then(function (response) {
+                    console.log(response)
+                }).catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                     } else {
+                        console.log('Error', error.message);
+                    }
+                 })
             }
             
         }

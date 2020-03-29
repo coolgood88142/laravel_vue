@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">生日</h3>
         <div class="form-check form-check-inline">
-            <select v-model="years_selected" id="us_year" name="us_year" :class="yearSelectClass" v-on:change="clearOptions">
+            <select v-model="userYear" id="us_year" name="us_year" :class="yearSelectClass" v-on:change="clearOptions">
                 <option value="0" disabled selected>--請選擇--</option>
                 <!--下拉選單不要拿index當value-->
                 <option v-for="(year, index) in years" :key="index" :value="year.value">{{ year.value }}</option>
@@ -10,14 +10,14 @@
             <label class="form-check-label">年</label>
         </div>
         <div class="form-check form-check-inline">
-            <select v-model="monthsSelected" id="us_month" name="us_month" :class="monthSelectClass" v-on:change="onChange">
+            <select v-model="userMonth" id="us_month" name="us_month" :class="monthSelectClass" v-on:change="onChange">
                 <option value="0" disabled selected>--請選擇--</option>
                 <option v-for="(month, index) in months" :key="index" :value="month.value">{{ month.value }}</option>
              </select>
              <label class="form-check-label">月</label>
          </div>
          <div class="form-check form-check-inline">
-             <select v-model="daysSelected" id="us_day" name="us_day" :class="daySelectClass">
+             <select v-model="userDay" id="us_day" name="us_day" :class="daySelectClass">
                  <option value="0" disabled selected>--請選擇--</option>
                  <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
             </select>
@@ -75,22 +75,24 @@ export default {
             monthSelectClass: this.getSelectClass(),
             daySelectClass: this.getSelectClass(),
             smallClass: this.getTextClass(),
-            years_selected: this.yearsSelected
+            userYear: this.yearsSelected,
+            userMonth: this.monthsSelected,
+            userDay: this.daysSelected
         }
     },
     mounted(){
-        this.getDays(this.years_selected , this.monthsSelected)
+        this.getDays(this.userYear , this.userMonth)
     },
     methods: {
         clearOptions: function () {
-            this.monthsSelected = 0
+            this.userMonth = 0
             this.days = ''
-            this.daysSelected = 0
+            this.userDay = 0
         },
         onChange: function () {
-            this.daysSelected = 0
-            if (this.years_selected  != 0){
-                this.getDays(this.years_selected , this.monthsSelected)
+            this.userDay = 0
+            if (this.userYear  != 0){
+                this.getDays(this.userYear , this.userMonth)
             }
         },
         getDays: function(year, month){
@@ -116,9 +118,9 @@ export default {
             }
         },
         getBirthdayIsError: function(){
-            this.isYearError = this.isValueNullOrEmpty(this.years_selected)
-            this.isMonthError = this.isValueNullOrEmpty(this.monthsSelected)
-            this.isDayError = this.isValueNullOrEmpty(this.daysSelected)
+            this.isYearError = this.isValueNullOrEmpty(this.userYear)
+            this.isMonthError = this.isValueNullOrEmpty(this.userMonth)
+            this.isDayError = this.isValueNullOrEmpty(this.userDay)
             this.isBirthdayError()
 
             this.yearSelectClass = this.setElementClass(this.isYearError, "select", this.isRemind)
@@ -127,16 +129,23 @@ export default {
             this.smallClass = this.setElementClass(this.birthdayError, "text", this.isRemind)
             
             return this.birthdayError
+        },
+        getBirthdayValue(){
+            return {
+                year: this.userYear,
+                month: this.userMonth,
+                day: this.userDay
+            }
         }
     },
     watch:{
-        years_selected(newVal){
+        userYear(newVal){
             this.getBirthdayIsError()
         },
-        monthsSelected(newVal){
+        userMonth(newVal){
             this.getBirthdayIsError()
         },
-        daysSelected(newVal){
+        userDay(newVal){
             this.getBirthdayIsError()
         }
     }

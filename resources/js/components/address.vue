@@ -3,13 +3,13 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
-            <counties v-on:change-counties="updateDistricts" :select_class="countiesSelectClass" :counties_data="counties_data" :counties-selected="countiesSelected"></counties>
+            <counties v-on:change-counties="updateDistricts" :select-class="countiesSelectClass" :counties-data="countiesData" :counties-selected="userCounties"></counties>
         </div>
         <div class="form-check form-check-inline">
-            <districts v-on:change-districts="getDistrictsSelected" :select_class="districtsSelectClass" :counties_selected_text="countiesSelectedText" :districts_data="districts_data" :districts-selected="districtsSelected"></districts>
+            <districts v-on:change-districts="getDistrictsSelected" :select-class="districtsSelectClass" :counties-selected-text="countiesSelectedText" :districts-data="districtsData" :districts-selected="userDistricts"></districts>
         </div>
         <div class="form-check form-check-inline">
-            <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="roadValue" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="userRoad" placeholder="請選擇縣市與鄉鎮市區">
         </div>
         <small v-if="isShow" id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
     </div>
@@ -32,10 +32,10 @@ export default {
         roadValue:{
             type:String
         },
-        counties_data:{
+        countiesData:{
             type:Array
         },
-        districts_data:{
+        districtsData:{
             type:Object
         }
     },
@@ -54,7 +54,10 @@ export default {
             countiesSelectClass: this.getSelectClass(),
             districtsSelectClass: this.getSelectClass(),
             inputClass: this.getInputClass(),
-            smallClass: this.getTextClass()
+            smallClass: this.getTextClass(),
+            userCounties: this.countiesSelected,
+            userDistricts: this.districtsSelected,
+            userRoad: this.roadValue
         }
     },
     components:{
@@ -62,16 +65,16 @@ export default {
         'districts': districts
     },
     mounted() {
-        this.countiesSelectedText = this.counties_data[this.countiesSelected]['text'];
+        this.countiesSelectedText = this.countiesData[this.userCounties]['text'];
     },
     methods: {
         getDistrictsSelected(DistrictsSelected) {
-            this.districtsSelected = DistrictsSelected;
+            this.userDistricts = DistrictsSelected;
         },
         updateDistricts(CountiesSelected) {
-            this.countiesSelectedText = this.counties_data[CountiesSelected]['text'];
-            this.countiesSelected = CountiesSelected;
-            this.districtsSelected = '';
+            this.countiesSelectedText = this.countiesData[CountiesSelected]['text'];
+            this.userCounties = CountiesSelected;
+            this.userDistricts = '';
         },
         isAddressError: function(){
             if (!this.isCountiesError && !this.isDistrictsError && !this.isRoadValueError){
@@ -91,9 +94,9 @@ export default {
             }
         },
         getAddressIsError: function(){
-            this.isCountiesError = this.isValueNullOrEmpty(this.countiesSelected)
-            this.isDistrictsError = this.isValueNullOrEmpty(this.districtsSelected)
-            this.isRoadValueError = this.isValueNullOrEmpty(this.roadValue)
+            this.isCountiesError = this.isValueNullOrEmpty(this.userCounties)
+            this.isDistrictsError = this.isValueNullOrEmpty(this.userDistricts)
+            this.isRoadValueError = this.isValueNullOrEmpty(this.userRoad)
             this.isAddressError()
 
             this.countiesSelectClass = this.setElementClass(this.isCountiesError, "select", this.isRemind)
@@ -102,18 +105,24 @@ export default {
             this.smallClass = this.setElementClass(this.addressError, "text", this.isRemind)
 
             return this.addressError
+        },
+        getAddressValue(){
+            return {
+                    counties: this.userCounties, 
+                    districts: this.userDistricts, 
+                    road: this.userRoad
+                }
         }
     },
     watch:{
-        //3個選單與文字框，改用function(isAddressError)，watch用一個object去處理(設定class)
-        countiesSelected(newVal){
-            this.districtsSelected = ''
+        userCounties(newVal){
+            this.userDistricts = 0
             this.getAddressIsError()
         },
-        districtsSelected(newVal){
+        userDistricts(newVal){
             this.getAddressIsError()
         },
-        roadValue(newVal){
+        userRoad(newVal){
             this.getAddressIsError()
         }
     }

@@ -43,10 +43,13 @@ class UserController extends Controller
     public function getFormData()
     {
         $city = Config::get('city');
-        $users = ['id_value' => '', 'name_value' => '', 'years_selected' => 0, 'months_selected' => 0
-        , 'days_selected' => 0, 'counties_selected' => 0, 'districts_selected' => 0
-        , 'road_value' => '', 'gender_value' => '', 'email_value' => ''
-        , 'interest_value' => [], 'counties' => $city['counties'], 'districts' => $city['districts']];
+        $users = [
+            'id_value' => '', 'name_value' => '', 'years_selected' => 0, 'months_selected' => 0,
+            'days_selected' => 0, 'counties_selected' => 0, 'districts_selected' => 0,
+            'road_value' => '', 'gender_value' => '', 'email_value' => '',
+            'interest_value' => [], 'counties' => $city['counties'], 'districts' => $city['districts'],
+            'send_name' => route('add')
+        ];
 
         return view('edit', $users);
     }
@@ -129,7 +132,8 @@ class UserController extends Controller
             'months_selected' => $months_selected, 'days_selected' => $days_selected,
             'counties_selected' => (int)$counties_selected, 'districts_selected' => (int)$districts_selected,
             'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value,
-            'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts']
+            'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts'],
+            'send_name' => route('update')
         ];
 
         // dd($users);
@@ -145,7 +149,9 @@ class UserController extends Controller
     }
 
     public function updateUserData(Request $request){
+        dd($request);
         $us_name = $request->us_name;
+        
         $us_month = str_pad($request->us_month,2,"0",STR_PAD_LEFT);
         $us_day = str_pad($request->us_day,2,"0",STR_PAD_LEFT);
         //stringDomat轉換格式

@@ -2,7 +2,7 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">{{ interestText }}</h3>
         <div class="form-check form-check-inline" v-for="(interest, index) in interest_array" :key="index">
-            <input class="form-check-input" type="checkbox" name="us_interest[]" :id="interest.id" :value="interest.value" v-model="interestChecked">
+            <input class="form-check-input" type="checkbox" name="us_interest[]" :id="interest.id" :value="interest.value" v-model="userInterest">
             <label :class="checkLabelClass" :for="interest.id">{{ interest.text }}</label>
         </div>
         <small v-if="interestError" id="warning" :class="smallClass">{{ warningText }}</small>
@@ -30,19 +30,23 @@ export default {
             warningText: '興趣必填',
             interestError: false,
             checkLabelClass: this.getCheckLabelClass(),
-            smallClass: this.getTextClass()
+            smallClass: this.getTextClass(),
+            userInterest: this.interestChecked
         }
     },
     methods: {
         getInterestIsError(){
-            this.interestError = this.isValueNullOrEmpty(this.interestChecked)
+            this.interestError = this.isValueNullOrEmpty(this.userInterest)
             this.checkLabelClass = this.setElementClass(this.interestError, "checklabel", false)
             this.smallClass = this.setElementClass(this.interestError, "text", false)
             return this.interestError
+        },
+        getInterestValue(){
+            return this.userInterest
         }
     },
     watch:{
-        interestChecked(newVal){
+        userInterest(newVal){
             this.getInterestIsError()
         }
     }

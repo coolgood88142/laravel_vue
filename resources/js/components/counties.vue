@@ -1,17 +1,17 @@
 <template>
-     <select v-model="countiesSelected" id="us_counties" name="us_counties" :class="select_class" @change="$emit('change-counties', countiesSelected)">
+     <select v-model="countiesValue" id="us_counties" name="us_counties" :class="selectClass" @change="$emit('change-counties', countiesValue)">
         <option value="0" disabled selected>--請選擇--</option>
-        <option v-for="(counties, index) in counties_array" :key="index" :value="counties.value">{{ counties.text }}</option>
+        <option v-for="(counties, index) in countiesArray" :key="index" :value="counties.value">{{ counties.text }}</option>
     </select>
 </template>
 
 <script>
 export default {
     props: {
-        select_class: {
+        selectClass: {
             type:String
         },
-        counties_data:{
+        countiesData:{
             type:Array
         },
         countiesSelected:{
@@ -20,7 +20,8 @@ export default {
     },
     data:function(){
         return {
-            counties_array: this.counties_data
+            countiesArray: this.countiesData,
+            countiesValue: this.countiesSelected
         }
     }
 }
