@@ -149,13 +149,8 @@ class UserController extends Controller
     }
 
     public function updateUserData(Request $request){
-        dd($request);
-        $us_name = $request->us_name;
-        
-        $us_month = str_pad($request->us_month,2,"0",STR_PAD_LEFT);
-        $us_day = str_pad($request->us_day,2,"0",STR_PAD_LEFT);
-        //stringDomat轉換格式
-        $us_birthday = (String)$request->us_year . '-' . $us_month . '-' . $us_day;
+        $us_name = $request->name;
+        $us_birthday = $request->birthday;
 
         $city = Config::get('city');
         $counties_data = $city['counties'][($request->us_counties)];

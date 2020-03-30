@@ -108,8 +108,9 @@ export default {
         },
         getAddressValue(){
             return {
-                    counties: this.userCounties, 
-                    districts: this.userDistricts, 
+                    counties: this.countiesSelectedText, 
+                    //要取得市區資料文字
+                    districts: this.districtsData[this.countiesSelectedText]['text'], 
                     road: this.userRoad
                 }
         }

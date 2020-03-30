@@ -31,7 +31,13 @@ export default {
     data:function(){
         return {
             districts: [],
-            districtsValue: this.districtsSelected
+            districtsValue: this.districtsSelected,
+            districtsText: ''
+        }
+    },
+    watch:{
+        districtsValue(newVal){
+            this.districtsText = this.districts_array[newVal]
         }
     }
 }
