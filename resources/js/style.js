@@ -43,16 +43,20 @@ let app = new Vue({
 
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){
                 alert('送出成功!')
-                axios.post(sendName,
-                    {
-                        us_name: this.$refs.name.getNameValue(),
-                        us_birthday: this.$refs.birthday.getBirthdayValue(),
-                        us_address: this.$refs.address.getAddressValue(),
-                        us_gender: this.$refs.gender.getGenderValue(),
-                        us_email: this.$refs.email.getEmailValue(),
-                        us_interest: this.$refs.interest.getInterestValue()
+                let params = new URLSearchParams()
+                params.append('us_name', this.$refs.name.getNameValue())
+                params.append('us_birthday', this.$refs.birthday.getBirthdayValue())
+                params.append('us_counties', this.$refs.address.getCountiesValue())
+                params.append('us_districts', this.$refs.address.getCountiesValue())
+                params.append('us_road', this.$refs.address.getRoadValue())
+                params.append('us_gender', this.$refs.gender.getGenderValue())
+                params.append('us_email', this.$refs.email.getEmailValue())
+                params.append('us_interest', this.$refs.interest.getInterestValue())
+                
+                axios.post(sendName, params).then(function (response) {
+                    if (response.data == 'success'){
+                        window.location = 'http://127.0.0.1:8000/user'
                     }
-                ).then(function (response) {
                     console.log(response)
                 }).catch((error) => {
                     if (error.response) {
@@ -64,7 +68,6 @@ let app = new Vue({
                     }
                  })
             }
-            
         }
     }
 })

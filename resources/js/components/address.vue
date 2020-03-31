@@ -106,13 +106,23 @@ export default {
 
             return this.addressError
         },
-        getAddressValue(){
-            return {
-                    counties: this.countiesSelectedText, 
-                    //要取得市區資料文字
-                    districts: this.districtsData[this.countiesSelectedText]['text'], 
-                    road: this.userRoad
+        getCountiesValue(){
+             return this.countiesSelectedText
+        },
+        getDistrictsValue(){
+            let userDistrictsData = ''
+            let districtsValue = this.userDistricts
+            let districtsArray = this.districtsData[this.countiesSelectedText]
+            districtsArray.forEach(function(el) { 
+                if(el['value'] == districtsValue){
+                    userDistrictsData = el['text']
                 }
+            })
+
+            return userDistrictsData
+        },
+        getRoadValue(){
+            return this.userRoad
         }
     },
     watch:{

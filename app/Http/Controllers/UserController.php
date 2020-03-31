@@ -149,28 +149,15 @@ class UserController extends Controller
     }
 
     public function updateUserData(Request $request){
-        $us_name = $request->name;
-        $us_birthday = $request->birthday;
-
-        $city = Config::get('city');
-        $counties_data = $city['counties'][($request->us_counties)];
-        $us_counties = $counties_data['text'];
-        
-        $districts_data = $city['districts'][$us_counties];
-        $districts_index = array_search(($request->us_districts), $districts_data); 
-        $us_districts = $districts_data[$districts_index]['text'];
-
-        //直接拿到下面就好(沒做計算的情況)
+        $us_name = $request->us_name;
+        $us_birthday = $request->us_birthday;
+        $us_counties = $request->us_counties;
+        $us_districts = $request->us_districts;
         $us_road = $request->us_road;
         $us_gender = $request->us_gender;
         $us_email = $request->us_email;
-        $interest_array = $request->input('us_interest');
-
-        $us_interest = '';
-        foreach ($interest_array as $value){
-            $us_interest = $us_interest . $value . ',';
-        }
-        $us_interest = substr($us_interest,0,-1);
+        $us_interest = $request->us_interest;
+        $status = 'success';
 
         //先查詢在更新(不然us_id的值是空的話怎麼辦)
         try {
@@ -184,8 +171,9 @@ class UserController extends Controller
             );
 
         } catch (Exception $e) {
+            $status = 'error';
             dd($e);
         }
-         return view('user');
+         return $status;
     }
 }

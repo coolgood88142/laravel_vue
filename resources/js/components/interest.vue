@@ -42,7 +42,12 @@ export default {
             return this.interestError
         },
         getInterestValue(){
-            return this.userInterest
+            let interestValue = ''
+            this.userInterest.forEach(function(el) {
+                interestValue += el + ','
+            });
+
+            return interestValue.substring(0,interestValue.length-1)
         }
     },
     watch:{
