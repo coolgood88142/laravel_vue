@@ -32,8 +32,7 @@
         <div class="container d-flex wrap-contact">
             <div class="row w-100">
                 <div class="mx-auto">
-                    <form action="" method="POST" id="addForm">
-                        {{ csrf_field() }}
+                    <form id="addForm">
                         <div id="app" class="card bg-light">
                             <div class="card-body">
                                 <div class="row">

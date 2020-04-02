@@ -1,5 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.css'
 
+let checkedIds = []
+let us_id = document.getElementsByName('us_id');
+
+us_id.onclick = function(){
+    if(this.is(":checked")){
+         checkedIds.push(this.value);
+     }else{
+         for(var i=0; i<checkedIds.length; i++){
+             if(this.value == checkedIds[i]){
+                checkedIds.splice(i, 1);
+                break;
+             }
+         }
+     }
+ };
+
+function isChecked(){
+    for(var i=0;i<us_id.length;i++){
+        if(checkedIds.indexOf(us_id[i].value,0)!=-1){
+            us_id[i].checked = true;
+        }else{
+            us_id[i].checked = false;
+        }
+    }
+}
+
 let user = new Vue({
     el: '#app',
     data: {
@@ -45,6 +71,7 @@ let user = new Vue({
             axios.get('/getUserData?page=' + page).then(response => {
                 this.users = response.data.users.data,
                 this.pagination = response.data.pagination
+                isChecked()
             }).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息
                 if (error.response){

@@ -43,30 +43,26 @@ let app = new Vue({
 
             if (!nameError && !birthdayError && !addressError && !genderError && !emailError && !interestError){
                 alert('送出成功!')
-                let params = new URLSearchParams()
-                params.append('us_name', this.$refs.name.getNameValue())
-                params.append('us_birthday', this.$refs.birthday.getBirthdayValue())
-                params.append('us_counties', this.$refs.address.getCountiesValue())
-                params.append('us_districts', this.$refs.address.getCountiesValue())
-                params.append('us_road', this.$refs.address.getRoadValue())
-                params.append('us_gender', this.$refs.gender.getGenderValue())
-                params.append('us_email', this.$refs.email.getEmailValue())
-                params.append('us_interest', this.$refs.interest.getInterestValue())
+
+                let params = {
+                    us_id: document.getElementById('us_id').value,
+                    us_name : this.$refs.name.getNameValue(),
+                    us_birthday: this.$refs.birthday.getBirthdayValue(),
+                    us_counties: this.$refs.address.getCountiesValue(),
+                    us_districts: this.$refs.address.getDistrictsValue(),
+                    us_road: this.$refs.address.getRoadValue(),
+                    us_gender: this.$refs.gender.getGenderValue(),
+                    us_email: this.$refs.email.getEmailValue(),
+                    us_interest: this.$refs.interest.getInterestValue()
+                }
+
                 
                 axios.post(sendName, params).then(function (response) {
                     if (response.data == 'success'){
-                        window.location = 'http://127.0.0.1:8000/user'
+                        window.location = '/user'
                     }
                     console.log(response)
-                }).catch((error) => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                     } else {
-                        console.log('Error', error.message);
-                    }
-                 })
+                })
             }
         }
     }
