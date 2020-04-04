@@ -1,35 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css'
-
-let checkedIds = []
-let us_id = document.getElementsByName('us_id');
-
-us_id.onclick = function(){
-    if(this.is(":checked")){
-         checkedIds.push(this.value);
-     }else{
-         for(var i=0; i<checkedIds.length; i++){
-             if(this.value == checkedIds[i]){
-                checkedIds.splice(i, 1);
-                break;
-             }
-         }
-     }
- };
-
-function isChecked(){
-    for(var i=0;i<us_id.length;i++){
-        if(checkedIds.indexOf(us_id[i].value,0)!=-1){
-            us_id[i].checked = true;
-        }else{
-            us_id[i].checked = false;
-        }
-    }
-}
+import pagination_vav from './components/pagination.vue'
 
 let user = new Vue({
     el: '#app',
     data: {
         users: [],
+        checkedUsers:[],
         pagination: {
             total: 0,
             per_page: 2,
@@ -38,6 +14,9 @@ let user = new Vue({
             current_page: 1
         },
         offset: 4,
+    },
+    components:{
+        'pagination-vav': pagination_vav
     },
     computed: {
         isActived: function () {
@@ -71,7 +50,6 @@ let user = new Vue({
             axios.get('/getUserData?page=' + page).then(response => {
                 this.users = response.data.users.data,
                 this.pagination = response.data.pagination
-                isChecked()
             }).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息
                 if (error.response){
@@ -92,6 +70,30 @@ let user = new Vue({
         },
         editUserData: function (id){
             window.location.href = '/editUserData?us_id='+id
+        },
+        deleteUserData: function(){
+            let params = {
+                us_id : this.checkedUsers
+            }
+
+            axios.post('/deleteUserData', params).then(response => {
+                if (response.data == 'success') {
+                    window.location = '/user'
+                }
+                console.log(response)
+            }).catch((error) => {
+                //顯示請求資料失敗的錯誤訊息
+                if (error.response) {
+                    //在log顯示response錯誤的資料、狀態、表頭
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else {
+                    //在log顯示r錯誤訊息
+                    console.log('Error', error.message);
+                }
+
+            })
         }
     }
 })

@@ -56,7 +56,6 @@ let app = new Vue({
                     us_interest: this.$refs.interest.getInterestValue()
                 }
 
-                
                 axios.post(sendName, params).then(function (response) {
                     if (response.data == 'success'){
                         window.location = '/user'

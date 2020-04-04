@@ -59,7 +59,7 @@ export default {
     methods: {
         changePage: function (page) {
             this.pagination.current_page = page
-            this.getUserData(page)
+            $emit('change-userdata', page)
         }
     },
 }

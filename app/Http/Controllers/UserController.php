@@ -58,36 +58,30 @@ class UserController extends Controller
     public function addData(Request $request)
     {
         $us_name = $request->us_name;
-        $us_birthday = $request->us_year . '-' . $request->us_month . '-' . $request->us_day;
-
-        $city = Config::get('city');
-        $counties_data = $city['counties'][($request->us_counties)];
-        $us_counties = $counties_data['text'];
-        
-        $districts_data = $city['districts'][$us_counties];
-        $districts_index = array_search(($request->us_districts), $districts_data); 
-        $us_districts = $districts_data[$districts_index]['text'];
+        $us_birthday = $request->us_birthday;
+        $us_counties = $request->us_counties;
+        $us_districts = $request->us_districts;
         $us_road = $request->us_road;
-
         $us_gender = $request->us_gender;
         $us_email = $request->us_email;
-        $interest_array = $request->input('us_interest');
+        $us_interest = $request->us_interest;
+        $status = 'success';
 
-        $us_interest = '';
-        foreach ($interest_array as $value){
-            $us_interest = $us_interest . $value . ',';
+        try {
+            $users = DB::table('user')->insert(
+                [
+                    'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
+                    'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
+                    'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1
+                ]
+            );
+
+        } catch (Exception $e) {
+            $status = 'error';
+            dd($e);
         }
-        $us_interest = substr($us_interest,0,-1);
-
-        $users = DB::table('user')->insert(
-            [
-                'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
-                'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
-                'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1
-            ]
-        );
         
-        return view('user');
+        return $status;
     }
 
     public function selectUserData(Request $request){
@@ -136,16 +130,21 @@ class UserController extends Controller
             'send_name' => route('update')
         ];
 
-        // dd($users);
-
         return view('edit', $users);
     }
 
     public function deleteUserData(Request $request){
         $us_id = $request->us_id;
-        $user = DB::table('user')->whereIn('us_id', $us_id)->delete();
+        $status = 'success';
         
-        return view('user');
+        try {
+            $user = DB::table('user')->whereIn('us_id', $us_id)->delete();
+
+        } catch (Exception $e) {
+            $status = 'error';
+            dd($e);
+        }
+         return $status;
     }
 
     public function updateUserData(Request $request){
