@@ -44,12 +44,12 @@
                                 <name-textbox ref="name" :name-value="'{{ $name_value }}'"></name-textbox>
                                 <birthday-select ref="birthday" :years-selected="{{ $years_selected }}" :months-selected="{{ $months_selected }}" :days-selected="{{ $days_selected }}"></birthday-select>
                                 <address-select ref="address" :counties-selected="{{ $counties_selected }}" :districts-selected="{{ $districts_selected }}" :road-value="'{{ $road_value }}'" :counties-data="{{ json_encode($counties) }}" :districts-data="{{ json_encode($districts) }}"></address-select>
-                                <gender-radio ref="gender" :gender-checked="'{{ $gender_value }}'"></gender-radio>
+                                <gender-radio ref="gender" :gender-checked="'{{ $gender_value }}'" :gender-data="{{ json_encode($gender_data) }}"></gender-radio>
                                 <email-textbox ref="email" :email-value="'{{ $email_value }}'"></email-textbox>
                                 <interest-checkbox ref="interest" :interest-checked="{{ json_encode($interest_value) }}"></interest-checkbox>
                                 <!-- 送出要研究看看怎麼使用同一個funcrion做到新增與更新(可以用save)-->
                                 <div class="form-group">
-                                    <input type="button" :class="btnStyle" :value="btnText" v-on:click="send('{{ $send_name }}')">
+                                    <input type="button" :class="btnStyle" :value="btnText" v-on:click="send('{{ $url }}')">
                                 </div>
                             </div>
                         </div>

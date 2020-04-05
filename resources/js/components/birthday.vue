@@ -131,12 +131,7 @@ export default {
             return this.birthdayError
         },
         getBirthdayValue(){
-            //javscript 的format function已經被移除了，需要新增js檔
-            let year = this.userYear < 10 ? "0" + this.userYear : this.userYear
-            let month = this.userMonth < 10 ? "0" + this.userMonth : this.userMonth
-            let day = this.userDay < 10 ? "0" + this.userDay : this.userDay
-            let birthday = year + '-' + month + '-' + day
-            return birthday
+            return new Date(this.userYear, this.userMonth, this.userDay).toISOString().substring(0,10)
         }
     },
     watch:{

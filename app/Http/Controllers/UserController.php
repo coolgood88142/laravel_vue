@@ -43,12 +43,13 @@ class UserController extends Controller
     public function getFormData()
     {
         $city = Config::get('city');
+        $gender = Config::get('gender');
         $users = [
             'id_value' => '', 'name_value' => '', 'years_selected' => 0, 'months_selected' => 0,
             'days_selected' => 0, 'counties_selected' => 0, 'districts_selected' => 0,
             'road_value' => '', 'gender_value' => '', 'email_value' => '',
             'interest_value' => [], 'counties' => $city['counties'], 'districts' => $city['districts'],
-            'send_name' => route('add')
+            'gender_data' => $gender['data'],'url' => route('add')
         ];
 
         return view('edit', $users);
@@ -57,122 +58,128 @@ class UserController extends Controller
 
     public function addData(Request $request)
     {
-        $us_name = $request->us_name;
-        $us_birthday = $request->us_birthday;
-        $us_counties = $request->us_counties;
-        $us_districts = $request->us_districts;
-        $us_road = $request->us_road;
-        $us_gender = $request->us_gender;
-        $us_email = $request->us_email;
-        $us_interest = $request->us_interest;
+        $name = $request->name;
+        $birthday = $request->birthday;
+        $counties = $request->counties;
+        $districts = $request->districts;
+        $road = $request->road;
+        $gender = $request->gender;
+        $email = $request->email;
+        $interest = $request->interest;
         $status = 'success';
+        $message = '新增成功!';
 
         try {
             $users = DB::table('user')->insert(
                 [
-                    'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
-                    'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
-                    'us_email' => $us_email, 'us_interest' => $us_interest, 'us_status' => 1
+                    'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
+                    'districts' => $districts, 'road' => $road, 'gender' => $gender,
+                    'email' => $email, 'interest' => $interest, 'status' => 1
                 ]
             );
 
         } catch (Exception $e) {
             $status = 'error';
+            $message = '新增失敗!';
             dd($e);
         }
         
-        return $status;
+        return [ 'status' => $status, 'message' => $message, 'url' => route('getUserView')];
     }
 
     public function selectUserData(Request $request){
-        $us_id = $request->us_id;
-        $user = DB::table('user')->where('us_id', $us_id)->first();
-        $name_value = $user->us_name;
+        $id = $request->id;
+        $user = DB::table('user')->where('id', $id)->first();
+        $name_value = $user->name;
         $city = Config::get('city');
+        $gender = Config::get('gender');
 
-        $birthday = explode("-",$user->us_birthday);
+        $birthday = explode("-",$user->birthday);
         $years_selected = (int)$birthday[0];
         $months_selected = (int)$birthday[1];
         $days_selected = (int)$birthday[2];
 
         $i=0;
         foreach($city['counties'] as $key => $counties){
-            if($user->us_counties == $counties['text']){
+            if($user->counties == $counties['text']){
                 $counties_selected = $i;
                 break;
             }
             $i++;
         }
 
-        $districts_array = $city['districts'][$user->us_counties];
+        $districts_array = $city['districts'][$user->counties];
         foreach($districts_array as $key => $districts){
-            if($user->us_districts == $districts['text']){
+            if($user->districts == $districts['text']){
                 $districts_selected = $districts['value'];
                 break;
             }
         }
 
-        $road_value = $user->us_road;
-        $gender_value = $user->us_gender;
-        $email_value = $user->us_email;
-        $interests = explode(",",$user->us_interest);
+        $road_value = $user->road;
+        $gender_value = $user->gender;
+        $email_value = $user->email;
+        $interests = explode(",",$user->interest);
         $interest_value = [];
         foreach($interests as $key => $value){
             array_push($interest_value, (int)$value);
         }
 
         $users = [
-            'id_value' => $us_id, 'name_value' => $name_value, 'years_selected' => $years_selected,
+            'id_value' => $id, 'name_value' => $name_value, 'years_selected' => $years_selected,
             'months_selected' => $months_selected, 'days_selected' => $days_selected,
             'counties_selected' => (int)$counties_selected, 'districts_selected' => (int)$districts_selected,
             'road_value' => $road_value, 'gender_value' => $gender_value, 'email_value' => $email_value,
             'interest_value' => $interest_value, 'counties' => $city['counties'], 'districts' => $city['districts'],
-            'send_name' => route('update')
+            'gender_data' => $gender['data'], 'url' => route('update')
         ];
 
         return view('edit', $users);
     }
 
     public function deleteUserData(Request $request){
-        $us_id = $request->us_id;
+        $id = $request->id;
         $status = 'success';
+        $message = '刪除成功!';
         
         try {
-            $user = DB::table('user')->whereIn('us_id', $us_id)->delete();
+            $user = DB::table('user')->whereIn('id', $id)->delete();
 
         } catch (Exception $e) {
             $status = 'error';
+            $message = '刪除失敗!';
             dd($e);
         }
-         return $status;
+         return [ 'status' => $status, 'message' => $message ];
     }
 
     public function updateUserData(Request $request){
-        $us_name = $request->us_name;
-        $us_birthday = $request->us_birthday;
-        $us_counties = $request->us_counties;
-        $us_districts = $request->us_districts;
-        $us_road = $request->us_road;
-        $us_gender = $request->us_gender;
-        $us_email = $request->us_email;
-        $us_interest = $request->us_interest;
+        $name = $request->name;
+        $birthday = $request->birthday;
+        $counties = $request->counties;
+        $districts = $request->districts;
+        $road = $request->road;
+        $gender = $request->gender;
+        $email = $request->email;
+        $interest = $request->interest;
         $status = 'success';
+        $message = '更新成功!';
 
         //先查詢在更新(不然us_id的值是空的話怎麼辦)
         try {
-            $user = DB::table('user')->where('us_id', $request->us_id)->update(
-                //要排版(clear-code)
+            $user = DB::table('user')->where('id', $request->id)->update(
                 array(
-                    'us_name' => $us_name, 'us_birthday' => $us_birthday, 'us_counties' => $us_counties,
-                    'us_districts' => $us_districts, 'us_road' => $us_road, 'us_gender' => $us_gender,
-                    'us_email' => $us_email, 'us_interest' => $us_interest
+                    'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
+                    'districts' => $districts, 'road' => $road, 'gender' => $gender,
+                    'email' => $email, 'interest' => $interest
                 )
             );
 
         } catch (Exception $e) {
             $status = 'error';
+            $message = '更新失敗!';
             dd($e);
         }
-         return $status;
+         return [ 'status' => $status, 'message' => $message, 'url' => route('getUserView')];
     }
 }

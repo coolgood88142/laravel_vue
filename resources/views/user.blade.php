@@ -27,12 +27,12 @@
                     <tbody>
                         <!--用checkbox可以做到刪除多個-->
                         <tr v-for="user in users">
-                            <td><input type="checkbox" name="us_id[]" :value="user.us_id" v-model="checkedUsers"></td>
-                            <td>@{{ user.us_id }}</td>
-                            <td>@{{ user.us_name }}</td>
-                            <td>@{{ user.us_email }}</td>
-                            <td>@{{ user.us_status == 1 ? '正常' : '停用'  }}</td>
-                            <td><input type="button" class="btn btn-primary" value="編輯" v-on:click="editUserData(user.us_id)" /></td>
+                            <td><input type="checkbox" name="us_id[]" :value="user.id" v-model="checkedUsers"></td>
+                            <td>@{{ user.id }}</td>
+                            <td>@{{ user.name }}</td>
+                            <td>@{{ user.email }}</td>
+                            <td>@{{ user.status == 1 ? '正常' : '停用'  }}</td>
+                            <td><input type="button" class="btn btn-primary" value="編輯" v-on:click="editUserData(user.id)" /></td>
                         </tr>
                     </tbody>
                 </table>

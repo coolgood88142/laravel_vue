@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
+import swal from 'sweetalert'
 import pagination_vav from './components/pagination.vue'
 
 let user = new Vue({
@@ -14,6 +15,8 @@ let user = new Vue({
             current_page: 1
         },
         offset: 4,
+        // url:{{ json_encode($url) }}
+        //傳rotue進來，找找看怎麼寫
     },
     components:{
         'pagination-vav': pagination_vav
@@ -69,18 +72,24 @@ let user = new Vue({
             this.getUserData(page)
         },
         editUserData: function (id){
-            window.location.href = '/editUserData?us_id='+id
+            window.location.href = '/editUserData?id='+id
         },
         deleteUserData: function(){
             let params = {
-                us_id : this.checkedUsers
+                id : this.checkedUsers
             }
 
             axios.post('/deleteUserData', params).then(response => {
-                if (response.data == 'success') {
-                    window.location = '/user'
+                if (response.data.status == 'success') {
+                    swal({
+                        title: response.data.message,
+                        confirmButtonColor: "#e6b930",
+                        icon:response.data.status,
+                        showCloseButton: true
+                    }).then(function() {
+                        this.changePage(this.pagination.current_page)
+                    });
                 }
-                console.log(response)
             }).catch((error) => {
                 //顯示請求資料失敗的錯誤訊息
                 if (error.response) {

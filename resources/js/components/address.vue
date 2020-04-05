@@ -110,6 +110,7 @@ export default {
              return this.countiesSelectedText
         },
         getDistrictsValue(){
+            //直接在後端拿文字就好了，前端會被別人看到資料
             let userDistrictsData = ''
             let districtsValue = this.userDistricts
             let districtsArray = this.districtsData[this.countiesSelectedText]
