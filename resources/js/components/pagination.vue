@@ -7,7 +7,7 @@
                 </a>
             </li>
             <li class="page-item" v-for="(page, index) in pagesNumber" :key="index" :class="[ page == isActived ? 'active' : '']">
-                <a class="page-link" href="#" v-on:click="changePage(page)">@{{ page }}</a>
+                <a class="page-link" href="#" v-on:click="changePage(page)">{{ page }}</a>
             </li>
             <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                 <a class="page-link" href="#" aria-label="Next" v-on:click="changePage(pagination.current_page + 1)">
@@ -20,6 +20,11 @@
 
 <script>
 export default {
+    props:{
+        paginationData:{
+            type:Object
+        }
+    },
     data:function(){
         return {
             pagination: {
@@ -59,8 +64,13 @@ export default {
     methods: {
         changePage: function (page) {
             this.pagination.current_page = page
-            $emit('change-userdata', page)
+            this.$emit('change-pagination', page)
         }
     },
+    watch:{
+        paginationData(newVal){
+            this.pagination = newVal
+        }
+    }
 }
 </script>

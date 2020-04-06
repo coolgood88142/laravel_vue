@@ -7,48 +7,21 @@ let user = new Vue({
     data: {
         users: [],
         checkedUsers:[],
-        pagination: {
-            total: 0,
-            per_page: 2,
-            from: 1,
-            to: 0,
-            current_page: 1
-        },
-        offset: 4,
+        pagination: {},
+        getPage:1
         // url:{{ json_encode($url) }}
         //傳rotue進來，找找看怎麼寫
     },
     components:{
         'pagination-vav': pagination_vav
     },
-    computed: {
-        isActived: function () {
-            return this.pagination.current_page;
-        },
-        pagesNumber: function () {
-            if (!this.pagination.to) {
-                return [];
-            }
-            let from = this.pagination.current_page - this.offset;
-            if (from < 1) {
-                from = 1;
-            }
-            let to = from + (this.offset * 2);
-            if (to >= this.pagination.last_page) {
-                to = this.pagination.last_page;
-            }
-            let pagesArray = [];
-            while (from <= to) {
-                pagesArray.push(from);
-                from++;
-            }
-            return pagesArray;
-        }
-    },
     mounted: function () {
-        this.getUserData(this.pagination.current_page)
+        this.getUserData(1)
     },
     methods: {
+        getPagination: function (getPage){
+            this.getUserData(getPage)
+        },
         getUserData: function (page) {
             axios.get('/getUserData?page=' + page).then(response => {
                 this.users = response.data.users.data,
@@ -67,10 +40,6 @@ let user = new Vue({
                 
             })
         },
-        changePage: function (page) {
-            this.pagination.current_page = page
-            this.getUserData(page)
-        },
         editUserData: function (id){
             window.location.href = '/editUserData?id='+id
         },
@@ -78,7 +47,6 @@ let user = new Vue({
             let params = {
                 id : this.checkedUsers
             }
-
             axios.post('/deleteUserData', params).then(response => {
                 if (response.data.status == 'success') {
                     swal({
@@ -87,7 +55,7 @@ let user = new Vue({
                         icon:response.data.status,
                         showCloseButton: true
                     }).then(function() {
-                        this.changePage(this.pagination.current_page)
+                        // this.getPage = this.pagination.current_page
                     });
                 }
             }).catch((error) => {

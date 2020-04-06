@@ -37,23 +37,7 @@
                     </tbody>
                 </table>
 
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item" v-if="pagination.current_page > 1">
-                            <a class="page-link" href="#" aria-label="Previous" v-on:click="changePage(pagination.current_page - 1)">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item" v-for="page in pagesNumber" :class="[ page == isActived ? 'active' : '']">
-                            <a class="page-link" href="#" v-on:click="changePage(page)">@{{ page }}</a>
-                        </li>
-                        <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                            <a class="page-link" href="#" aria-label="Next" v-on:click="changePage(pagination.current_page + 1)">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <pagination-vav v-on:change-pagination="getPagination" :pagination-data="pagination" ></pagination-vav>
             </div>
         </form>
     </div>
