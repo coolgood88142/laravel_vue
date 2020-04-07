@@ -44,10 +44,11 @@ let user = new Vue({
             window.location.href = '/editUserData?id='+id
         },
         deleteUserData: function(){
-            let params = {
-                id : this.checkedUsers
-            }
-            axios.post('/deleteUserData', params).then(response => {
+            let current_page = this.pagination.current_page
+
+            axios.post('/deleteUserData', {
+                id: this.checkedUsers 
+            }).then(response => {
                 if (response.data.status == 'success') {
                     swal({
                         title: response.data.message,
@@ -55,7 +56,7 @@ let user = new Vue({
                         icon:response.data.status,
                         showCloseButton: true
                     }).then(function() {
-                        // this.getPage = this.pagination.current_page
+                        window.location = response.data.url
                     });
                 }
             }).catch((error) => {

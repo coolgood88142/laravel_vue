@@ -143,14 +143,14 @@ class UserController extends Controller
         $message = '刪除成功!';
         
         try {
-            $user = DB::table('user')->whereIn('id', $id)->delete();
+            // $user = DB::table('user')->whereIn('id', $id)->delete();
 
         } catch (Exception $e) {
             $status = 'error';
             $message = '刪除失敗!';
             dd($e);
         }
-         return [ 'status' => $status, 'message' => $message ];
+         return [ 'status' => $status, 'message' => $message, 'url' => route('getUserView')];
     }
 
     public function updateUserData(Request $request){
