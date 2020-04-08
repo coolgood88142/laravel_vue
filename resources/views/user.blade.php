@@ -19,8 +19,8 @@
                             <th></th>
                             <th>ID</th>
                             <th>姓名</th>
+                            <th>生日</th>
                             <th>信箱</th>
-                            <th>狀態</th>
                             <th>編輯設定</th>
                         </tr>
                     </thead>
@@ -30,8 +30,8 @@
                             <td><input type="checkbox" name="us_id[]" :value="user.id" v-model="checkedUsers"></td>
                             <td>@{{ user.id }}</td>
                             <td>@{{ user.name }}</td>
+                            <td>@{{ user.birthday }}</td>
                             <td>@{{ user.email }}</td>
-                            <td>@{{ user.status == 1 ? '正常' : '停用'  }}</td>
                             <td><input type="button" class="btn btn-primary" value="編輯" v-on:click="editUserData(user.id)" /></td>
                         </tr>
                     </tbody>

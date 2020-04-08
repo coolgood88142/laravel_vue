@@ -11,6 +11,7 @@ let user = new Vue({
         getPage:1
         // url:{{ json_encode($url) }}
         //傳rotue進來，找找看怎麼寫
+        //去思考怎麼用js拿到php參數
     },
     components:{
         'pagination-vav': pagination_vav
@@ -44,8 +45,6 @@ let user = new Vue({
             window.location.href = '/editUserData?id='+id
         },
         deleteUserData: function(){
-            let current_page = this.pagination.current_page
-
             axios.post('/deleteUserData', {
                 id: this.checkedUsers 
             }).then(response => {

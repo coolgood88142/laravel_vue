@@ -1,16 +1,16 @@
 <template>
     <nav>
         <ul class="pagination">
-            <li class="page-item" v-if="pagination.current_page > 1">
-                <a class="page-link" href="#" aria-label="Previous" v-on:click="changePage(pagination.current_page - 1)">
+            <li class="page-item" v-if="paginationData.current_page > 1">
+                <a class="page-link" href="#" aria-label="Previous" v-on:click="changePage(paginationData.current_page - 1)">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" v-for="(page, index) in pagesNumber" :key="index" :class="[ page == isActived ? 'active' : '']">
                 <a class="page-link" href="#" v-on:click="changePage(page)">{{ page }}</a>
             </li>
-            <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                <a class="page-link" href="#" aria-label="Next" v-on:click="changePage(pagination.current_page + 1)">
+            <li class="page-item" v-if="paginationData.current_page < paginationData.last_page">
+                <a class="page-link" href="#" aria-label="Next" v-on:click="changePage(paginationData.current_page + 1)">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -27,31 +27,24 @@ export default {
     },
     data:function(){
         return {
-            pagination: {
-                total: 0,
-                per_page: 2,
-                from: 1,
-                to: 0,
-                current_page: 1
-            },
-            offset: 4,
+            offset: 4
         }
     },
     computed: {
         isActived: function () {
-            return this.pagination.current_page;
+            return this.paginationData.current_page;
         },
         pagesNumber: function () {
-            if (!this.pagination.to) {
+            if (!this.paginationData.to) {
                 return [];
             }
-            let from = this.pagination.current_page - this.offset;
+            let from = this.paginationData.current_page - this.offset;
             if (from < 1) {
                 from = 1;
             }
             let to = from + (this.offset * 2);
-            if (to >= this.pagination.last_page) {
-                to = this.pagination.last_page;
+            if (to >= this.paginationData.last_page) {
+                to = this.paginationData.last_page;
             }
             let pagesArray = [];
             while (from <= to) {
@@ -63,13 +56,7 @@ export default {
     },
     methods: {
         changePage: function (page) {
-            this.pagination.current_page = page
             this.$emit('change-pagination', page)
-        }
-    },
-    watch:{
-        paginationData(newVal){
-            this.pagination = newVal
         }
     }
 }

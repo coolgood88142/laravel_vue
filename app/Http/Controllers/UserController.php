@@ -16,14 +16,14 @@ class UserController extends Controller
     }
 
     public function select(){
-        $users = DB::table('user')->paginate(5);
+        $users = DB::table('user_info')->paginate(5);
 
         return view('user', ['users' => $users]);
     }
 
     public function index()
     {
-        $users = DB::table('user')->paginate(5);
+        $users = DB::table('user_info')->paginate(5);
         $response = [
             'pagination' => [
                 'total' => $users->total(),
@@ -35,7 +35,6 @@ class UserController extends Controller
             ],
             'users' => $users
         ];
-        //確認user資料是否為重複，要補上文件
 
         return response()->json($response);
     }
@@ -70,11 +69,11 @@ class UserController extends Controller
         $message = '新增成功!';
 
         try {
-            $users = DB::table('user')->insert(
+            $users = DB::table('user_info')->insert(
                 [
                     'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
                     'districts' => $districts, 'road' => $road, 'gender' => $gender,
-                    'email' => $email, 'interest' => $interest, 'status' => 1
+                    'email' => $email, 'interest' => $interest
                 ]
             );
 
@@ -89,7 +88,7 @@ class UserController extends Controller
 
     public function selectUserData(Request $request){
         $id = $request->id;
-        $user = DB::table('user')->where('id', $id)->first();
+        $user = DB::table('user_info')->where('id', $id)->first();
         $name_value = $user->name;
         $city = Config::get('city');
         $gender = Config::get('gender');
@@ -143,7 +142,7 @@ class UserController extends Controller
         $message = '刪除成功!';
         
         try {
-            // $user = DB::table('user')->whereIn('id', $id)->delete();
+            $user = DB::table('user_info')->whereIn('id', $id)->delete();
 
         } catch (Exception $e) {
             $status = 'error';
@@ -167,7 +166,7 @@ class UserController extends Controller
 
         //先查詢在更新(不然us_id的值是空的話怎麼辦)
         try {
-            $user = DB::table('user')->where('id', $request->id)->update(
+            $user = DB::table('user_info')->where('id', $request->id)->update(
                 array(
                     'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
                     'districts' => $districts, 'road' => $road, 'gender' => $gender,
