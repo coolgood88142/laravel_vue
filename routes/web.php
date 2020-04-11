@@ -53,5 +53,7 @@ Route::post('/deleteUserData','userController@deleteUserData')->name('delete');
 
 Route::post('/updateUserData','userController@updateUserData')->name('update');
 
-Route::get('/list','userController@getListData')->name('getListData');
+Route::get('/channel','userController@getChannelData')->name('getChannelData');
+
+Route::post('/saveChannel','userController@saveChannelData')->name('saveChannelData');
 

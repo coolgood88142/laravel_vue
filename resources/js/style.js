@@ -18,8 +18,7 @@ let app = new Vue({
     data: {
         title: '填寫個人資料',
         btnStyle: 'btn btn-primary',
-        btnText: '送出',
-        // url:'{!! json_encode($url) !!}'
+        btnText: '送出'
     },
     components: {
         'name-textbox' : name,

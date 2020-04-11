@@ -1,11 +1,12 @@
 {
     "/js/api.js": "/js/api.js?id=41c235e2972d9a21bcb0",
-    "/js/app.js": "/js/app.js?id=2c09b161e246bb9a8c8b",
+    "/js/app.js": "/js/app.js?id=15b64a8c92f8181d9c6c",
     "/css/app.css": "/css/app.css?id=2a4461fc35df4e8d0a06",
     "/js/button.js": "/js/button.js?id=24ae62ec306d119e16b5",
+    "/js/channel.js": "/js/channel.js?id=bb29ddc8cea0dbe42bec",
     "/js/city.js": "/js/city.js?id=ba03afc0523f73632fc6",
     "/js/date.js": "/js/date.js?id=30e9a2188763547ccf0d",
-    "/js/style.js": "/js/style.js?id=850e12c8813273ed7d49",
+    "/js/style.js": "/js/style.js?id=06901993b181fb7aad74",
     "/js/user.js": "/js/user.js?id=c7c888ce153f6bc40ae5",
-    "/js/verification.js": "/js/verification.js?id=30cfeb555047f1196dcf"
+    "/js/verification.js": "/js/verification.js?id=f12a36700f450933cb11"
 }

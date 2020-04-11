@@ -182,8 +182,7 @@ class UserController extends Controller
          return [ 'status' => $status, 'message' => $message, 'url' => route('getUserView')];
     }
 
-    public function getListData(){
-        
+    public function getChannelData(){
         $array = [
             'master1' => [
                 'sub1' => '1-1',
@@ -195,6 +194,38 @@ class UserController extends Controller
             ],
         ];
 
-        return [ 'channel' => $array ]; 
+        return view('channel', [ 'channels' => $array, 'selectedData' => [] ]);
+    }
+
+    public function saveChannelData(Request $request){
+        $master = $request->master;
+        $sub = $request->sub;
+        $master_data = array();
+        $sub_data = array();
+        $i = 0;$j = 0;
+        foreach ($master as $key => $value) {
+            $master_data[$i]['model'] = 'master' . $i;
+            $master_data[$i]['value'] = $value;
+            $i++;
+        }
+
+        foreach ($sub as $key => $value) {
+            $sub_data[$j]['model'] = 'sub' . $j;
+            $sub_data[$j]['value'] = $value;
+            $j++;
+        }
+
+        $array = [
+            'master1' => [
+                'sub1' => '1-1',
+                'sub2' => '1-2'
+            ],
+            'master2' => [
+                'sub1' => '2-1',
+                'sub2' => '2-2'
+            ],
+        ];
+
+        return view('channel', [ 'channels' => $array, 'masterSelected' => $master_data, 'subSelected' => $sub_data ]);
     }
 }

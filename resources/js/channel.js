@@ -1,11 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.css'
+import channel from './components/channel.vue';
 
 let app = new Vue({
     el: '#app',
     data: {
         title: '頻道選單',
-        channels: []
+        btnSave: 'btn btn-primary',
+        sendList: []
     },
-    
-
+    components: {
+        'channel-select': channel
+    },
+    methods: {
+        // getSendData(data){
+        //     this.sendList.push(data)
+        // },
+        // deleteData(index) {
+        //     this.sendList.splice(index, 1)
+        // }
+    }
 })
