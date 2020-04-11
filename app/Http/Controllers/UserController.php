@@ -181,4 +181,20 @@ class UserController extends Controller
         }
          return [ 'status' => $status, 'message' => $message, 'url' => route('getUserView')];
     }
+
+    public function getListData(){
+        
+        $array = [
+            'master1' => [
+                'sub1' => '1-1',
+                'sub2' => '1-2'
+            ],
+            'master2' => [
+                'sub1' => '2-1',
+                'sub2' => '2-2'
+            ],
+        ];
+
+        return [ 'channel' => $array ]; 
+    }
 }
