@@ -194,7 +194,7 @@ class UserController extends Controller
             ],
         ];
 
-        return view('channel', [ 'channels' => $array, 'selectedData' => [] ]);
+        return view('channel', [ 'channels' => $array, 'masterSelected' => [1], 'subSelected' => ['2-2'], 'masterModel' => ['master0'], 'subModel' => ['sub0'], 'isDafult' => true ]);
     }
 
     public function saveChannelData(Request $request){
@@ -202,17 +202,17 @@ class UserController extends Controller
         $sub = $request->sub;
         $master_data = array();
         $sub_data = array();
-        $i = 0;$j = 0;
+        $master_model = array();
+        $sub_model = array();
+
         foreach ($master as $key => $value) {
-            $master_data[$i]['model'] = 'master' . $i;
-            $master_data[$i]['value'] = $value;
-            $i++;
+            $master_model[$key] = 'master' . $key;
+            $master_data[$key] = $value;
         }
 
         foreach ($sub as $key => $value) {
-            $sub_data[$j]['model'] = 'sub' . $j;
-            $sub_data[$j]['value'] = $value;
-            $j++;
+            $sub_model[$key] = 'sub' . $key;
+            $sub_data[$key] = $value;
         }
 
         $array = [
@@ -226,6 +226,6 @@ class UserController extends Controller
             ],
         ];
 
-        return view('channel', [ 'channels' => $array, 'masterSelected' => $master_data, 'subSelected' => $sub_data ]);
+        return view('channel', [ 'channels' => $array, 'masterSelected' => $master_data, 'subSelected' => $sub_data, 'masterModel' => $master_model, 'subModel' => $sub_model, 'isDafult' => true ]);
     }
 }

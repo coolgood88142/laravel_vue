@@ -10,7 +10,7 @@
              <form action="{{ route('saveChannelData') }}" method="POST">
                 {{ csrf_field() }}
                 <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">@{{ title }}</h2>
-                <channel-select :channel-data="{{ json_encode($channels) }}" :master-data="{{ json_encode($masterSelected) }}" :sub-data="{{ json_encode($subSelected) }}" ></channel-select>
+                <channel-select :channel-data="{{ json_encode($channels) }}" :master-selected="{{ json_encode($masterSelected) }}" :sub-selected="{{ json_encode($subSelected) }}" :master-model="{{ json_encode($masterModel) }}" :sub-model="{{ json_encode($subModel) }}" :is-dafult="{{ json_encode($isDafult) }}"></channel-select>
                 <input type="submit" :class="btnSave" value="送出">
             </form>
         </div>
