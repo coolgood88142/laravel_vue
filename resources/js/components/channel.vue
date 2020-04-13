@@ -18,6 +18,7 @@
                         </div>
                     </th>
                 </tr>
+                <input type="hidden" v-model="nowChannel" name="channelIndex">
             </table>
         </div>
     </div>
@@ -41,24 +42,24 @@ export default {
         subModel:{
             type:Array
         },
-        isDafult:{
-            type:Boolean
+        channelIndex:{
+            type:Number
         }
     },
     data:function(){
         return {
-            nowChannel:0,
+            nowChannel: this.channelIndex,
             channelList: this.getChannelData(this.masterSelected, this.subSelected),
             btnAdd:'btn btn-primary',
             btnDelete:'btn btn-secondary',
             modelData: [this.masterSelected,this.subSelected],
             modelName: [this.masterModel,this.subModel],
             buttonData: {isSelect : false},
-            dafultData: this.isDafult
+            isDafult: true
         }
     },
     mounted() {
-        this.setSubData(this.dafultData, this.masterSelected)
+        this.setSubData(this.isDafult, this.masterSelected)
     },
     methods: {
         setSubData: function(isDafult, masterSelected) {
@@ -115,35 +116,29 @@ export default {
                 })
                 
                 this.channelList[index][1].select = select
-                if(!this.dafultData){
+                if(!this.isDafult){
                     this.modelData[1][index] = ''
                 }
-            }else{
-                let sub = document.getElementsByName('sub[]')[index]
             }
-            // $emit('sendData', { index:index, master: masterValue, sub: subValue })
         },
         addChannel: function(){
-            this.dafultData = false
+            this.isDafult = false
             this.nowChannel = this.nowChannel+1
             this.channelList.push(this.getChannelList(this.nowChannel))
             this.modelData[0][this.nowChannel] = ''
             this.modelData[1][this.nowChannel] = ''
-            this.updateModelData()
         },
         delChannel: function(index){
-            this.dafultData = false
+            this.isDafult = false
             let master_value = document.getElementsByName('master[]')[index].value
             let sub_value = document.getElementsByName('sub[]')[index].value
             this.channelList.splice(index,1)
-            this.nowChannel = this.nowChannel-1
             this.modelData[0].splice(index,1)
             this.modelData[1].splice(index,1)
             this.modelName[0].splice(index,1)
             this.modelName[1].splice(index,1)
             this.updateModelData()
-
-            // $emit('delelteData', index)
+            this.nowChannel = this.nowChannel-1
         },
         updateModelData: function(){
             let master = []
@@ -158,18 +153,6 @@ export default {
 
             this.modelName[0] = master
             this.modelName[1] = sub
-        }
-    },
-    watch:{
-        masterValue(newVal){
-            if(this.masterData != undefined){
-                this.masterData.forEach(function(el,index){
-                    console.log(el)
-                })
-
-            }
-            
-            
         }
     }
 }

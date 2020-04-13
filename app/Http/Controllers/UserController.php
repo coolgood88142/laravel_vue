@@ -194,12 +194,13 @@ class UserController extends Controller
             ],
         ];
 
-        return view('channel', [ 'channels' => $array, 'masterSelected' => [1], 'subSelected' => ['2-2'], 'masterModel' => ['master0'], 'subModel' => ['sub0'], 'isDafult' => true ]);
+        return view('channel', [ 'channels' => $array, 'masterSelected' => [1], 'subSelected' => ['2-2'], 'masterModel' => ['master0'], 'subModel' => ['sub0'], 'channelIndex' => 0 ]);
     }
 
     public function saveChannelData(Request $request){
         $master = $request->master;
         $sub = $request->sub;
+        $channelIndex = (int)($request->channelIndex);
         $master_data = array();
         $sub_data = array();
         $master_model = array();
@@ -226,6 +227,6 @@ class UserController extends Controller
             ],
         ];
 
-        return view('channel', [ 'channels' => $array, 'masterSelected' => $master_data, 'subSelected' => $sub_data, 'masterModel' => $master_model, 'subModel' => $sub_model, 'isDafult' => true ]);
+        return view('channel', [ 'channels' => $array, 'masterSelected' => $master_data, 'subSelected' => $sub_data, 'masterModel' => $master_model, 'subModel' => $sub_model, 'channelIndex' => $channelIndex ]);
     }
 }
