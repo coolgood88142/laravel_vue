@@ -135,8 +135,10 @@ export default {
             this.channelList.splice(index,1)
             this.modelData[0].splice(index,1)
             this.modelData[1].splice(index,1)
-            this.modelName[0].splice(index,1)
-            this.modelName[1].splice(index,1)
+            this.masterModel.splice(index,1)
+            this.subModel.splice(index,1)
+            // this.modelName[0].splice(index,1)
+            // this.modelName[1].splice(index,1)
             this.updateModelData()
             this.nowChannel = this.nowChannel-1
         },
