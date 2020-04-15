@@ -9,7 +9,7 @@ let app = new Vue({
         sendList: []
     },
     components: {
-        'channel-select': channel
+        'channel': channel
     },
     methods: {
         // getSendData(data){

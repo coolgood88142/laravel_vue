@@ -30,7 +30,7 @@
                             <td><input type="checkbox" name="us_id[]" :value="user.id" v-model="checkedUsers"></td>
                             <td>@{{ user.id }}</td>
                             <td>@{{ user.name }}</td>
-                            <td>@{{ user.birthday }}</td>
+                            <td>@{{ new Date(user.birthday).toISOString().substring(0,10) }}</td>
                             <td>@{{ user.email }}</td>
                             <td><input type="button" class="btn btn-primary" value="編輯" v-on:click="editUserData(user.id)" /></td>
                         </tr>

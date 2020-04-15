@@ -57,3 +57,10 @@ Route::get('/channel','userController@getChannelData')->name('getChannelData');
 
 Route::post('/saveChannel','userController@saveChannelData')->name('saveChannelData');
 
+// Route::get('/text', function () {
+//     return view('text');
+// });
+
+Route::get('/text','userController@getTextLength')->name('getTextLength');
+
+

@@ -68,14 +68,14 @@ class UserController extends Controller
         $status = 'success';
         $message = '新增成功!';
 
+        $data = [
+            'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
+            'districts' => $districts, 'road' => $road, 'gender' => $gender,
+            'email' => $email, 'interest' => $interest
+        ];
+
         try {
-            $users = DB::table('user_info')->insert(
-                [
-                    'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
-                    'districts' => $districts, 'road' => $road, 'gender' => $gender,
-                    'email' => $email, 'interest' => $interest
-                ]
-            );
+            $users = DB::table('user_info')->insert($data);
 
         } catch (Exception $e) {
             $status = 'error';
@@ -164,15 +164,14 @@ class UserController extends Controller
         $status = 'success';
         $message = '更新成功!';
 
-        //先查詢在更新(不然us_id的值是空的話怎麼辦)
+        $data = [ 
+            'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
+            'districts' => $districts, 'road' => $road, 'gender' => $gender,
+            'email' => $email, 'interest' => $interest
+        ];
+
         try {
-            $user = DB::table('user_info')->where('id', $request->id)->update(
-                array(
-                    'name' => $name, 'birthday' => $birthday, 'counties' => $counties,
-                    'districts' => $districts, 'road' => $road, 'gender' => $gender,
-                    'email' => $email, 'interest' => $interest
-                )
-            );
+            $user = DB::table('user_info')->where('id', $request->id)->update($data);
 
         } catch (Exception $e) {
             $status = 'error';
@@ -183,18 +182,16 @@ class UserController extends Controller
     }
 
     public function getChannelData(){
-        $array = [
-            'master1' => [
-                'sub1' => '1-1',
-                'sub2' => '1-2'
-            ],
-            'master2' => [
-                'sub1' => '2-1',
-                'sub2' => '2-2'
-            ],
-        ];
-
-        return view('channel', [ 'channels' => $array, 'masterSelected' => [1], 'subSelected' => ['2-2'], 'masterModel' => ['master0'], 'subModel' => ['sub0'], 'channelIndex' => 0 ]);
+        //除了channel資料，其他可以從vue設定預設值，只用channels這個資料寫預設值
+        $channel = Config::get('channel');
+        return view('channel', [ 
+            'channels' => $channel['data'], 
+            'masterSelected' => [1],
+            'subSelected' => ['2-1'], 
+            'masterModel' => ['master0'], 
+            'subModel' => ['sub0'], 
+            'channelIndex' => 0 ]
+        );
     }
 
     public function saveChannelData(Request $request){
@@ -205,6 +202,7 @@ class UserController extends Controller
         $sub_data = array();
         $master_model = array();
         $sub_model = array();
+        $channel = Config::get('channel');
 
         foreach ($master as $key => $value) {
             $master_model[$key] = 'master' . $key;
@@ -216,17 +214,41 @@ class UserController extends Controller
             $sub_data[$key] = $value;
         }
 
-        $array = [
-            'master1' => [
-                'sub1' => '1-1',
-                'sub2' => '1-2'
-            ],
-            'master2' => [
-                'sub1' => '2-1',
-                'sub2' => '2-2'
-            ],
-        ];
+        return view('channel', [ 'channels' =>$channel['data'], 'masterSelected' => $master_data, 'subSelected' => $sub_data, 'masterModel' => $master_model, 'subModel' => $sub_model, 'channelIndex' => $channelIndex ]);
+    }
 
-        return view('channel', [ 'channels' => $array, 'masterSelected' => $master_data, 'subSelected' => $sub_data, 'masterModel' => $master_model, 'subModel' => $sub_model, 'channelIndex' => $channelIndex ]);
+    public function getTextLength(Request $request){
+        $tagtext= '';
+        $length = 20;
+        $text = 'hello<p>hi i am little boy. hello world 新增測試長度 2&!51561 你好,我是人</p>world';
+        preg_match('/<p>([\s\S]*?)<\/p>/', $text, $tagtext);
+        
+        //取中文字元
+        $chinese = preg_replace('/[\u4e00-\u9fa5\s\w\!\"\#\$\%\&\’\(\)\*\+\,\，\-\.\/\:\;\<\=\>\?\@\[\]\^\_\`\{\|\}\~\.]/', '', $tagtext[1]);
+        $chinese_length = (int)mb_strlen($chinese, "utf-8");
+
+        //取英文字元
+        $english_length = (int)str_word_count($tagtext[1]);
+
+        //取特殊符號字元
+        $symbol = preg_replace('/[^\!\"\#\$\%\&\’\(\)\*\+\,\，\-\.\/\:\;\<\=\>\?\@\[\]\^\_\`\{\|\}\~\.]/', '', $tagtext[1]);
+        $symbole_length = (int)strlen($symbol);
+
+        $all = $chinese_length + $english_length + $symbole_length;
+        $success = 'false';
+        if($all>=20){
+            $success = 'true';
+        }
+
+        $show = '回傳' . $success . ' 字元長度為' . $all;
+        dd($show);
+
+        // return view('text', )
+        //英文單字+1 中文一個字+1
+        //特殊符號+1
+        //判斷字元>20為true ,<20為false
+        //提示: 英文單字長度str_word_count 中文字長度mb_strlen()
+        
+
     }
 }

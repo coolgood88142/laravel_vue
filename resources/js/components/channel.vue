@@ -18,7 +18,8 @@
                         </div>
                     </th>
                 </tr>
-                <input type="hidden" v-model="nowChannel" name="channelIndex">
+                <!-- 這個不需要直接在新增與刪除去計算目前有多少組資料就可以了-->
+                <input type="hidden" v-model="nowChannelCount" name="channelIndex">
             </table>
         </div>
     </div>
@@ -48,7 +49,8 @@ export default {
     },
     data:function(){
         return {
-            nowChannel: this.channelIndex,
+            nowChannelCount: this.channelIndex,
+            //不應該這寫，當function或參數寫壞了，導致回傳資料錯誤變成null的話，畫面全壞，預設值的定義是一定是正常的資料型態
             channelList: this.getChannelData(this.masterSelected, this.subSelected),
             btnAdd:'btn btn-primary',
             btnDelete:'btn btn-secondary',
@@ -77,7 +79,7 @@ export default {
                     let master = this.getSelectData(this.channelData, i)
                     let sub = this.getSelectData(null, i)
                     data.push([master, sub, {isSelect : false}])
-                    this.nowChannel = i+1
+                    this.nowChannelCount = i+1
                 }
             }
 
@@ -123,10 +125,10 @@ export default {
         },
         addChannel: function(){
             this.isDafult = false
-            this.nowChannel = this.nowChannel+1
-            this.channelList.push(this.getChannelList(this.nowChannel))
-            this.modelData[0][this.nowChannel] = ''
-            this.modelData[1][this.nowChannel] = ''
+            this.nowChannelCount = this.nowChannelCount+1
+            this.channelList.push(this.getChannelList(this.nowChannelCount))
+            this.modelData[0][this.nowChannelCount] = ''
+            this.modelData[1][this.nowChannelCount] = ''
         },
         delChannel: function(index){
             this.isDafult = false
@@ -140,7 +142,7 @@ export default {
             // this.modelName[0].splice(index,1)
             // this.modelName[1].splice(index,1)
             this.updateModelData()
-            this.nowChannel = this.nowChannel-1
+            this.nowChannelCount = this.nowChannelCount-1
         },
         updateModelData: function(){
             let master = []
