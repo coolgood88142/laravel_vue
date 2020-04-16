@@ -230,11 +230,15 @@ class UserController extends Controller
         //取英文字元
         $english_length = (int)str_word_count($tagtext[1]);
 
+        //取數字字元
+        $math = preg_replace('/[^0-9]/', '', $tagtext[1]);
+        $math_length = (int)strlen($math);
+
         //取特殊符號字元
         $symbol = preg_replace('/[^\!\"\#\$\%\&\’\(\)\*\+\,\，\-\.\/\:\;\<\=\>\?\@\[\]\^\_\`\{\|\}\~\.]/', '', $tagtext[1]);
         $symbole_length = (int)strlen($symbol);
 
-        $all = $chinese_length + $english_length + $symbole_length;
+        $all = $chinese_length + $english_length + $math_length + $symbole_length;
         $success = 'false';
         if($all>=20){
             $success = 'true';
