@@ -19,7 +19,7 @@
                     </th>
                 </tr>
                 <!-- 這個不需要直接在新增與刪除去計算目前有多少組資料就可以了-->
-                <input type="hidden" v-model="nowChannelCount" name="channelIndex">
+                <!-- <input type="hidden" v-model="nowChannelCount" name="channelIndex"> -->
             </table>
         </div>
     </div>
@@ -51,7 +51,7 @@ export default {
         return {
             nowChannelCount: this.channelIndex,
             //不應該這寫，當function或參數寫壞了，導致回傳資料錯誤變成null的話，畫面全壞，預設值的定義是一定是正常的資料型態
-            channelList: this.getChannelData(this.masterSelected, this.subSelected),
+            channelList: [],
             btnAdd:'btn btn-primary',
             btnDelete:'btn btn-secondary',
             modelData: [this.masterSelected,this.subSelected],
@@ -60,8 +60,13 @@ export default {
             isDafult: true
         }
     },
+    computed: {
+        channelList(){
+            return this.getChannelData(this.masterSelected, this.subSelected)
+        }
+    },
     mounted() {
-        this.setSubData(this.isDafult, this.masterSelected)
+        // this.setSubData(this.isDafult, this.masterSelected)
     },
     methods: {
         setSubData: function(isDafult, masterSelected) {

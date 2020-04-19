@@ -223,20 +223,21 @@ class UserController extends Controller
         $text = 'hello<p>hi i am little boy. hello world 新增測試長度 2&!51561 你好,我是人</p>world';
         preg_match('/<p>([\s\S]*?)<\/p>/', $text, $tagtext);
         
-        //取中文字元
-        $chinese = preg_replace('/[\u4e00-\u9fa5\s\w\!\"\#\$\%\&\’\(\)\*\+\,\，\-\.\/\:\;\<\=\>\?\@\[\]\^\_\`\{\|\}\~\.]/', '', $tagtext[1]);
+        //取中文字元,將中文以外的字元取代成空白
+        $chinese = preg_replace('/[^\p{Han}]+/u', '', $tagtext[1]);
         $chinese_length = (int)mb_strlen($chinese, "utf-8");
 
         //取英文字元
         $english_length = (int)str_word_count($tagtext[1]);
 
-        //取數字字元
+        //取數字字元,將數字以外的字元取代成空白
         $math = preg_replace('/[^0-9]/', '', $tagtext[1]);
         $math_length = (int)strlen($math);
 
-        //取特殊符號字元
-        $symbol = preg_replace('/[^\!\"\#\$\%\&\’\(\)\*\+\,\，\-\.\/\:\;\<\=\>\?\@\[\]\^\_\`\{\|\}\~\.]/', '', $tagtext[1]);
+        //取特殊符號字元,將點(.)、數字、英文、底線、空白、中文取代成空白
+        $symbol = preg_replace('/[.\w\s\p{Han}]+/u', '', $tagtext[1]);
         $symbole_length = (int)strlen($symbol);
+
 
         $all = $chinese_length + $english_length + $math_length + $symbole_length;
         $success = 'false';
