@@ -72,6 +72,7 @@ export default {
             }
 
             this.channelIindex = data.length - 1
+            this.isDafult = false
 
             return data
         },
@@ -90,18 +91,21 @@ export default {
                     selectData.push({text:el, value:index})
                 });
             }else{
-                let channel = this.channelData
-                let obj = Object.keys(channel)
-                let master = this.modelData[0]
-                obj.forEach(function(el,index){
-                    if(master[count] == index){
-                        let sub_data = channel[el]
-                        let sub = Object.keys(sub_data)
-                        sub.forEach(function(el,index){
-                            selectData.push({text:el, value:sub_data[el]})
-                        })
-                    }
-                });
+                //當後端傳值有資料時，要組選項
+                if(this.isDafult){
+                    let channel = this.channelData
+                    let obj = Object.keys(channel)
+                    let master = this.modelData[0]
+                    obj.forEach(function(el,index){
+                        if(master[count] == index){
+                            let sub_data = channel[el]
+                            let sub = Object.keys(sub_data)
+                            sub.forEach(function(el,index){
+                                selectData.push({text:el, value:sub_data[el]})
+                            })
+                        }
+                    });
+                }
             }
 
             return {isMaster: isMaster, select: selectData, elName: elName}
@@ -118,24 +122,20 @@ export default {
                 })
                 
                 this.channelList[index][1].select = select
-                if(!this.isDafult){
-                    this.modelData[1][index] = ''
-                }
+                this.modelData[1][index] = ''
             }
         },
         addChannel: function(){
-            this.isDafult = false
-            let index = this.channelIindex + 1
-            this.modelData[0][index] = ''
-            this.modelData[1][index] = ''
-            this.channelList = this.getChannelData()
+            this.channelIindex  = this.channelIindex + 1
+            this.modelData[0][this.channelIindex] = ''
+            this.modelData[1][this.channelIindex] = ''
+            this.channelList.push(this.getChannelList(this.channelIindex))
         },
         delChannel: function(index){
-            this.isDafult = false
-            let master_value = document.getElementsByName('master[]')[index].value
-            let sub_value = document.getElementsByName('sub[]')[index].value
+            this.channelIindex  = this.channelIindex - 1
             this.modelData[0].splice(index,1)
             this.modelData[1].splice(index,1)
+            this.channelList.splice(index,1)
         },
 
     }
