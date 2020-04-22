@@ -184,58 +184,70 @@ class UserController extends Controller
     public function getChannelData(){
         //除了channel資料，其他可以從vue設定預設值，只用channels這個資料寫預設值
         $channel = Config::get('channel');
-        return view('channel', [ 
+        return view('channel', [
             'channels' => $channel['data'], 
             'masterSelected' => [1],
-            'subSelected' => ['2-1'], 
-            'masterModel' => ['master0'], 
-            'subModel' => ['sub0'], 
-            'channelIndex' => 0 ]
-        );
+            'subSelected' => ['2-1']
+        ]);
     }
 
     public function saveChannelData(Request $request){
         $master = $request->master;
         $sub = $request->sub;
-        $channelIndex = (int)($request->channelIndex);
         $master_data = array();
         $sub_data = array();
-        $master_model = array();
-        $sub_model = array();
         $channel = Config::get('channel');
 
         foreach ($master as $key => $value) {
-            $master_model[$key] = 'master' . $key;
             $master_data[$key] = $value;
         }
 
         foreach ($sub as $key => $value) {
-            $sub_model[$key] = 'sub' . $key;
             $sub_data[$key] = $value;
         }
 
-        return view('channel', [ 'channels' =>$channel['data'], 'masterSelected' => $master_data, 'subSelected' => $sub_data, 'masterModel' => $master_model, 'subModel' => $sub_model, 'channelIndex' => $channelIndex ]);
+        return view('channel', [ 
+            'channels' =>$channel['data'],
+            'masterSelected' => $master_data,
+            'subSelected' => $sub_data
+         ]);
     }
 
     public function getTextLength(Request $request){
-        $tagtext= '';
         $length = 20;
         $text = 'hello<p>hi i am little boy. hello world 新增測試長度 2&!51561 你好,我是人</p>world';
-        preg_match('/<p>([\s\S]*?)<\/p>/', $text, $tagtext);
+        preg_match('/<p>([\s\S]*?)<\/p>/', $text, $tag);
+        $matchText = $tag[1];
         
-        //取中文字元,將中文以外的字元取代成空白
-        $chinese = preg_replace('/[^\p{Han}]+/u', '', $tagtext[1]);
+        // $chinese = preg_replace('/[^\p{Han}]+/u', '', $tagtext[1]);
+        //preg_match()有找到第一次符合條件就會停止，改用preg_match_all才可以找到全部
+        $chinese = '';
+        preg_match_all('/\p{Han}+/u', $matchText, $chinese_match);
+        foreach ($chinese_match[0] as $key => $value) {
+            $chinese = $chinese . $value;
+        }
         $chinese_length = (int)mb_strlen($chinese, "utf-8");
 
-        //取英文字元
-        $english_length = (int)str_word_count($tagtext[1]);
+        //取英文字元,計算英文單字長度
+        $english_length = (int)str_word_count($matchText);
 
         //取數字字元,將數字以外的字元取代成空白
-        $math = preg_replace('/[^0-9]/', '', $tagtext[1]);
+        // $math = preg_replace('/[^0-9]/', '', $matchText);
+        $math = '';
+        preg_match_all('/[0-9]/', $matchText, $math_match);
+        foreach ($math_match[0] as $key => $value) {
+            $math = $math . $value;
+        }
         $math_length = (int)strlen($math);
 
         //取特殊符號字元,將點(.)、數字、英文、底線、空白、中文取代成空白
-        $symbol = preg_replace('/[.\w\s\p{Han}]+/u', '', $tagtext[1]);
+        //特殊符號的簡寫\p{P}，但是會包含到點(.)
+        // $symbol = preg_replace('/[.\w\s\p{Han}]+/u', '', $matchText);
+        $symbol = '';
+        preg_match_all('/[^.\w\s\p{Han}]+/u', $matchText, $symbol_match);
+        foreach ($symbol_match[0] as $key => $value) {
+            $symbol = $symbol . $value;
+        }
         $symbole_length = (int)strlen($symbol);
 
 
