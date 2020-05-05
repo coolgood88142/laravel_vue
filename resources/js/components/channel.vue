@@ -9,7 +9,9 @@
                     <th v-for="(selectData,index) in el" :key="index">
                         <select v-model="modelData[index][ListIndex]" :name="selectData.elName" @change="getSubData(selectData.isMaster, ListIndex)">
                             <option value="" disabled selected>--請選擇--</option>
-                            <option v-for="(data, index) in selectData.select" :key="index" :value="data.value">{{ data.text }}</option>
+                            <!-- channelData的資料型態要改用select跑v-for組起來-->
+                            <!--達到不需要再額外組選項資料，可以自動對應-->
+                            <option v-for="(data, index) in channelData" :key="index" :value="data.value">{{ data.text }}</option>
                         </select>
                     </th>
                     <th>
@@ -77,7 +79,7 @@ export default {
             return data
         },
         getChannelList: function(index){
-            return [this.getSelectData(this.channelData,index), this.getSelectData(null, index)]
+            return [this.getSelectData(this.channelData,index), []]
         },
         getSelectData: function(channelData, count){
             let selectData = []
