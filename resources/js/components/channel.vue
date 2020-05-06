@@ -7,11 +7,19 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <tr v-for="(el,ListIndex) in channelList" :key="ListIndex">
                     <th v-for="(selectData,index) in el" :key="index">
-                        <select v-model="modelData[index][ListIndex]" :name="selectData.elName" @change="getSubData(selectData.isMaster, ListIndex)">
+                        <!-- <select v-model="modelData[index][ListIndex]" :name="selectData.elName" @change="getSubData(selectData.isMaster, ListIndex)">
                             <option value="" disabled selected>--請選擇--</option>
-                            <!-- channelData的資料型態要改用select跑v-for組起來-->
-                            <!--達到不需要再額外組選項資料，可以自動對應-->
-                            <option v-for="(data, index) in channelData" :key="index" :value="data.value">{{ data.text }}</option>
+                            channelData的資料型態要改用select跑v-for組起來
+                            達到不需要再額外組選項資料，可以自動對應  selectData.select
+                            <option v-for="(data, index) in selectData.select" :key="index" :value="data.value">{{ data.text }}</option>
+                        </select> -->
+                        <select v-model="modelData[0][ListIndex]" v-for="(master, index) in channelMaster" :key="index">
+                            <option value="" disabled selected>--請選擇--</option>
+                            <option :value="master.value">{{ master.text }}</option>
+                        </select>
+                        <select v-model="modelData[1][ListIndex]" v-for="(sub, index) in channelSub[modelData[0][ListIndex]]" :key="index">
+                            <option value="" disabled selected>--請選擇--</option>
+                            <option :value="sub.value">{{ sub.text }}</option>
                         </select>
                     </th>
                     <th>
@@ -26,7 +34,10 @@
 <script>
 export default {
     props:{
-        channelData:{
+        channelMaster:{
+            type:Object
+        },
+        channelSub:{
             type:Object
         },
         masterSelected:{

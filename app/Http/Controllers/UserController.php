@@ -185,7 +185,8 @@ class UserController extends Controller
         //除了channel資料，其他可以從vue設定預設值，只用channels這個資料寫預設值
         $channel = Config::get('channel');
         return view('channel', [
-            'channels' => $channel['data'], 
+            'channelsMaster' => $channel['master'], 
+            'channelsSub' => $channel['sub'], 
             'masterSelected' => [1],
             'subSelected' => ['2-1']
         ]);
