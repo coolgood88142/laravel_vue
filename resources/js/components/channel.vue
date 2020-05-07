@@ -6,20 +6,22 @@
         <div class="form-group">
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <tr v-for="(el,ListIndex) in channelList" :key="ListIndex">
-                    <th v-for="(selectData,index) in el" :key="index">
+                    <th>
                         <!-- <select v-model="modelData[index][ListIndex]" :name="selectData.elName" @change="getSubData(selectData.isMaster, ListIndex)">
                             <option value="" disabled selected>--請選擇--</option>
                             channelData的資料型態要改用select跑v-for組起來
                             達到不需要再額外組選項資料，可以自動對應  selectData.select
                             <option v-for="(data, index) in selectData.select" :key="index" :value="data.value">{{ data.text }}</option>
                         </select> -->
-                        <select v-model="modelData[0][ListIndex]" v-for="(master, index) in channelMaster" :key="index">
+                        <select v-model="el[0]" @change="getSubData(ListIndex)">
                             <option value="" disabled selected>--請選擇--</option>
-                            <option :value="master.value">{{ master.text }}</option>
+                            <option v-for="(master, index) in channelMaster" :key="index" :value="master.value">{{ master.text }}</option>
                         </select>
-                        <select v-model="modelData[1][ListIndex]" v-for="(sub, index) in channelSub[modelData[0][ListIndex]]" :key="index">
+                    </th>
+                    <th>
+                         <select v-model="el[1]">
                             <option value="" disabled selected>--請選擇--</option>
-                            <option :value="sub.value">{{ sub.text }}</option>
+                            <option v-for="(sub, index) in channelSub[masterSelected[ListIndex]]" :key="index" :value="sub.value">{{ sub.text }}</option>
                         </select>
                     </th>
                     <th>
@@ -53,7 +55,6 @@ export default {
             channelList: [],
             btnAdd:'btn btn-primary',
             btnDelete:'btn btn-secondary',
-            modelData: [this.masterSelected,this.subSelected],
             buttonData: {isSelect : false},
             isDafult: true,
             channelIindex:0
@@ -72,82 +73,41 @@ export default {
     },
     methods: {
         getChannelData :function(){
-            let master_selected = this.modelData[0]
-            let sub_selected = this.modelData[1]
+            let master_selected = this.masterSelected
+            let sub_selected = this.subSelected
             let data = []
             if(master_selected.length > 0 && sub_selected.length > 0 ){
                 for(let i = 0; i < master_selected.length; i++){
-                    //因為要選擇master選單後，才可以產生sub選單，所以要拆開寫
-                    let master = this.getSelectData(this.channelData, i)
-                    let sub = this.getSelectData(null, i)
-                    data.push([master, sub])
+                    data.push([master_selected[i], sub_selected[i]])
                 }
             }
-
-            this.channelIindex = data.length - 1
-            this.isDafult = false
-
             return data
         },
-        getChannelList: function(index){
-            return [this.getSelectData(this.channelData,index), []]
-        },
-        getSelectData: function(channelData, count){
-            let selectData = []
-            let isMaster = false
-            let elName = 'sub[]'
-            if(channelData != undefined && channelData != null){
-                isMaster = true
-                elName = 'master[]'
-                let data = Object.keys(channelData)
-                data.forEach(function(el,index){
-                    selectData.push({text:el, value:index})
-                });
-            }else{
-                //當後端傳值有資料時，要組選項
-                if(this.isDafult){
-                    let channel = this.channelData
-                    let obj = Object.keys(channel)
-                    let master = this.modelData[0]
-                    obj.forEach(function(el,index){
-                        if(master[count] == index){
-                            let sub_data = channel[el]
-                            let sub = Object.keys(sub_data)
-                            sub.forEach(function(el,index){
-                                selectData.push({text:el, value:sub_data[el]})
-                            })
-                        }
-                    });
-                }
+        getSubData: function(index){
+            if(index != undefined && index != null){
+                this.masterSelected[index] = this.channelList[index][0]
+                this.subSelected[index] = ''
             }
-
-            return {isMaster: isMaster, select: selectData, elName: elName}
         },
-        getSubData: function(isMaster, index){
-            if(isMaster){
-                let master = document.getElementsByName('master[]')[index]
-                let text = master.options[master.selectedIndex].text
-                let data = this.channelData[text]
-                let obj = Object.keys(data)
-                let select = []
-                obj.forEach(function(el,index){
-                    select.push({text:el, value:data[el]})
-                })
+        // getSubData: function(isMaster, index){
+        //     if(isMaster){
+        //         let master = document.getElementsByName('master[]')[index]
+        //         let text = master.options[master.selectedIndex].text
+        //         let data = this.channelData[text]
+        //         let obj = Object.keys(data)
+        //         let select = []
+        //         obj.forEach(function(el,index){
+        //             select.push({text:el, value:data[el]})
+        //         })
                 
-                this.channelList[index][1].select = select
-                this.modelData[1][index] = ''
-            }
-        },
+        //         this.channelList[index][1].select = select
+        //         this.modelData[1][index] = ''
+        //     }
+        // },
         addChannel: function(){
-            this.channelIindex  = this.channelIindex + 1
-            this.modelData[0][this.channelIindex] = ''
-            this.modelData[1][this.channelIindex] = ''
-            this.channelList.push(this.getChannelList(this.channelIindex))
+            this.channelList.push(['',''])
         },
         delChannel: function(index){
-            this.channelIindex  = this.channelIindex - 1
-            this.modelData[0].splice(index,1)
-            this.modelData[1].splice(index,1)
             this.channelList.splice(index,1)
         },
 

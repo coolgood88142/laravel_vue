@@ -11,7 +11,7 @@ $sub = [
     ],
     [
         ['text' => 'm2sub1', 'value' => '2-1'],
-        ['text' => 'm2sub1', 'value' => '2-2'],
+        ['text' => 'm2sub2', 'value' => '2-2'],
     ]
 ];
 
