@@ -10,13 +10,5 @@ let app = new Vue({
     },
     components: {
         'channel': channel
-    },
-    methods: {
-        // getSendData(data){
-        //     this.sendList.push(data)
-        // },
-        // deleteData(index) {
-        //     this.sendList.splice(index, 1)
-        // }
     }
 })

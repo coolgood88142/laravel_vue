@@ -208,7 +208,8 @@ class UserController extends Controller
         }
 
         return view('channel', [ 
-            'channels' =>$channel['data'],
+            'channelsMaster' => $channel['master'], 
+            'channelsSub' => $channel['sub'], 
             'masterSelected' => $master_data,
             'subSelected' => $sub_data
          ]);
