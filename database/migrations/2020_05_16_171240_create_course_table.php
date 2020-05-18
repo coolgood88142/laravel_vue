@@ -16,9 +16,9 @@ class CreateCourseTable extends Migration
         Schema::create('course', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 30);
-            $table->string('start_status', 30);
+            $table->string('start_status', 30);//1啟用 2未啟用
             $table->string('date', 30);
-            $table->string('display_status', 30);
+            $table->string('display_status', 30);//1啟用 2未啟用
             $table->string('tag', 30);
             $table->timestamps();
         });

@@ -8,10 +8,9 @@ let app = new Vue({
         users: []
     },
     mounted() {
-        //要引用google app script的js，才可以使用SpreadsheetApp更新狀態欄位
-        //有這個就不一定要使用API
-        //https://script.google.com/macros/s/AKfycbx7P1Ahb9L_msEJ0rBb9z0r5lOnl6pe9DJyMQ0Xdlfff3_sUhg/exec
-        axios.get('https://script.googleusercontent.com/macros/echo?user_content_key=gTMpSUFN0h49HLC_YD9XPQ9NIIDCB0enU5hjbScjMUgCKNt5SGbST0ARVjvjzolI4ysqYt-c0a4W2hoRltslCPvMgwsyepKfm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnCXgUTRdgqXj3Aq3ZTlpz-TBJKUm1HAR0A93zL_jSiszuca-6WkGG1kr6HoIsCLXONveWPraiRQB&lib=MxgXVhpOa8KXE62faMUKC2eGkeYm2IhVF')
+        //後端執行完新增資料之後在這裡使用google app script
+        //取得試算表資料做更新狀態欄位
+        axios.get('https://script.googleusercontent.com/macros/echo?user_content_key=-yex6UFY5iOjrDBSTF9Xk-tuy_e1WRzVdLXbLWBehCM0_M36v8eUV5JI_lr40LVHZmcKQaLgNg2NILiGhWlTjpxtast2Plb-m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnCXgUTRdgqXj3Aq3ZTlpz-TBJKUm1HAR0A93zL_jSiszuca-6WkGG1kr6HoIsCLXONveWPraiRQB&lib=MxgXVhpOa8KXE62faMUKC2eGkeYm2IhVF')
         .then(
             response => (
             this.users = response.data
