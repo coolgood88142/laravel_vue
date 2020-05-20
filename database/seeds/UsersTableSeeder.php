@@ -16,18 +16,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('user_info')->insert([
-        //     'name' => Str::random(10),
-        //     'birthday' => '1900-01-01',
-        //     'counties' => '臺北市',
-        //     'districts' => '新北市',
-        //     'road' => 'xx路xx巷xx號',
-        //     'gender' => 'R',
-        //     'email' => Str::random(10).'@gmail.com',
-        //     'interest' => '0,1',
-        // ]);
+        DB::table('user_info')->insert([
+            'name' => Str::random(10),
+            'birthday' => '1900-01-01',
+            'counties' => '臺北市',
+            'districts' => '新北市',
+            'road' => 'xx路xx巷xx號',
+            'gender' => 'R',
+            'email' => Str::random(10).'@gmail.com',
+            'interest' => '0,1',
+        ]);
 
-        factory(UserInfo::class, 5)->create();
+        // factory(UserInfo::class, 5)->create();
         
     }
 }

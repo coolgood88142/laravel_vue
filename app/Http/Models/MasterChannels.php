@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Master extends Model
+class MasterChannels extends Model
 {
     protected $table = 'master_channels';
     protected $connection = 'mysql_user';
