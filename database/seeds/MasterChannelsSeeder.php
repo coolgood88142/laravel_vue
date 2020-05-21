@@ -24,10 +24,10 @@ class MasterChannelsSeeder extends Seeder
         //     'position' => '1'
         // ]);
 
-        // factory(MasterChannels::class, 5)->create();
+        factory(MasterChannels::class, 5)->create();
 
-        factory(MasterChannels::class, 5)->create()->each(function($id){
-            $id->posts()->save(factory(SubChannels::class)->make());
-        });
+        // factory(MasterChannels::class, 5)->create()->each(function($id){
+        //     $id->posts()->save(factory(SubChannels::class)->make());
+        // });
     }
 }

@@ -24,6 +24,6 @@ class SubChannelsSeeder extends Seeder
         //     'position' => '1'
         // ]);
 
-        factory(SubChannels::class, 1)->create();
+        factory(SubChannels::class, 5)->create();
     }
 }
