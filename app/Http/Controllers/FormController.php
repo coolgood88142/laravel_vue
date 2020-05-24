@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Google;
 use Sheets;
+use Google;
 
 class FormController extends Controller
 {
@@ -35,23 +35,17 @@ class FormController extends Controller
         // -> sheetById('問卷資料')
         // -> all();
 
-        $googleClient = Google::getClient();
+        // $googleClient = Google::getClient();
         // dd($googleClient);
-        $storage = Google::make('storage');
-        $storage->buckets->listBuckets('project id');
-        dd($storage);
-        // $user = $request->user();
+        // $storage = Google::make('storage');
+        // $storage->buckets->listBuckets('project id');
+        // dd($storage);
 
-        // $token = [
-        //     'access_token'  => $user->access_token,
-        //     'refresh_token' => $user->refresh_token,
-        //     'expires_in'    => $user->expires_in,
-        //     'created'       => $user->updated_at->getTimestamp(),
-        // ];
+        
 
-        // // all() returns array
-        // $sheets = Sheets::setAccessToken($token)->spreadsheet('13DiX-Ca39sJP_j--ruilMd4oLKPE3fhNsfV79B04I-M')
-        // ->sheet('問卷資料')->all();
+        // all() returns array
+        // dd(Sheets::getService());
+        $sheets = Sheets::spreadsheet('13DiX-Ca39sJP_j--ruilMd4oLKPE3fhNsfV79B04I-M')->sheet('問卷資料')->all();
 
         dd($sheets);
     }

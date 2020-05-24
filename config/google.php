@@ -17,11 +17,11 @@ return [
     | https://developers.google.com/console
     |
     */
-    'client_id' => env('GOOGLE_CLIENT_ID', ''),
-    'client_secret' => env('GOOGLE_CLIENT_SECRET', ''),
+    'client_id' => env('GOOGLE_CLIENT_ID', '703199608133-48lihk64psruguqdqk1qqr508i87jt3v.apps.googleusercontent.com'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET', 'qNBem27aGVgcJ3HGOgs_H_Sf'),
     'redirect_uri' => env('GOOGLE_REDIRECT', ''),
     'scopes' => [\Google_Service_Sheets::DRIVE, \Google_Service_Sheets::SPREADSHEETS],
-    'access_type' => 'online',
+    'access_type' => 'offline',
     'approval_prompt' => 'auto',
 
     /*
@@ -48,12 +48,12 @@ return [
         /*
         | Enable service account auth or not.
         */
-        'enable' => env('GOOGLE_SERVICE_ENABLED', false),
+        'enable' => env('GOOGLE_SERVICE_ENABLED', true),
 
         /*
         | Path to service account json file
         */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', ''),
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', storage_path('credetokenntials.json')),
     ],
 
     /*
