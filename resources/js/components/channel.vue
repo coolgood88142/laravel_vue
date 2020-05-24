@@ -19,7 +19,7 @@
                         </select>
                     </th>
                     <th>
-                         <select v-model="el[1]" name="sub[]">
+                        <select v-model="el[1]" name="sub[]">
                             <option value="" disabled selected>--請選擇--</option>
                             <option v-for="(sub, index) in channelSub[masterSelected[ListIndex]]" :key="index" :value="sub.value">{{ sub.text }}</option>
                         </select>
