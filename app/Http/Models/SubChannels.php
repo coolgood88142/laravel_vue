@@ -8,7 +8,6 @@ class SubChannels extends Model
 {
     protected $table = 'sub_channels';
     protected $connection = 'mysql_user';
-    public $timestamps = false;
 
     public function master_channels()
     {
@@ -17,6 +16,6 @@ class SubChannels extends Model
 
     public function course()
     {
-        return $this->belongsToMany('App\Models\Course','id');
+        return $this->belongsToMany('App\Models\Course')->withTimestamps();
     }
 }

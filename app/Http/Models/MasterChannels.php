@@ -8,7 +8,6 @@ class MasterChannels extends Model
 {
     protected $table = 'master_channels';
     protected $connection = 'mysql_user';
-    public $timestamps = false;
 
     public function sub_channels()
     {

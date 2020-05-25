@@ -16,18 +16,8 @@ class MasterChannelsSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('master_channels')->insert([
-        //     'name' => '測試主頻道',
-        //     'status' => '1',
-        //     'sort' => '1',
-        //     'url' => 'xxxxx.com.tw',
-        //     'position' => '1'
-        // ]);
-
-        factory(MasterChannels::class, 5)->create();
-
-        // factory(MasterChannels::class, 5)->create()->each(function($id){
-        //     $id->posts()->save(factory(SubChannels::class)->make());
-        // });
+        factory(MasterChannels::class, 5)->create()->each(function($id){
+            $id->sub_channels()->save(factory(SubChannels::class)->make());
+        });
     }
 }
