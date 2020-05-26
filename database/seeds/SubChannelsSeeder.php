@@ -15,19 +15,6 @@ class SubChannelsSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('sub_channels')->insert([
-        //     'master_id' => '1',
-        //     'name' => '測試次頻道',
-        //     'status' => '1',
-        //     'sort' => '1',
-        //     'url' => 'xxxxx.com.tw',
-        //     'position' => '1'
-        // ]);
-
-        // factory(SubChannels::class, 5)->create();
-
-        factory(SubChannels::class, 3)->create()->each(function($id){
-            $id->course()->save(factory(CourseSeeder::class)->make());
-        });
+        factory(SubChannels::class, 5)->create();
     }
 }

@@ -15,15 +15,6 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('course')->insert([
-        //     'title' => '測試課程',
-        //     'start_status' => '1',
-        //     'date' => '109/5/20',
-        //     'display_status' => '1',
-        //     'tag' => 'test'
-        // ]);
-
-
         factory(Course::class, 5)->create();
     }
 }
