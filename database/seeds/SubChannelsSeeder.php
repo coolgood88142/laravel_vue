@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\SubChannels;
+use App\Models\Course;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,10 @@ class SubChannelsSeeder extends Seeder
      */
     public function run()
     {
-        factory(SubChannels::class, 5)->create();
+        // factory(SubChannels::class, 5)->create();
+
+        factory(SubChannels::class, 1)->create()->each(function($id){
+            $id->course()->save(factory(Course::class)->make());
+        });
     }
 }

@@ -270,4 +270,56 @@ class UserController extends Controller
         
 
     }
+
+    public function TestCode(){
+        $str = '本該是全球化最響亮1,本該是全球化最響亮2,本該是全球化最響3,本該是全球化最響亮4,本該是全球化最響亮5,本該是全球化最響亮6,本該是全球化最響亮7';
+        $str_sec = explode(",",$str);
+        $array1 = [];
+        $array2 = [];
+        // foreach($str_sec as $key => $value){
+        //     if($key < 3){
+        //         array_push($array1, $value);
+        //     }else{
+        //         array_push($array2, $value);
+        //     }
+        // }
+
+        $array1_index = array_search('本該是全球化最響亮2', $str_sec);
+        $length1 = count(range(0, $array1_index));
+        
+        $array1 = array_slice($str_sec, 0, $length1);
+        $array2 = array_slice($str_sec, $length1);
+        
+        $array2_index = array_search('本該是全球化最響亮4', $array2);
+        $length2 = count(range(0, $array2_index));
+        $array2 = array_slice($str_sec, $length1, $length2);
+        
+        $array3_index = array_search('本該是全球化最響亮5', $str_sec);
+        $array3 = array_slice($str_sec, $array3_index);
+
+        print_r($array1);
+        print_r($array2);
+        print_r($array3);
+
+        $array3 = implode(' ',$array2);
+        // print_r($array3);
+        
+        $array1_key = "";
+        // foreach ($array1 as $key => $value) {
+        //     $array = [$value];
+        //     if(in_array('2', $array)){
+        //         print_r($key);
+        //     }
+        //    if(preg_match("/2/", $value)){
+        //        $array1_key = $key;
+        //    }
+        // }
+
+        
+        // print_r($result);
+        
+        // $array1_key = array_keys($array1, '2');
+        // $array1_key = array_search('2', $array1);
+        // print_r($array1_key);
+    }
 }

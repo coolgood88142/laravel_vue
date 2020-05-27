@@ -59,6 +59,8 @@ Route::post('/saveChannel','userController@saveChannelData')->name('saveChannelD
 
 Route::get('/text','userController@getTextLength')->name('getTextLength');
 
+Route::get('/test','userController@TestCode');
+
 Route::get('/formUserData','FormController@getFormUserData')->name('getFormUserData');
 
 
