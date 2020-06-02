@@ -16,6 +16,6 @@ class SubChannels extends Model
 
     public function course()
     {
-        return $this->belongsToMany('App\Models\Course')->withTimestamps();
+        return $this->belongsToMany('App\Models\Course', 'course_id');
     }
 }
