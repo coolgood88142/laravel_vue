@@ -15,19 +15,8 @@ class CreateCourseSubChannelsTable extends Migration
     {
         Schema::create('course_sub_channels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('course_id', 30);
-            $table->string('title', 30);
-            $table->string('start_status', 30);//1啟用 2未啟用
-            $table->string('date', 30);
-            $table->string('display_status', 30);//1啟用 2未啟用
-            $table->string('tag', 30);
-            $table->string('sub_channels_id', 30);
-            $table->string('master_id', 30);
-            $table->string('name', 30);
-            $table->string('status', 30);
-            $table->string('sort', 30);
-            $table->string('url', 30);
-            $table->string('position', 30);
+            $table->integer('course_id');
+            $table->integer('sub_channels_id');
             $table->timestamps();
         });
     }

@@ -14,20 +14,18 @@ class CourseSubChannelsSeeder extends Seeder
      */
     public function run()
     {
-        $channels = factory(SubChannels::class, 5)->create();
-        $course = factory(Course::class, 5)->create();
+        // $channels = factory(SubChannels::class, 5)->create();
+        // $course = factory(Course::class, 5)->create();
 
-        Course::all()->each(function ($course) use ($channels) { 
-            $course->sub_channels()->attach($channels);
-        });
+        // Course::all()->each(function ($course) use ($channels) { 
+        //     $course->sub_channels()->attach($channels);
+        // });
         
 
-        // factory(MasterChannels::class, 5)->create()->each(function($id){
-        //     $id->sub_channels()->save(factory(SubChannels::class)->make());
-        // })
+        $course = factory(Course::class,3)->create();
 
-        // SubChannels::all()->each(function ($channels) use ($course) { 
-        //     $channels->course()->attach($course); 
-        // });
+        factory(SubChannels::class,3)->create()->each(function ($sub) use ($course){
+            $sub->course_sub_channels()->saveMany($course);
+        });
     }
 }
