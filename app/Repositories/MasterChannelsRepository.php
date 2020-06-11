@@ -24,9 +24,9 @@ class MasterChannelsRepository
         return $master_channels;
     }
 
-    public function getMasterSubChannelsData($id)
+    public function getMasterData($id)
     {   
-        $master_channels = MasterChannels::with('sub_channels')->where('master_channels.id', $id)->get();
+        $master_channels = MasterChannels::whereIn('master_channels.id', $id)->get();
         return $master_channels;
     }
 }

@@ -15,7 +15,7 @@ class CreateSubChannelsTable extends Migration
     {
         Schema::create('sub_channels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('master_id', 30);
+            $table->string('master_channels_id', 30);
             $table->string('name', 30);
             $table->string('status', 30);
             $table->string('sort', 30);

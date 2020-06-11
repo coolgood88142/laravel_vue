@@ -29,8 +29,20 @@ class ChannelsController extends Controller
 
     public function selectCourse()
     {
-        //要先建立關聯key，才可以將3張表使用join
         $course = $this->courseRepo->getCourseAllData()->sub_channels()->orderBy('name')->get();
     }
 
+    public function selectCourseSubChannels()
+    {
+        $courseSubChannels = DB::table('course_sub_channels');
+        $master_array = [];
+        //先取關連資料，透過subChannels_id組master_id
+        foreach ($courseSubChannels as $key => $value) {
+            $subChannels = $value->sub_channels_id;
+            $masterChannelsData = $this->masterChannelsRepo->getMasterData($subChannels->master_channels_id);
+            array_push($master_array, $masterChannelsData->name);
+        }
+
+        //在組多個master組對應subchannels的資料
+    }
 }

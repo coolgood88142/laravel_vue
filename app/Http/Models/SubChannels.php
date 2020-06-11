@@ -21,6 +21,6 @@ class SubChannels extends Model
 
     public function course_sub_channels()
     {
-        return $this->belongsToMany('App\Models\Course', 'course_sub_channels', 'course_id', 'sub_channels_id');
+        return $this->belongsToMany('App\Models\CourseSubChannels', 'course_sub_channels', 'course_id', 'sub_channels_id');
     }
 }
