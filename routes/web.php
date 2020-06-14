@@ -63,4 +63,6 @@ Route::get('/test','userController@TestCode');
 
 Route::get('/formUserData','FormController@getFormUserData')->name('getFormUserData');
 
+Route::get('/courseSubChannels','ChannelsController@selectCourseSubChannels')->name('getCourseSubChannelsData');
+
 
