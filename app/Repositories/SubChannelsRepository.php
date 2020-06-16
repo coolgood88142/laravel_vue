@@ -33,7 +33,7 @@ class SubChannelsRepository
 
     public function getCourseData($id)
     {   
-        $sub_channels = SubChannels::with('master_channels')->where('sub_channels.id', $id)->get();
+        $sub_channels = SubChannels::with('master_channels')->where('sub_channels.id', $id)->first();
         return $sub_channels;
     }
 }

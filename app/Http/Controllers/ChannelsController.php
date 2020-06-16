@@ -23,16 +23,27 @@ class ChannelsController extends Controller
 
     public function selectCourseSubChannels()
     {
-        $courseSubChannels = DB::table('course_sub_channels')->paginate(20);
-        $master_array = [];
+        $courseSubChannels = DB::table('course_sub_channels')
+            ->join('course', 'course_sub_channels.course_id', '=', 'course.id')
+            ->join('sub_channels', 'course_sub_channels.sub_channels_id', '=', 'sub_channels.id')
+            ->select('course_sub_channels.course_id', 'course.title', 'course_sub_channels.sub_channels_id', 'sub_channels.name')
+            ->get();
+
+        $courseSubChannelsArray = [];
+
         //先取關連資料，透過subChannels_id組master_id
         foreach ($courseSubChannels as $key => $value) {
-            $subChannelsId = $value->sub_channels_id;
-            $masterChannels = $this->masterChannelsRepo->getMasterData($subChannelsId);
-            array_push($master_array, $masterChannels->name);
-        }
 
-        dd($master_array);
+            $array = [
+                'course_id' => $value->course_id,
+                'course_title' => $value->title,
+                'sub_channels_id' => $value->sub_channels_id,
+                'sub_channels_name' => $value->name,
+            ];
+
+            array_push($courseSubChannelsArray, $array);
+        }
+        dd($courseSubChannelsArray);
 
         //在組多個master組對應subchannels的資料
     }

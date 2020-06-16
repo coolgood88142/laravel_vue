@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(MasterChannels::class, function (Faker $faker) {
     return [
-        'name' => '測試主頻道',
+        'name' => $faker->name,
         'status' => '1',
         'sort' => '1',
         'url' => 'xxxxx.com.tw',
