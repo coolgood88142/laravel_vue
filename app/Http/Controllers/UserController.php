@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Config;
+use DateTime;
 
 class UserController extends Controller
 {
@@ -321,5 +322,31 @@ class UserController extends Controller
         // $array1_key = array_keys($array1, '2');
         // $array1_key = array_search('2', $array1);
         // print_r($array1_key);
+    }
+    public function testFunction(){
+        //3:8->03:08
+        //5:59:4->59:04
+        //3:10->03:10
+
+        //DateTime在轉換時無法只用分鐘與秒數，必須要補上小時再轉才可以，不然會直接小時開始做轉換
+        //暫時設定1小時
+        $time1 = '3:8';
+        $fulltime1 = '1:' . $time1;
+        $datetime1 = new \DateTime($fulltime1);
+        $minute1 = $datetime1->format('i:s');
+
+        $time2 = '59:4';
+        $fulltime2 = '1:' . $time2;
+        $datetime2 = new \DateTime($fulltime2);
+        $minute2 = $datetime2->format('i:s');
+
+        $time3 = '3:10';
+        $fulltime3 = '1:' . $time3;
+        $datetime3 = new \DateTime($fulltime3);
+        $minute3 = $datetime3->format('i:s');
+
+        $minute = array($minute1, $minute2, $minute3);
+        
+        print_r($minute);
     }
 }

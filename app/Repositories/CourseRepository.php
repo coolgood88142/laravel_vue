@@ -25,5 +25,9 @@ class CourseRepository
         return $course;
     }
 
-
+    public function getCourseData($id)
+    {
+        $course = Course::where('id', $id)->first();
+        return $course;
+    }
 }

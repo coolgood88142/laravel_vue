@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\MasterChannelsRepository;
 use App\Repositories\SubChannelsRepository;
 use App\Repositories\CourseRepository;
+use App\Repositories\CourseSubChannelsRepository;
 
 class ChannelsController extends Controller
 {
@@ -14,37 +15,37 @@ class ChannelsController extends Controller
     protected $subChannelsRepo;
     protected $courseRepo;
 
-    public function __construct(MasterChannelsRepository $masterChannelsRepo, SubChannelsRepository $subChannelsRepo, CourseRepository $courseRepo)
+    public function __construct(MasterChannelsRepository $masterChannelsRepo, SubChannelsRepository $subChannelsRepo, CourseRepository $courseRepo, CourseSubChannelsRepository $courseSubChannelsRepo)
     {
         $this->masterChannelsRepo = $masterChannelsRepo;
         $this->subChannelsRepo = $subChannelsRepo;
         $this->courseRepo = $courseRepo;
+        $this->courseSubChannelsRepo = $courseSubChannelsRepo;
     }
 
     public function selectCourseSubChannels()
     {
-        $courseSubChannels = DB::table('course_sub_channels')
-            ->join('course', 'course_sub_channels.course_id', '=', 'course.id')
-            ->join('sub_channels', 'course_sub_channels.sub_channels_id', '=', 'sub_channels.id')
-            ->select('course_sub_channels.course_id', 'course.title', 'course_sub_channels.sub_channels_id', 'sub_channels.name')
-            ->get();
+        $courseSubChannels = $this->courseSubChannelsRepo->getCourseSubChannelsAllData();
 
-        $courseSubChannelsArray = [];
-
-        //先取關連資料，透過subChannels_id組master_id
+        $data_array = [];
         foreach ($courseSubChannels as $key => $value) {
+            $courseId = $value->course_id;
+            $course = $this->courseRepo->getCourseData($courseId);
+            $course_title = $course->title;
 
-            $array = [
-                'course_id' => $value->course_id,
-                'course_title' => $value->title,
-                'sub_channels_id' => $value->sub_channels_id,
-                'sub_channels_name' => $value->name,
-            ];
+            $subChannelsId = $value->sub_channels_id;
+            $subChannels = $this->subChannelsRepo->getMasterSubChannelsData($subChannelsId);
+            $subChannels_name = $subChannels->name;
 
-            array_push($courseSubChannelsArray, $array);
+            $masterChannelsId = $subChannels->master_channels_id;
+            $masterChannels = $this->masterChannelsRepo->getMasterData($masterChannelsId);
+            $masterChannels_name = $masterChannels->name;
+
+            $array = ['masterChannels' => $masterChannels_name, 'subChannels' => $subChannels_name, 'course' => $course_title];
+
+            array_push($data_array, $array);
         }
-        dd($courseSubChannelsArray);
 
-        //在組多個master組對應subchannels的資料
+        return view('channelsRelation', ['channels' => $data_array]);
     }
 }
