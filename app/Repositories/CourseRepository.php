@@ -30,4 +30,10 @@ class CourseRepository
         $course = Course::where('id', $id)->first();
         return $course;
     }
+
+    public function getCourseMultipleData($id)
+    {
+        $course = Course::whereIn('id', $id)->get();
+        return $course;
+    }
 }

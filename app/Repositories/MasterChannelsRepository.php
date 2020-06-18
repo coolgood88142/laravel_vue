@@ -18,7 +18,7 @@ class MasterChannelsRepository
         $master_channels->save();
     }
 
-    public function getMasterChannelsData($id)
+    public function getMasterChannelsMultipleData($id)
     {
         $master_channels = MasterChannels::whereIn('id', $id)->get();
         return $master_channels;

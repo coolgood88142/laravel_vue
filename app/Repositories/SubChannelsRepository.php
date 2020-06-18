@@ -25,6 +25,12 @@ class SubChannelsRepository
         return $sub_channels;
     }
 
+    public function getSubChannelsMultipleData($id)
+    {
+        $sub_channels = SubChannels::whereIn('id', $id)->get();
+        return $sub_channels;
+    }
+
     public function getMasterSubChannelsData($id)
     {   
         $sub_channels = SubChannels::with('master_channels')->where('sub_channels.id', $id)->first();
