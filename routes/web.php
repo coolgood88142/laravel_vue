@@ -67,4 +67,6 @@ Route::get('/courseSubChannels','ChannelsController@selectCourseSubChannels')->n
 
 Route::get('/testFunction','userController@testFunction');
 
+Route::get('/elastic','sqlController@testElastic');
+
 
