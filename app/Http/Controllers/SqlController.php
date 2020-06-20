@@ -29,18 +29,28 @@ class SqlController extends Controller
 
         //使用delete拿掉body
         $params =[
-            'index' => 'elastic20200619185616',
+            'index' => 'elastic20200620200511',
             'type' => 'data',
-            'id' => 'el1',
-            'body' => [
-                'id' => '1',
-                'name' => 'Ming'
-            ]
+            'id' => 'el1'
         ];
 
-        $client = ClientBuilder::create()->setHosts($hosts)->build();
-        $response = $client->update($params);
-        // dd($client);
+        // $params['body'] = [
+        //     'id' => '2',
+        //     'name' => 'Ming'
+        // ];
+
+        //update
+        // $params['body'] = [
+        //     'doc' => [
+        //         'id' => '2',
+        //         'name' => 'test'
+        //     ]
+        // ];
+
+        $client = $this->connElastic();
+        // $this->createElastic($client, $params);
+        // $this->updateElastic($client, $params);
+        $this->deleteElastic($client, $params);
 
         // {
         //     "_index": "laravel-2020.06.19",
@@ -89,7 +99,7 @@ class SqlController extends Controller
 
     }
 
-    public function connElastic(ClientBuilder $client)
+    public function connElastic()
     {
         $hosts = [
             '127.0.0.1:9200',         // IP + Port
@@ -100,22 +110,22 @@ class SqlController extends Controller
             'https://127.0.0.1:9200'  // SSL to IP + Port
         ];
 
-        $client->setHosts($hosts)->build();
+        $client = ClientBuilder::create()->setHosts($hosts)->build();
 
         return $client;
     }
 
-    public function createElastic(ClientBuilder $client, Array $data)
+    public function createElastic($client, $data)
     {
         $response = $client->create($data);
     }
 
-    public function updateElastic(ClientBuilder $client, Array $data)
+    public function updateElastic($client, $data)
     {
         $response = $client->update($data);
     }
 
-    public function deleteElastic(ClientBuilder $client, Array $data)
+    public function deleteElastic($client, $data)
     {
         $response = $client->delete($data);
     }
