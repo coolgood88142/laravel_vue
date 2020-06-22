@@ -1,0 +1,85 @@
+<template>
+    <div id="channel_list">
+        <div style="text-align:right;margin-bottom: 20px;">
+            <input type="button" id="add" :class="btnSelect" value="查詢" v-on:click="selectChannel()">
+        </div>
+        <div class="form-group">
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <tr v-for="(el,ListIndex) in channelList" :key="ListIndex">
+                    <th>
+                        <select v-model="el[0]" @change="getSubData(ListIndex)" name="master[]">
+                            <option value="" disabled selected>--請選擇--</option>
+                            <option v-for="(master, index) in channelMaster" :key="index" :value="master.value">{{ master.text }}</option>
+                        </select>
+                    </th>
+                    <th>
+                        <select v-model="el[1]" name="sub[]">
+                            <option value="" disabled selected>--請選擇--</option>
+                            <option v-for="(sub, index) in channelSub[masterSelected[ListIndex]]" :key="index" :value="sub.value">{{ sub.text }}</option>
+                        </select>
+                    </th>
+                    <th>
+                        <input type="button" :class="btnDelete" value="刪除" v-on:click="delChannel(ListIndex)">
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props:{
+        channelMaster:{
+            type:Array
+        },
+        channelSub:{
+            type:Array
+        },
+        masterSelected:{
+            type:Array
+        },
+        subSelected:{
+            type:Array
+        }
+    },
+    data:function(){
+        return {
+            //不應該這寫，當function或參數寫壞了，導致回傳資料錯誤變成null的話，畫面全壞，預設值的定義是一定是正常的資料型態
+            channelList: [],
+            btnAdd:'btn btn-primary',
+            btnDelete:'btn btn-secondary',
+            buttonData: {isSelect : false}
+        }
+    },
+    mounted() {
+        this.channelList = this.getChannelData()
+    },
+    methods: {
+        getChannelData :function(){
+            let master_selected = this.masterSelected
+            let sub_selected = this.subSelected
+            let data = []
+            if(master_selected.length > 0 && sub_selected.length > 0 ){
+                for(let i = 0; i < master_selected.length; i++){
+                    data.push([master_selected[i], sub_selected[i]])
+                }
+            }
+            return data
+        },
+        getSubData: function(index){
+            if(index != undefined && index != null){
+                this.channelList[index][1] = ''
+                this.masterSelected[index] = this.channelList[index][0]
+                this.subSelected[index] = this.channelList[index][1]
+            }
+        },
+        addChannel: function(){
+            this.channelList.push(['',''])
+        },
+        delChannel: function(index){
+            this.channelList.splice(index,1)
+        },
+    }
+}
+</script>

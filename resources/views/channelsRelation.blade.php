@@ -22,9 +22,9 @@
                     <tbody>
                         @foreach ($channels as $channel)
                             <tr>
-                                <td>{{ $channel['masterChannels'] }}</td>
-                                <td>{{ $channel['subChannels'] }}</td>
-                                <td>{{ $channel['course'] }}</td>
+                                <td>{{ $channel['masterChannelsName'] }}</td>
+                                <td>{{ $channel['subChannelsName'] }}</td>
+                                <td>{{ $channel['courseTitle'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

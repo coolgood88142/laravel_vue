@@ -28,8 +28,6 @@ class ChannelsController extends Controller
         $courseSubChannels = $this->courseSubChannelsRepo->getCourseSubChannelsAllData();
 
         $data_array = [];
-        $course_array = [];
-        $sub_channels_array = [];
         foreach ($courseSubChannels as $key => $value) {
             $courseId = $value->course_id;
             $course = $this->courseRepo->getCourseData($courseId);
@@ -39,20 +37,20 @@ class ChannelsController extends Controller
             $subChannels = $this->subChannelsRepo->getMasterSubChannelsData($subChannelsId);
             $subChannels_name = $subChannels->name;
 
-            // $array = ['masterChannels' => $masterChannels_name, 'subChannels' => $subChannels_name, 'course' => $course_title];
+            $masterChannels = $this->masterChannelsRepo->getMasterData($subChannels->master_channels_id);
+            
+            $data = [
+                'masterChannelsId' => $masterChannels->id,
+                'masterChannelsName' => $masterChannels->name,
+                'subChannelsId' => $subChannelsId,
+                'subChannelsName' => $subChannels_name,
+                'courseId' => $courseId,
+                'courseTitle' => $course_title
+            ];
 
-            // array_push($data_array, $array);
-            array_push($course_array, $courseId);
-            array_push($sub_channels_array, $subChannelsId);
+            array_push($data_array, $data);
         }
 
-        foreach ($sub_channels_array as $key => $value) {
-            dd($value);
-            // $masterChannelsId = $subChannels->master_channels_id;
-            // $masterChannels = $this->masterChannelsRepo->getMasterData($masterChannelsId);
-            // $masterChannels_name = $masterChannels->name;
-        }
-
-        // return view('channelsRelation', ['channels' => $data_array]);
+        return view('channelsRelation', ['channels' => $data_array]);
     }
 }
