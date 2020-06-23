@@ -51,6 +51,6 @@ class ChannelsController extends Controller
             array_push($data_array, $data);
         }
 
-        return view('channelsRelation', ['channels' => $data_array]);
+        return view('channelsRelation', ['channelsRelation' => $data_array]);
     }
 }

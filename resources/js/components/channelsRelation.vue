@@ -5,19 +5,14 @@
         </div>
         <div class="form-group">
             <table id="example" class="table table-striped table-bordered" style="width:100%">
-                <tr v-for="(el,ListIndex) in channelList" :key="ListIndex">
+                <tr v-for="(el,ListIndex) in channelsRelationSelected" :key="ListIndex">
                     <th>
                         <select v-model="el[0]" @change="getSubData(ListIndex)" name="master[]">
                             <option value="" disabled selected>--請選擇--</option>
                             <option v-for="(master, index) in channelMaster" :key="index" :value="master.value">{{ master.text }}</option>
                         </select>
                     </th>
-                    <th>
-                        <select v-model="el[1]" name="sub[]">
-                            <option value="" disabled selected>--請選擇--</option>
-                            <option v-for="(sub, index) in channelSub[masterSelected[ListIndex]]" :key="index" :value="sub.value">{{ sub.text }}</option>
-                        </select>
-                    </th>
+                    
                     <th>
                         <input type="button" :class="btnDelete" value="刪除" v-on:click="delChannel(ListIndex)">
                     </th>
@@ -30,16 +25,7 @@
 <script>
 export default {
     props:{
-        channelMaster:{
-            type:Array
-        },
-        channelSub:{
-            type:Array
-        },
-        masterSelected:{
-            type:Array
-        },
-        subSelected:{
+        channelsRelationSelected:{
             type:Array
         }
     },

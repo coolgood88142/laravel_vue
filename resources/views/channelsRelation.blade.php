@@ -10,7 +10,8 @@
         <form  method="POST" id="userForm">
             {{ csrf_field() }}
             <div v-cloak id="app" class="content">
-                <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">頻道關聯資料</h2>
+                <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">@{{ title }}</h2>
+                <channelsRelation :channels-relation-selected=@json($channelsRelation)></channelsRelation>
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
@@ -33,6 +34,7 @@
         </form>
     </div>
     <script src="{{mix('js/app.js')}}"></script>
+    <script src="{{mix('js/channel.js')}}"></script>
 </body>
 
 </html>
