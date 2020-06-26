@@ -27,30 +27,42 @@ class ChannelsController extends Controller
     {
         $courseSubChannels = $this->courseSubChannelsRepo->getCourseSubChannelsAllData();
 
-        $data_array = [];
+        $master_channels_id = [];
+        $sub_channels_id = [];
+        $course_id = [];
         foreach ($courseSubChannels as $key => $value) {
-            $courseId = $value->course_id;
-            $course = $this->courseRepo->getCourseData($courseId);
-            $course_title = $course->title;
-
-            $subChannelsId = $value->sub_channels_id;
-            $subChannels = $this->subChannelsRepo->getMasterSubChannelsData($subChannelsId);
-            $subChannels_name = $subChannels->name;
-
-            $masterChannels = $this->masterChannelsRepo->getMasterData($subChannels->master_channels_id);
-            
-            $data = [
-                'masterChannelsId' => $masterChannels->id,
-                'masterChannelsName' => $masterChannels->name,
-                'subChannelsId' => $subChannelsId,
-                'subChannelsName' => $subChannels_name,
-                'courseId' => $courseId,
-                'courseTitle' => $course_title
-            ];
-
-            array_push($data_array, $data);
+            array_push($course_id, $value->course_id);
+            array_push($sub_channels_id, $value->sub_channels_id);
         }
 
-        return view('channelsRelation', ['channelsRelation' => $data_array]);
+        $course = array_unique($course_id);
+        $sub_channels = array_unique($sub_channels_id);
+
+        $course_data = $this->courseRepo->getCourseIdData($course);
+        $sub_channels_data = $this->subChannelsRepo->getSubChannelsIdData($sub_channels);
+
+        $master_channels_array = [];
+        $sub_channels_array = [];
+        $course_array = [];
+        foreach($course_data as $key => $value){
+            array_push($course_array, ['id' => $value->id, 'title' => $value->title]);
+        }
+
+        foreach($sub_channels_data as $key => $value){
+            array_push($master_channels_id, $value->master_channels_id);
+            array_push($sub_channels_array, ['id' => $value->id, 'name' => $value->name]);
+        }
+
+        $master_channels_data = $this->masterChannelsRepo->getMasterChannelsIdData($master_channels_id);
+
+        foreach($master_channels_data as $key => $value){
+            array_push($master_channels_array, ['id' => $value->id, 'name' => $value->name]);
+        }
+
+        return view('channelsRelation', [
+            'masterChannels' => $master_channels_array,
+            'subChannels' => $sub_channels_array,
+            'course' => $course_array
+        ]);
     }
 }

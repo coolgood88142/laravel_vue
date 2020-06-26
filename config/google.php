@@ -48,12 +48,12 @@ return [
         /*
         | Enable service account auth or not.
         */
-        'enable' => env('GOOGLE_SERVICE_ENABLED', true),
+        'enable' => env('GOOGLE_SERVICE_ENABLED', false),
 
         /*
         | Path to service account json file
         */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', storage_path('credetokenntials.json')),
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', ''),
     ],
 
     /*

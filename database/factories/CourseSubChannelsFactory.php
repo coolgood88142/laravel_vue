@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Model::class, function (Faker $faker) {
     return [
-        //
+        'course_id'=>Course::all()->random()->id,
+        'sub_channels_id'=>SubChannels::all()->random()->id
     ];
 });

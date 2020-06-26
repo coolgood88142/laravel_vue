@@ -7,34 +7,17 @@
 
 <body>
     <div class="container">
-        <form  method="POST" id="userForm">
-            {{ csrf_field() }}
-            <div v-cloak id="app" class="content">
+        <div v-cloak id="app" class="content">
+            <form action="" method="POST">
+                {{ csrf_field() }}
                 <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">@{{ title }}</h2>
-                <channelsRelation :channels-relation-selected=@json($channelsRelation)></channelsRelation>
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>主頻道</th>
-                            <th>次頻道</th>
-                            <th>課程</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($channels as $channel)
-                            <tr>
-                                <td>{{ $channel['masterChannelsName'] }}</td>
-                                <td>{{ $channel['subChannelsName'] }}</td>
-                                <td>{{ $channel['courseTitle'] }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </form>
+                <channels_relation :master-channels-data=@json($masterChannels) :sub-channels-data=@json($subChannels) :course-data=@json($course)></channels_relation>
+                {{-- <input type="submit" :class="btnSelect" value="查詢"> --}}
+            </form>
+        </div>
     </div>
     <script src="{{mix('js/app.js')}}"></script>
-    <script src="{{mix('js/channel.js')}}"></script>
+    <script src="{{mix('js/channelsRelation.js')}}"></script>
 </body>
 
 </html>

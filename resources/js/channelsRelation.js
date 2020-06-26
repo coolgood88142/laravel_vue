@@ -5,10 +5,8 @@ let app = new Vue({
     el: '#app',
     data: {
         title: '頻道關聯資料',
-        btnSave: 'btn btn-primary',
-        sendList: []
     },
     components: {
-        'channelsRelation': channelsRelation
+        'channels_relation': channelsRelation
     }
 })

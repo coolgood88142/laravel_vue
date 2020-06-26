@@ -5,16 +5,24 @@
         </div>
         <div class="form-group">
             <table id="example" class="table table-striped table-bordered" style="width:100%">
-                <tr v-for="(el,ListIndex) in channelsRelationSelected" :key="ListIndex">
+                <tr>
                     <th>
-                        <select v-model="el[0]" @change="getSubData(ListIndex)" name="master[]">
+                        <select>
                             <option value="" disabled selected>--請選擇--</option>
-                            <option v-for="(master, index) in channelMaster" :key="index" :value="master.value">{{ master.text }}</option>
+                            <option v-for="(master, index) in masterChannelsData" :key="index" :value="master.id">{{ master.name }}</option>
                         </select>
                     </th>
-                    
                     <th>
-                        <input type="button" :class="btnDelete" value="刪除" v-on:click="delChannel(ListIndex)">
+                        <select>
+                            <option value="" disabled selected>--請選擇--</option>
+                            <option v-for="(sub, index) in subChannelsData" :key="index" :value="sub.id">{{ sub.name }}</option>
+                        </select>
+                    </th>
+                    <th>
+                        <select>
+                            <option value="" disabled selected>--請選擇--</option>
+                            <option v-for="(el, index) in courseData" :key="index" :value="el.id">{{ el.title }}</option>
+                        </select>
                     </th>
                 </tr>
             </table>
@@ -25,47 +33,27 @@
 <script>
 export default {
     props:{
-        channelsRelationSelected:{
+        masterChannelsData:{
             type:Array
-        }
+        },
+        subChannelsData:{
+            type:Array
+        },
+        courseData:{
+            type:Array
+        },
     },
     data:function(){
         return {
-            //不應該這寫，當function或參數寫壞了，導致回傳資料錯誤變成null的話，畫面全壞，預設值的定義是一定是正常的資料型態
-            channelList: [],
-            btnAdd:'btn btn-primary',
-            btnDelete:'btn btn-secondary',
-            buttonData: {isSelect : false}
+            // channelList: []
+            btnSelect: 'btn btn-primary'
         }
     },
     mounted() {
-        this.channelList = this.getChannelData()
+        // this.channelList = this.getChannelData()
     },
     methods: {
-        getChannelData :function(){
-            let master_selected = this.masterSelected
-            let sub_selected = this.subSelected
-            let data = []
-            if(master_selected.length > 0 && sub_selected.length > 0 ){
-                for(let i = 0; i < master_selected.length; i++){
-                    data.push([master_selected[i], sub_selected[i]])
-                }
-            }
-            return data
-        },
-        getSubData: function(index){
-            if(index != undefined && index != null){
-                this.channelList[index][1] = ''
-                this.masterSelected[index] = this.channelList[index][0]
-                this.subSelected[index] = this.channelList[index][1]
-            }
-        },
-        addChannel: function(){
-            this.channelList.push(['',''])
-        },
-        delChannel: function(index){
-            this.channelList.splice(index,1)
-        },
+        
     }
 }
 </script>
