@@ -7,19 +7,19 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <tr>
                     <th>
-                        <select>
+                        <select v-model="masterChannels" id="master" name="master" v-on:change="changeChannels">
                             <option value="" disabled selected>--請選擇--</option>
                             <option v-for="(master, index) in masterChannelsData" :key="index" :value="master.id">{{ master.name }}</option>
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select v-model="subChannels" id="sub" name="sub">
                             <option value="" disabled selected>--請選擇--</option>
                             <option v-for="(sub, index) in subChannelsData" :key="index" :value="sub.id">{{ sub.name }}</option>
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select v-model="course" id="course" name="course">
                             <option value="" disabled selected>--請選擇--</option>
                             <option v-for="(el, index) in courseData" :key="index" :value="el.id">{{ el.title }}</option>
                         </select>
@@ -45,7 +45,6 @@ export default {
     },
     data:function(){
         return {
-            // channelList: []
             btnSelect: 'btn btn-primary'
         }
     },
@@ -53,7 +52,10 @@ export default {
         // this.channelList = this.getChannelData()
     },
     methods: {
-        
+        changeChannels: function () {
+            this.subChannels = ''
+            this.course = ''
+        },
     }
 }
 </script>

@@ -16,8 +16,9 @@ class MasterChannelsSeeder extends Seeder
      */
     public function run()
     {
-        factory(MasterChannels::class, 5)->create()->each(function($id){
-            $id->sub_channels()->save(factory(SubChannels::class)->make());
-        });
+        //要換成一對多產生新的關聯資料
+        // factory(MasterChannels::class, 5)->create()->each(function($id){
+        //     $id->sub_channels()->save(factory(SubChannels::class)->make());
+        // });
     }
 }

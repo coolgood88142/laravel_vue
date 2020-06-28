@@ -53,7 +53,8 @@ class ChannelsController extends Controller
             array_push($sub_channels_array, ['id' => $value->id, 'name' => $value->name]);
         }
 
-        $master_channels_data = $this->masterChannelsRepo->getMasterChannelsIdData($master_channels_id);
+        $master = array_unique($master_channels_id);
+        $master_channels_data = $this->masterChannelsRepo->getMasterChannelsIdData($master);
 
         foreach($master_channels_data as $key => $value){
             array_push($master_channels_array, ['id' => $value->id, 'name' => $value->name]);
