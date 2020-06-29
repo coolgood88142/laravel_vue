@@ -37,9 +37,9 @@ class SubChannelsRepository
         return $sub_channels;
     }
 
-    public function getMasterSubChannelsData($id)
+    public function getMasterSubChannels($id)
     {   
-        $sub_channels = SubChannels::with('master_channels')->where('sub_channels.id', $id)->first();
+        $sub_channels = SubChannels::where('sub_channels.id', $id)->first();
         return $sub_channels;
     }
 }

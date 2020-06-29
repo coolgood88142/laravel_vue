@@ -16,10 +16,10 @@ class SubChannelsSeeder extends Seeder
      */
     public function run()
     {
-        // factory(SubChannels::class, 5)->create();
+        factory(SubChannels::class, 5)->create();
 
-        factory(SubChannels::class, 1)->create()->each(function($id){
-            $id->course()->save(factory(Course::class)->make());
-        });
+        // factory(SubChannels::class, 1)->create()->each(function($id){
+        //     $id->course()->save(factory(Course::class)->make());
+        // });
     }
 }

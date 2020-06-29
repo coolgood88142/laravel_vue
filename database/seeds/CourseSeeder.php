@@ -16,10 +16,10 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        // factory(Course::class, 5)->create();
+        factory(Course::class, 3)->create();
         
-        factory(Course::class, 1)->create()->each(function($id){
-            $id->sub_channels()->save(factory(SubChannels::class)->make());
-        });
+        // factory(Course::class, 1)->create()->each(function($id){
+        //     $id->sub_channels()->save(factory(SubChannels::class)->make());
+        // });
     }
 }

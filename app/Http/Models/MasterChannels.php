@@ -11,6 +11,6 @@ class MasterChannels extends Model
 
     public function sub_channels()
     {
-        return $this->hasMany('App\Models\SubChannels','master_channels_id');
+        return $this->hasOne('App\Models\SubChannels','master_channels_id');
     }
 }
