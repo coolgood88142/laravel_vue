@@ -56,25 +56,34 @@ class ChannelsController extends Controller
         $master = array_unique($master_channels_id);
         $master_channels_data = $this->masterChannelsRepo->getMasterChannelsIdData($master);
 
-        $master_sub_channels_related = [];
+        $related = [];
         foreach($master_channels_data as $key => $value){
             $id = $value->id;
-            array_push($master_channels_array, ['id' => $id, 'name' => $value->name]);
-            
-            $subChannelsData = $this->subChannelsRepo->getMasterSubChannels($id);
-            $subChannels = [];
-            foreach($subChannelsData as $key => $value){
-                array_push($subChannels, $value->id);
-            }
-            array_push($master_sub_channels_related, ['masterChannelsId' => $id, 'subChannelsId' => $subChannels]);
-        }
+            $name = $value->name;
+            array_push($master_channels_array, ['id' => $id, 'name' => $name]);
 
-        dd($master_sub_channels_related);
+            $subChannelsData = $this->subChannelsRepo->getMasterSubChannels($id);
+
+            $courseData = [];
+            $courseSubChannelsData = $this->courseSubChannelsRepo->getCourseSubChannels($subChannelsData->id);
+            foreach($courseSubChannelsData as $key => $value){
+                $courseFirstData = $this->courseRepo->getCourseData($value->course_id);
+                array_push($courseData, ['id' => $value->course_id, 'title' => $courseFirstData->title]);
+            }
+
+            array_push($related, [
+                'masterChannelsId' => ['id' => $id, 'name' => $name], 
+                'subChannelsId' => ['id' => $subChannelsData->id, 'name' => $subChannelsData->name], 
+                'courseId' => $courseData
+                ]
+            );
+        }
 
         return view('channelsRelation', [
             'masterChannels' => $master_channels_array,
             'subChannels' => $sub_channels_array,
-            'course' => $course_array
+            'course' => $course_array,
+            'related' => $related
         ]);
     }
 }

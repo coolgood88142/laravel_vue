@@ -14,5 +14,10 @@ class CourseSubChannelsRepository
         return $CourseSubChannels;
     }
 
+    public function getCourseSubChannels($id)
+    {   
+        $CourseSubChannels = CourseSubChannels::where('sub_channels_id', $id)->get();
+        return $CourseSubChannels;
+    }
 
 }
