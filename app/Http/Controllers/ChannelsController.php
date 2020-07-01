@@ -63,18 +63,26 @@ class ChannelsController extends Controller
             array_push($master_channels_array, ['id' => $id, 'name' => $name]);
 
             $subChannelsData = $this->subChannelsRepo->getMasterSubChannels($id);
+            $subChannelsRelatedData = [];
+            $courseRelatedData = [];
+            foreach($subChannelsData as $key => $value){
+                $subChannelsRelatedId = $value->id;
+                array_push($subChannelsRelatedData, ['id' => $subChannelsRelatedId, 'name' => $value->name]);
 
-            $courseData = [];
-            $courseSubChannelsData = $this->courseSubChannelsRepo->getCourseSubChannels($subChannelsData->id);
-            foreach($courseSubChannelsData as $key => $value){
-                $courseFirstData = $this->courseRepo->getCourseData($value->course_id);
-                array_push($courseData, ['id' => $value->course_id, 'title' => $courseFirstData->title]);
+                $courseData = [];
+                $courseSubChannelsData = $this->courseSubChannelsRepo->getCourseSubChannels($subChannelsRelatedId);
+
+                foreach($courseSubChannelsData as $key => $value){
+                    $courseFirstData = $this->courseRepo->getCourseData($value->course_id);
+                    array_push($courseData, ['id' => $value->course_id, 'title' => $courseFirstData->title]);
+                }
+                array_push($courseRelatedData, $courseData);
             }
 
             array_push($related, [
                 'masterChannelsId' => ['id' => $id, 'name' => $name], 
-                'subChannelsId' => ['id' => $subChannelsData->id, 'name' => $subChannelsData->name], 
-                'courseId' => $courseData
+                'subChannelsId' => $subChannelsRelatedData, 
+                'courseId' => $courseRelatedData
                 ]
             );
         }

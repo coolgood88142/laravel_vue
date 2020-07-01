@@ -6,8 +6,13 @@
         <div class="form-group">
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <tr>
+                    <th>主頻道</th>
+                    <th>次頻道</th>
+                    <th>課程</th>
+                </tr>
+                <tr>
                     <th>
-                        <select v-model="masterChannels" id="master" name="master" v-on:change="changeMasterChannels">
+                        <select v-model="masterChannels" id="master" name="master" class="form-control" v-on:change="changeMasterChannels">
                             <option value="" disabled selected>--請選擇--</option>
                             <option v-for="(master, index) in masterChannelsList" :key="index" :value="master.id">{{ master.name }}</option>
                         </select>
@@ -31,7 +36,11 @@
 </template>
 
 <script>
+
 export default {
+    components: {
+    "vue-select": require("vue-select")
+  },
     props:{
         masterChannelsData:{
             type:Array
@@ -62,9 +71,10 @@ export default {
             if(this.relatedData.length > 0){
                 for(let i = 0; i < this.relatedData.length; i++){
                     if(this.masterChannels == this.relatedData[i]['masterChannelsId']['id']){
-                        this.subChannelsList = [this.relatedData[i]['subChannelsId']]
-                        this.subChannels = this.relatedData[i]['subChannelsId']['id']
-                        this.courseList = this.relatedData[i]['courseId']
+                        this.subChannelsList = this.relatedData[i]['subChannelsId']
+                        this.subChannels = ''
+                        this.courseList = []
+                        this.course = ''
                     }
                 }
             }
@@ -72,7 +82,13 @@ export default {
         changeSubChannels: function () {
             if(this.relatedData.length > 0){
                 for(let i = 0; i < this.relatedData.length; i++){
-                
+                    let subChannelsId = this.relatedData[i]['subChannelsId'];
+                    for(let j =0; j < subChannelsId.length; j++){
+                        if(this.subChannels == subChannelsId[j]['id']){
+                            this.courseList = this.relatedData[i]['courseId'][j]
+                        }
+                    }
+                    
                 }
             }
         }

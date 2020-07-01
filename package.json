@@ -23,6 +23,7 @@
         "sass-loader": "^7.1.0",
         "sweetalert": "^2.1.2",
         "vue": "^2.6.11",
+        "vue-select2": "^0.2.6",
         "vue-template-compiler": "^2.6.11"
     }
 }
