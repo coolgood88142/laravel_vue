@@ -39,6 +39,10 @@ Route::get('/api', function () {
     return view('api');
 });
 
+Route::get('/vueSelect', function () {
+    return view('vueSelect');
+});
+
 Route::get('/user','userController@userView')->name('getUserView');
 
 Route::get('/form','userController@getFormData')->name('getForm');

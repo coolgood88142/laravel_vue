@@ -8,7 +8,7 @@
 require('./bootstrap');
 window.Vue = require('vue');
 window.axios = require('axios');
-window.vSelect = require("vue-select2")
+window.select2 = require("vue-select2")
 Vue.config.productionTip = false;
 
 //防止顯示生產訊息，vue預設會顯示
