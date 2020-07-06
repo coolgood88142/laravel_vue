@@ -8,6 +8,6 @@ var vm = new Vue({
     el: "#el",
     data: {
         title: 'vue-select',
-        options: [1,2,3]
+        options: [{id: 'Canada', value: 'ca'}]
     }
 });

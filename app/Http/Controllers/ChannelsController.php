@@ -45,7 +45,7 @@ class ChannelsController extends Controller
         $sub_channels_array = [];
         $course_array = [];
         foreach($course_data as $key => $value){
-            array_push($course_array, ['id' => $value->id, 'title' => $value->title]);
+            array_push($course_array, ['id' => $value->id, 'name' => $value->title]);
         }
 
         foreach($sub_channels_data as $key => $value){
@@ -74,7 +74,7 @@ class ChannelsController extends Controller
 
                 foreach($courseSubChannelsData as $key => $value){
                     $courseFirstData = $this->courseRepo->getCourseData($value->course_id);
-                    array_push($courseData, ['id' => $value->course_id, 'title' => $courseFirstData->title]);
+                    array_push($courseData, ['id' => $value->course_id, 'name' => $courseFirstData->title]);
                 }
                 array_push($courseRelatedData, $courseData);
             }

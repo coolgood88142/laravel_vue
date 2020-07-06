@@ -29,28 +29,28 @@ class SqlController extends Controller
 
         //使用delete拿掉body
         $params =[
-            'index' => 'elastic20200620200511',
+            'index' => 'elastic' . date('YmdHms'),
             'type' => 'data',
             'id' => 'el1'
         ];
 
-        // $params['body'] = [
-        //     'id' => '2',
-        //     'name' => 'Ming'
-        // ];
+        $params['body'] = [
+            'id' => '5',
+            'name' => 'Test1'
+        ];
 
         //update
         // $params['body'] = [
         //     'doc' => [
-        //         'id' => '2',
+        //         'id' => '3',
         //         'name' => 'test'
         //     ]
         // ];
 
         $client = $this->connElastic();
-        // $this->createElastic($client, $params);
+        $this->createElastic($client, $params);
         // $this->updateElastic($client, $params);
-        $this->deleteElastic($client, $params);
+        // $this->deleteElastic($client, $params);
 
         // {
         //     "_index": "laravel-2020.06.19",

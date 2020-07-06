@@ -9,7 +9,7 @@
     <div class="container">
         <div id="el">
             <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">@{{ title }}</h2>
-            <v-select :options="options"></v-select>
+            <v-select v-model="tet" :options="options" value="code" label="id"></v-select>
         </div>
     </div>
     <script src="{{mix('js/app.js')}}"></script>

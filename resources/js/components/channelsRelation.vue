@@ -12,22 +12,13 @@
                 </tr>
                 <tr>
                     <th>
-                        <select v-model="masterChannels" id="master" name="master" class="form-control" v-on:change="changeMasterChannels">
-                            <option value="" disabled selected>--請選擇--</option>
-                            <option v-for="(master, index) in masterChannelsList" :key="index" :value="master.id">{{ master.name }}</option>
-                        </select>
+                        <vSelect v-model="masterChannels" :options="masterChannelsList" value="id" label="name" @input="changeMasterChannels"></vSelect>
                     </th>
                     <th>
-                        <select v-model="subChannels" id="sub" name="sub" v-on:change="changeSubChannels">
-                            <option value="" disabled selected>--請選擇--</option>
-                            <option v-for="(sub, index) in subChannelsList" :key="index" :value="sub.id">{{ sub.name }}</option>
-                        </select>
+                        <vSelect v-model="subChannels" :options="subChannelsList" value="id" label="name"></vSelect>
                     </th>
                     <th>
-                        <select v-model="course" id="course" name="course">
-                            <option value="" disabled selected>--請選擇--</option>
-                            <option v-for="(el, index) in courseList" :key="index" :value="el.id">{{ el.title }}</option>
-                        </select>
+                        <vSelect v-model="course" :options="courseList" value="id" label="name"></vSelect>
                     </th>
                 </tr>
             </table>
@@ -36,11 +27,11 @@
 </template>
 
 <script>
-
+import 'vue-select/dist/vue-select.css'
+import vSelect from 'vue-select'
+Vue.component('vSelect', vSelect)
+let defaultLable = '---請選擇---'
 export default {
-    components: {
-    "vue-select": require("vue-select")
-  },
     props:{
         masterChannelsData:{
             type:Array
@@ -60,21 +51,22 @@ export default {
             masterChannelsList: this.masterChannelsData,
             subChannelsList: [],
             courseList: [],
-            masterChannels: '',
-            subChannels: '',
-            course: '',
+            masterChannels: defaultLable,
+            subChannels: defaultLable,
+            course: defaultLable,
             btnSelect: 'btn btn-primary'
         }
     },
     methods: {
         changeMasterChannels: function () {
+            console.log(this.masterChannels)
             if(this.relatedData.length > 0){
                 for(let i = 0; i < this.relatedData.length; i++){
-                    if(this.masterChannels == this.relatedData[i]['masterChannelsId']['id']){
+                    if(this.masterChannels['id'] == this.relatedData[i]['masterChannelsId']['id']){
                         this.subChannelsList = this.relatedData[i]['subChannelsId']
-                        this.subChannels = ''
+                        this.subChannels = defaultLable
                         this.courseList = []
-                        this.course = ''
+                        this.course = defaultLable
                     }
                 }
             }
