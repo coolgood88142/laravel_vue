@@ -12,7 +12,6 @@
                 {{ csrf_field() }}
                 <h2 id="title" class="text-center text-black font-weight-bold" style="margin-bottom:20px;">@{{ title }}</h2>
                 <channels_relation :master-channels-data=@json($masterChannels) :sub-channels-data=@json($subChannels) :course-data=@json($course) :related-data=@json($related)></channels_relation>
-                {{-- <input type="submit" :class="btnSelect" value="查詢"> --}}
             </form>
         </div>
     </div>
