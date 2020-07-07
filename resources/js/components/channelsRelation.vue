@@ -1,7 +1,7 @@
 <template>
     <div id="channel_list">
         <div style="text-align:right;margin-bottom: 20px;">
-            <input type="button" id="add" :class="btnSelect" value="查詢" v-on:click="selectChannel()">
+            <input type="button" id="add" :class="btnSelect" value="查詢" v-on:click="showSelectChannels()">
         </div>
         <div class="form-group">
             <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -20,17 +20,23 @@
                     <th>
                         <vSelect v-model="course" :options="courseList" :searchable="true" value="id" label="name"></vSelect>
                     </th>
-                    <th>
-                    </th>
                 </tr>
             </table>
         </div>
-        <!-- <div class="form-group" id="select">
+        <div class="form-group" id="select">
             <table class="table table-striped table-bordered" style="width:100%">
                 <tr>
+                    <th>主頻道</th>
+                    <th>次頻道</th>
+                    <th>課程</th>
+                </tr>
+                <tr v-for="(channels, index) in selectChannels" :key="index">
+                    <th>{{ channels[0] }}</th>
+                    <th>{{ channels[1] }}</th>
+                    <th>{{ channels[2] }}</th>
                 </tr>
             </table>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -52,16 +58,14 @@ export default {
         },
         relatedData:{
             type:Array
-        },searchable: {
-	type: Boolean,
-	default: true
-},
+        }
     },
     data:function(){
         return {
             masterChannelsList: this.masterChannelsData,
             subChannelsList: [],
             courseList: [],
+            selectChannels: [],
             masterChannels: defaultLable,
             subChannels: defaultLable,
             course: defaultLable,
@@ -107,6 +111,37 @@ export default {
                     }
                 }
             }
+        },
+        showSelectChannels: function(){
+            let selectData = []
+            let masterData = []
+            let subData = []
+            let courseData = []
+
+            if(this.masterChannels['id'] != 0 && this.subChannels['id'] != 0 && this.course['id'] != 0 ){
+                selectData.push([this.masterChannels, this.subChannels, this.course])
+            }else{
+                if(this.masterChannels['id'] != 0){
+                    masterData.push([this.masterChannels])
+                }else{
+                    masterData.push(this.masterChannelsList)
+                }
+
+                if(this.subChannels['id'] != 0){
+                    subData.push([this.subChannels])
+                }else{
+                    subData.push(this.subChannelsList)
+                }
+
+                if(this.course['id'] != 0){
+                    courseData.push([this.course])
+                }else{
+                    courseData.push(this.courseList)
+                }
+
+                selectData.push([masterData, subData, courseData])
+            }
+            this.selectChannels = selectData
         }
     }
 }
