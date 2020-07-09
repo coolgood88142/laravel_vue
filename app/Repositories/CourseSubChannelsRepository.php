@@ -10,7 +10,7 @@ class CourseSubChannelsRepository
 
     public function getCourseSubChannelsAllData()
     {
-        $CourseSubChannels = CourseSubChannels::all();
+        $CourseSubChannels = CourseSubChannels::all(['course_id', 'sub_channels_id']);
         return $CourseSubChannels;
     }
 

@@ -9,7 +9,7 @@ class Course extends Model
     protected $table = 'course';
     protected $connection = 'mysql_user';
 
-    public function sub_channels()
+    public function subChannels()
     {
         return $this->belongsToMany('App\Models\SubChannels');
     }

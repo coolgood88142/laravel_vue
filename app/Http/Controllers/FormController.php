@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\MasterChannels;
+use App\Models\SubChannels;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
@@ -56,5 +59,16 @@ class FormController extends Controller
             dd('新增資料錯誤');
         }
             
+    }
+
+    public function laravelTestCode() {
+        // $data = MasterChannels::whereMonth('created_at', '05')->get();
+        // $data = MasterChannels::all()->groupBy(function($item) {
+        //     return $item->name;
+        // });
+        // $date = date('Y-m-d');
+        $data = MasterChannels::has('subChannels')->get();
+        dd($data);
+
     }
 }

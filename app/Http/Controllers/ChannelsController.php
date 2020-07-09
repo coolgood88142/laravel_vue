@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\MasterChannels;
+use App\Models\SubChannels;
+use App\Models\CourseSubChannels;
 use App\Repositories\MasterChannelsRepository;
 use App\Repositories\SubChannelsRepository;
 use App\Repositories\CourseRepository;
@@ -25,11 +28,34 @@ class ChannelsController extends Controller
 
     public function selectCourseSubChannels()
     {
+        $master_channels_array = [];
+        $master_channels_id = [];
+        $master_data = MasterChannels::has('subChannels.course')->get();
+        foreach ($master_data as $key => $value) {
+            array_push($master_channels_array, ['id' => $value->id, 'name' => $value->name]);
+            array_push($master_channels_id, $value->id);
+        }
+
+        $sub_channels_array = [];
+        $sub_channels_id = [];
+        $sub_data = subChannels::whereIn('master_channels_id', $master_channels_id)->get();
+        foreach ($sub_data as $key => $value) {
+            array_push($sub_channels_array, ['id' => $value->id, 'name' => $value->name]);
+            array_push($sub_channels_id, $value->id);
+        }
+
+        $course_array = [];
+        $course_id = [];
+        $course_sub_data = CourseSubChannels::whereIn('sub_channels_id', $sub_channels_id)->get();
+        foreach ($course_sub_data as $key => $value) {
+            array_push($course_array, ['id' => $value->id, 'name' => $value->name]);
+            array_push($course_id, $value->id);
+        }
+
+
         $courseSubChannels = $this->courseSubChannelsRepo->getCourseSubChannelsAllData();
 
-        $master_channels_id = [];
-        $sub_channels_id = [];
-        $course_id = [];
+        
         foreach ($courseSubChannels as $key => $value) {
             array_push($course_id, $value->course_id);
             array_push($sub_channels_id, $value->sub_channels_id);
@@ -41,9 +67,7 @@ class ChannelsController extends Controller
         $course_data = $this->courseRepo->getCourseIdData($course);
         $sub_channels_data = $this->subChannelsRepo->getSubChannelsIdData($sub_channels);
 
-        $master_channels_array = [];
-        $sub_channels_array = [];
-        $course_array = [];
+
         foreach($course_data as $key => $value){
             array_push($course_array, ['id' => $value->id, 'name' => $value->title]);
         }
@@ -60,7 +84,7 @@ class ChannelsController extends Controller
         foreach($master_channels_data as $key => $value){
             $id = $value->id;
             $name = $value->name;
-            array_push($master_channels_array, ['id' => $id, 'name' => $name]);
+            // array_push($master_channels_array, ['id' => $id, 'name' => $name]);
 
             $subChannelsData = $this->subChannelsRepo->getMasterSubChannels($id);
             $subChannelsRelatedData = [];

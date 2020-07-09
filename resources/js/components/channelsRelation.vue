@@ -31,9 +31,9 @@
                     <th>課程</th>
                 </tr>
                 <tr v-for="(channels, index) in selectChannels" :key="index">
-                    <th>{{ channels[0] }}</th>
-                    <th>{{ channels[1] }}</th>
-                    <th>{{ channels[2] }}</th>
+                    <th>{{ channels[0].name }}</th>
+                    <th>{{ channels[1].name }}</th>
+                    <th>{{ channels[2].name }}</th>
                 </tr>
             </table>
         </div>

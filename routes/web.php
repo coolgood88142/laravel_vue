@@ -73,4 +73,6 @@ Route::get('/testFunction','userController@testFunction');
 
 Route::get('/elastic','sqlController@testElastic');
 
+Route::get('/testCode','FormController@laravelTestCode');
+
 

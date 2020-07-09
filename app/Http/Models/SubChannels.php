@@ -9,7 +9,7 @@ class SubChannels extends Model
     protected $table = 'sub_channels';
     protected $connection = 'mysql_user';
 
-    public function master_channels()
+    public function masterChannels()
     {
         return $this->belongsToMany('App\Models\MasterChannels','master_channels_id');
     }
@@ -19,7 +19,7 @@ class SubChannels extends Model
         return $this->belongsToMany('App\Models\Course');
     }
 
-    public function course_sub_channels()
+    public function courseSubChannels()
     {
         return $this->belongsToMany('App\Models\CourseSubChannels', 'course_sub_channels', 'sub_channels_id', 'course_id');
     }

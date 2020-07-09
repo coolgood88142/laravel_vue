@@ -9,8 +9,8 @@ class MasterChannels extends Model
     protected $table = 'master_channels';
     protected $connection = 'mysql_user';
 
-    public function sub_channels()
+    public function subChannels()
     {
-        return $this->hasOne('App\Models\SubChannels','master_channels_id');
+        return $this->hasMany('App\Models\SubChannels','master_channels_id');
     }
 }
