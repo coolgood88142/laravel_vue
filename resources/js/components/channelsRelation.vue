@@ -31,9 +31,9 @@
                     <th>課程</th>
                 </tr>
                 <tr v-for="(channels, index) in selectChannels" :key="index">
-                    <th>{{ channels[0].name }}</th>
-                    <th>{{ channels[1].name }}</th>
-                    <th>{{ channels[2].name }}</th>
+                    <th>{{ channels[0] }}</th>
+                    <th>{{ channels[1] }}</th>
+                    <th>{{ channels[2] }}</th>
                 </tr>
             </table>
         </div>
@@ -122,24 +122,45 @@ export default {
                 selectData.push([this.masterChannels, this.subChannels, this.course])
             }else{
                 if(this.masterChannels['id'] != 0){
-                    masterData.push([this.masterChannels])
+                    masterData.push(this.masterChannels)
                 }else{
-                    masterData.push(this.masterChannelsList)
+                    masterData = this.masterChannelsList
                 }
 
                 if(this.subChannels['id'] != 0){
-                    subData.push([this.subChannels])
+                    subData.push(this.subChannels)
                 }else{
-                    subData.push(this.subChannelsList)
+                    subData = this.subChannelsList
                 }
 
                 if(this.course['id'] != 0){
-                    courseData.push([this.course])
+                    courseData.push(this.course)
                 }else{
-                    courseData.push(this.courseList)
+                    let list = [];
+                    for(let i = 0; i < this.relatedData.length; i++){
+                        let subChannelsId = this.relatedData[i]['subChannelsId'];
+                        for(let j =0; j < subData.length; j++){
+                            if(subChannelsId[j]['id'] == subData[j]['id']){
+                                list = this.relatedData[i]['courseId'][j]
+                            }
+                        }
+                    }
+                    courseData = list;
                 }
 
-                selectData.push([masterData, subData, courseData])
+                console.log(masterData);
+                console.log(subData);
+                console.log(courseData);
+
+                for(let i = 0; i < masterData.length; i++){
+                    for(let j = 0; j < subData.length; j++){
+                        for(let k = 0; k < courseData.length; k++){
+                            selectData.push([masterData[i]['name'], subData[j]['name'], courseData[k]['name']])
+                        }
+                    }
+                }
+
+                
             }
             this.selectChannels = selectData
         }
