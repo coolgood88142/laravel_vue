@@ -21,6 +21,9 @@
                         <vSelect v-model="course" :options="courseList" :searchable="true" value="id" label="name"></vSelect>
                     </th>
                 </tr>
+                <tr>
+                    <vSelect v-model="searchChannels" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
+                </tr>
             </table>
         </div>
         <div class="form-group" id="select">
@@ -66,9 +69,11 @@ export default {
             subChannelsList: [],
             courseList: [],
             selectChannels: [],
+            channelsData:[],
             masterChannels: defaultLable,
             subChannels: defaultLable,
             course: defaultLable,
+            searchChannels: defaultLable,
             btnSelect: 'btn btn-primary'
         }
     },
@@ -119,7 +124,7 @@ export default {
             let courseData = []
 
             if(this.masterChannels['id'] != 0 && this.subChannels['id'] != 0 && this.course['id'] != 0 ){
-                selectData.push([this.masterChannels, this.subChannels, this.course])
+                selectData.push([this.masterChannels['name'], this.subChannels['name'], this.course['name']])
             }else{
                 if(this.masterChannels['id'] != 0){
                     masterData.push(this.masterChannels)
@@ -139,18 +144,14 @@ export default {
                     let list = [];
                     for(let i = 0; i < this.relatedData.length; i++){
                         let subChannelsId = this.relatedData[i]['subChannelsId'];
-                        for(let j =0; j < subData.length; j++){
-                            if(subChannelsId[j]['id'] == subData[j]['id']){
+                        for(let j =0; j < subChannelsId.length; j++){
+                            if(subChannelsId[j]['id'] == subData[0]['id']){
                                 list = this.relatedData[i]['courseId'][j]
                             }
                         }
                     }
                     courseData = list;
                 }
-
-                console.log(masterData);
-                console.log(subData);
-                console.log(courseData);
 
                 for(let i = 0; i < masterData.length; i++){
                     for(let j = 0; j < subData.length; j++){
@@ -163,6 +164,17 @@ export default {
                 
             }
             this.selectChannels = selectData
+        },
+        onSearch(search, loading) {
+            this.search(loading, search, this);
+        },
+        search(loading, search, vm){
+            fetch(
+                `https://api.github.com/search/repositories?q=${escape(search)}`
+            ).then(res => {
+                res.json().then(json => (vm.options = json.items));
+                loading(false);
+            });
         }
     }
 }
