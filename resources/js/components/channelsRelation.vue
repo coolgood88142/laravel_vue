@@ -22,7 +22,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <vSelect v-model="searchChannels" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
+                    <vSelect label="name" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
                 </tr>
             </table>
         </div>
@@ -60,6 +60,9 @@ export default {
             type:Array
         },
         relatedData:{
+            type:Array
+        },
+        totalChannelsData:{
             type:Array
         }
     },
@@ -166,16 +169,13 @@ export default {
             this.selectChannels = selectData
         },
         onSearch(search, loading) {
-            this.search(loading, search, this);
+            loading(true)
+            this.search(loading, search, this.totalChannelsData, this)
         },
-        search(loading, search, vm){
-            fetch(
-                `https://api.github.com/search/repositories?q=${escape(search)}`
-            ).then(res => {
-                res.json().then(json => (vm.options = json.items));
-                loading(false);
-            });
-        }
+        search: _.debounce((loading, search, options, vm) => {
+            vm.options = [options]
+            loading(false)
+        }, 350)
     }
 }
 </script>

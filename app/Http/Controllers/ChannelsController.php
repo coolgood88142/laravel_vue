@@ -30,6 +30,7 @@ class ChannelsController extends Controller
     public function selectCourseSubChannels()
     {
         $related = [];
+        $total_channels_array = [];
         $master_channels_array = [];
         $master_channels_id = [];
         $master_data = MasterChannels::has('subChannels.course')->get();
@@ -37,6 +38,7 @@ class ChannelsController extends Controller
             $master = MasterChannels::where('id', $value->id)->first();
             array_push($master_channels_array, ['id' => $master->id, 'name' => $master->name]);
             array_push($master_channels_id, $value->id);
+            array_push($total_channels_array, $master->name);
 
             $sub = [];
             $course = [];
@@ -44,12 +46,14 @@ class ChannelsController extends Controller
             $sub_channels =  subChannels::where('master_channels_id', $value->id)->get();
             foreach ($sub_channels as $key => $value) {
                 array_push($sub, ['id' => $value->id, 'name' => $value->name]);
+                array_push($total_channels_array, $value->name);
 
                 $courseSub = [];
                 $course_sub_channels = CourseSubChannels::where('sub_channels_id', $value->id)->get();
                 foreach ($course_sub_channels as $key => $value) {
                     $coursedata = Course::where('id', $value->course_id)->first();
                     array_push($courseSub, ['id' => $coursedata->id, 'name' => $coursedata->title]);
+                    array_push($total_channels_array, $coursedata->title);
                 }
                 array_push($course, $courseSub);
             }
@@ -86,7 +90,8 @@ class ChannelsController extends Controller
             'masterChannels' => $master_channels_array,
             'subChannels' => $sub_channels_array,
             'course' => $course_array,
-            'related' => $related
+            'related' => $related,
+            'totalChannels' => $total_channels_array
         ]);
     }
 }
