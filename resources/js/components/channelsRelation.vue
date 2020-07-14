@@ -21,10 +21,8 @@
                         <vSelect v-model="course" :options="courseList" :searchable="true" value="id" label="name"></vSelect>
                     </th>
                 </tr>
-                <tr>
-                    <vSelect label="name" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
-                </tr>
             </table>
+            <vSelect label="name" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
         </div>
         <div class="form-group" id="select">
             <table class="table table-striped table-bordered" style="width:100%">
@@ -163,8 +161,6 @@ export default {
                         }
                     }
                 }
-
-                
             }
             this.selectChannels = selectData
         },
@@ -173,7 +169,11 @@ export default {
             this.search(loading, search, this.totalChannelsData, this)
         },
         search: _.debounce((loading, search, options, vm) => {
-            vm.options = [options]
+            let channelsOptions = options.filter(function(element, index, arr){
+                return arr.indexOf(search) === index;
+            });
+
+            vm.channelsData = channelsOptions
             loading(false)
         }, 350)
     }
