@@ -94,4 +94,31 @@ class ChannelsController extends Controller
             'totalChannels' => $total_channels_array
         ]);
     }
+
+    public function getKeyWordChannelsData(Request $request)
+    {
+        $search = $request->search;
+        $search_array = [];
+        $master_channels = MasterChannels::has('subChannels.course');
+        $master_data = $master_channels->get();
+        foreach ($master_data as $key => $value) {
+            $master_search = $master_channels->where('name', 'like', '%'. $search .'%')->get();
+            foreach ($master_search as $key => $value) {
+                array_push($search_array, $value->name);
+            }
+
+            $sub_channels =  subChannels::where('master_channels_id', $value->id);
+            $sub_data = $sub_channels->get();
+            foreach ($sub_data as $key => $value) {
+
+                
+            }
+
+            $sub_search = $sub_channels->where('name', 'like', '%'. $search .'%')->get();
+            foreach ($sub_search as $key => $value) {
+                array_push($search_array, $value->name);
+            }
+
+        }
+    }
 }

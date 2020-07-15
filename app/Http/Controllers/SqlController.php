@@ -12,7 +12,6 @@ class SqlController extends Controller
     public function selectData()
     {
         $users = User::where('us_status', 1);
-
         return view('select', ['users' => $users]);
     }
 
