@@ -69,6 +69,8 @@ Route::get('/formUserData','FormController@getFormUserData')->name('getFormUserD
 
 Route::get('/courseSubChannels','ChannelsController@selectCourseSubChannels')->name('getCourseSubChannelsData');
 
+Route::get('/getKeyWord','ChannelsController@getKeyWordChannelsData')->name('getKeyWordChannelsData');
+
 Route::get('/testFunction','userController@testFunction');
 
 Route::get('/elastic','sqlController@testElastic');

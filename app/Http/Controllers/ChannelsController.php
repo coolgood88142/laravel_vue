@@ -110,15 +110,20 @@ class ChannelsController extends Controller
             $sub_channels =  subChannels::where('master_channels_id', $value->id);
             $sub_data = $sub_channels->get();
             foreach ($sub_data as $key => $value) {
-
-                
+                $courseSub = [];
+                $course_sub_channels = CourseSubChannels::where('sub_channels_id', $value->id)->get();
+                foreach ($course_sub_channels as $key => $value) {
+                    $coursedata = Course::where('title', 'like', '%'. $search .'%')->get();
+                    array_push($search_array, $coursedata->title);
+                }
             }
 
             $sub_search = $sub_channels->where('name', 'like', '%'. $search .'%')->get();
             foreach ($sub_search as $key => $value) {
                 array_push($search_array, $value->name);
             }
-
         }
+        
+        return $search_array;
     }
 }

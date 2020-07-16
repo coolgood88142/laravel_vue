@@ -166,15 +166,15 @@ export default {
         },
         onSearch(search, loading) {
             loading(true)
-            this.search(loading, search, this.totalChannelsData, this)
+            this.search(loading, search, this)
         },
-        search: _.debounce((loading, search, options, vm) => {
-            let channelsOptions = options.filter(function(element, index, arr){
-                return arr.indexOf(search) === index;
+        search: _.debounce((loading, search, vm) => {
+            fetch(
+                'https://api.github.com/search/repositories?q=${escape(search)}'
+            ).then(res => {
+                res.json().then(json => (vm.options = json.items));
+                loading(false);
             });
-
-            vm.channelsData = channelsOptions
-            loading(false)
         }, 350)
     }
 }
