@@ -113,8 +113,14 @@ class ChannelsController extends Controller
                 $courseSub = [];
                 $course_sub_channels = CourseSubChannels::where('sub_channels_id', $value->id)->get();
                 foreach ($course_sub_channels as $key => $value) {
-                    $coursedata = Course::where('title', 'like', '%'. $search .'%')->get();
-                    array_push($search_array, $coursedata->title);
+                    $coursedata = Course::where([
+                        ['id', '=', $value->course_id],
+                        ['title', 'like', '%'. $search .'%']
+                    ])->first();
+                    
+                    if($coursedata != null){
+                        array_push($search_array, $coursedata->title);
+                    }
                 }
             }
 
@@ -122,6 +128,10 @@ class ChannelsController extends Controller
             foreach ($sub_search as $key => $value) {
                 array_push($search_array, $value->name);
             }
+        }
+        
+        if(count($search_array) > 0){
+            $search_array = array_unique($search_array);
         }
         
         return $search_array;

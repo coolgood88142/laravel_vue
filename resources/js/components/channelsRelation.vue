@@ -170,9 +170,9 @@ export default {
         },
         search: _.debounce((loading, search, vm) => {
             fetch(
-                'https://api.github.com/search/repositories?q=${escape(search)}'
+                'http://127.0.0.1:8000/getKeyWord?search=${escape(search)}'
             ).then(res => {
-                res.json().then(json => (vm.options = json.items));
+                res.json().then(json => (vm.channelsData = json));
                 loading(false);
             });
         }, 350)
