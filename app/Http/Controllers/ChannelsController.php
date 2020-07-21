@@ -86,12 +86,19 @@ class ChannelsController extends Controller
             array_push($course_array, ['id' => $value->id, 'name' => $value->title]);
         }
 
+        $totalChannels = [];
+        $total_channels_array = array_unique($total_channels_array);
+
+        foreach ($total_channels_array as $key => $value) {
+            array_push($totalChannels, $value);
+        }
+
         return view('channelsRelation', [
             'masterChannels' => $master_channels_array,
             'subChannels' => $sub_channels_array,
             'course' => $course_array,
             'related' => $related,
-            'totalChannels' => $total_channels_array
+            'totalChannels' => $totalChannels
         ]);
     }
 
