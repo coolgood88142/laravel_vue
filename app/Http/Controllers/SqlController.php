@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Services\ElasticService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Elasticsearch\ClientBuilder;
 
 class SqlController extends Controller
 {
@@ -17,15 +17,6 @@ class SqlController extends Controller
 
     public function testElastic()
     {
-        $hosts = [
-            '127.0.0.1:9200',         // IP + Port
-            '127.0.0.1',              // Just IP
-            'mydomain.server.com:9201', // Domain + Port
-            'mydomain2.server.com',     // Just Domain
-            'https://localhost',        // SSL to localhost
-            'https://127.0.0.1:9200'  // SSL to IP + Port
-        ];
-
         //使用delete拿掉body
         $params =[
             'index' => 'elastic' . date('YmdHms'),
@@ -46,10 +37,10 @@ class SqlController extends Controller
         //     ]
         // ];
 
-        $client = $this->connElastic();
-        $this->createElastic($client, $params);
-        // $this->updateElastic($client, $params);
-        // $this->deleteElastic($client, $params);
+        $client = ElasticService::connElastic();
+        ElasticService::createElastic($client, $params);
+        // ElasticService::updateElastic($client, $params);
+        // ElasticService::deleteElastic($client, $params);
 
         // {
         //     "_index": "laravel-2020.06.19",
@@ -96,36 +87,5 @@ class SqlController extends Controller
 
 
 
-    }
-
-    public function connElastic()
-    {
-        $hosts = [
-            '127.0.0.1:9200',         // IP + Port
-            '127.0.0.1',              // Just IP
-            'mydomain.server.com:9201', // Domain + Port
-            'mydomain2.server.com',     // Just Domain
-            'https://localhost',        // SSL to localhost
-            'https://127.0.0.1:9200'  // SSL to IP + Port
-        ];
-
-        $client = ClientBuilder::create()->setHosts($hosts)->build();
-
-        return $client;
-    }
-
-    public function createElastic($client, $data)
-    {
-        $response = $client->create($data);
-    }
-
-    public function updateElastic($client, $data)
-    {
-        $response = $client->update($data);
-    }
-
-    public function deleteElastic($client, $data)
-    {
-        $response = $client->delete($data);
     }
 }
