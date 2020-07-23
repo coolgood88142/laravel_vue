@@ -43,6 +43,10 @@ Route::get('/vueSelect', function () {
     return view('vueSelect');
 });
 
+Route::get('/validation', function () {
+    return view('validation');
+});
+
 Route::get('/user','userController@userView')->name('getUserView');
 
 Route::get('/form','userController@getFormData')->name('getForm');
@@ -77,4 +81,5 @@ Route::get('/elastic','sqlController@testElastic');
 
 Route::get('/testCode','FormController@laravelTestCode');
 
+Route::POST('/sendValidation','FormController@validationUser')->name('sendValidation');
 

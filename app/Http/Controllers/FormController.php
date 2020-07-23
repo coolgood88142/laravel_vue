@@ -7,6 +7,8 @@ use App\Models\MasterChannels;
 use App\Models\SubChannels;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use GuzzleHttp\Client;
 use Sheets;
 
@@ -70,5 +72,53 @@ class FormController extends Controller
         $data = MasterChannels::has('subChannels')->get();
         dd($data);
 
+    }
+
+    public function validationUser(Request $request){
+
+        //驗證姓名、信箱、性別的資料必填，姓名最大3個字
+        // $validatedData = $request->validate([
+        //     'name' => 'required|max:3',
+        //     'email' => 'required',
+        //     'gender' => 'required',
+        // ]);
+
+        //承上，下方在拋錯時，顯示提示訊息
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|max:3',
+        //     'email' => 'required',
+        //     'gender' => 'required',
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return redirect('validation')
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
+
+        $name = $request->name;
+        $gender = $request->gender;
+
+        //驗證規則在user_info的資料表，條件裡找出name、 gender的唯一值
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|max:3',
+            'gender' => [
+                'required',
+                Rule::unique('user_info')->where(function ($query) use ($name, $gender) {
+                        return $query->where('name', $name)
+                            ->where('gender', $gender);
+                })
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('validation')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        return redirect('validation')
+            ->withErrors('驗證成功!')
+            ->withInput();
     }
 }
