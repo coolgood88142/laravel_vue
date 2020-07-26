@@ -12,19 +12,24 @@ use App\Repositories\MasterChannelsRepository;
 use App\Repositories\SubChannelsRepository;
 use App\Repositories\CourseRepository;
 use App\Repositories\CourseSubChannelsRepository;
+use App\Services\ElasticService;
+use Elasticsearch\ClientBuilder;
+use Config;
 
 class ChannelsController extends Controller
 {
     protected $masterChannelsRepo;
     protected $subChannelsRepo;
     protected $courseRepo;
+    protected $elasticService;
 
-    public function __construct(MasterChannelsRepository $masterChannelsRepo, SubChannelsRepository $subChannelsRepo, CourseRepository $courseRepo, CourseSubChannelsRepository $courseSubChannelsRepo)
+    public function __construct(MasterChannelsRepository $masterChannelsRepo, SubChannelsRepository $subChannelsRepo, CourseRepository $courseRepo, CourseSubChannelsRepository $courseSubChannelsRepo, ElasticService $elasticService)
     {
         $this->masterChannelsRepo = $masterChannelsRepo;
         $this->subChannelsRepo = $subChannelsRepo;
         $this->courseRepo = $courseRepo;
         $this->courseSubChannelsRepo = $courseSubChannelsRepo;
+        $this->elasticService = $elasticService;
     }
 
     public function selectCourseSubChannels()
@@ -106,41 +111,24 @@ class ChannelsController extends Controller
     {
         $search = $request->search;
         $search_array = [];
-        $master_channels = MasterChannels::has('subChannels.course');
-        $master_data = $master_channels->get();
-        foreach ($master_data as $key => $value) {
-            $master_search = $master_channels->where('name', 'like', '%'. $search .'%')->get();
-            foreach ($master_search as $key => $value) {
-                array_push($search_array, $value->name);
-            }
+        if($search != ''){
+            $courseSubChannels = CourseSubChannels::select('course_id')->distinct()->get();
+            foreach ($courseSubChannels as $key => $value) {
+                $coursedata = Course::where([
+                    ['id', '=', $value->course_id],
+                    ['title', 'like', '%'. $search .'%']
+                ])->first();
 
-            $sub_channels =  subChannels::where('master_channels_id', $value->id);
-            $sub_data = $sub_channels->get();
-            foreach ($sub_data as $key => $value) {
-                $courseSub = [];
-                $course_sub_channels = CourseSubChannels::where('sub_channels_id', $value->id)->get();
-                foreach ($course_sub_channels as $key => $value) {
-                    $coursedata = Course::where([
-                        ['id', '=', $value->course_id],
-                        ['title', 'like', '%'. $search .'%']
-                    ])->first();
-                    
-                    if($coursedata != null){
-                        array_push($search_array, $coursedata->title);
-                    }
+                if($coursedata != null){
+                    array_push($search_array, $coursedata->title);
                 }
             }
-
-            $sub_search = $sub_channels->where('name', 'like', '%'. $search .'%')->get();
-            foreach ($sub_search as $key => $value) {
-                array_push($search_array, $value->name);
-            }
         }
-        
+
         if(count($search_array) > 0){
             $search_array = array_unique($search_array);
         }
-        
-        return $search_array;
+
+        return response()->json(['searchData' => $search_array]);
     }
 }

@@ -22,7 +22,7 @@
                     </th>
                 </tr>
             </table>
-            <vSelect label="name" :options="channelsData" ></vSelect>
+            <vSelect label="name" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
         </div>
         <div class="form-group" id="select">
             <table class="table table-striped table-bordered" style="width:100%">
@@ -70,7 +70,7 @@ export default {
             subChannelsList: [],
             courseList: [],
             selectChannels: [],
-            channelsData: this.totalChannelsData,
+            channelsData: [],
             masterChannels: defaultLable,
             subChannels: defaultLable,
             course: defaultLable,
@@ -163,7 +163,20 @@ export default {
                 }
             }
             this.selectChannels = selectData
-        }
+        },
+        onSearch(search, loading) {
+            console.log(search)
+            loading(true);
+            this.search(loading, search, this);
+        },
+        search: _.debounce((loading, search, vm) => {
+            fetch(
+                `http://127.0.0.1:8000/getKeyWord?search=${search}`
+            ).then(res => {
+                res.json().then(json => (vm.channelsData = json.searchData));
+                loading(false);
+            });
+        }, 350)
     }
 }
 </script>
