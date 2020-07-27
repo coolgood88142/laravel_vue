@@ -168,13 +168,31 @@ export default {
             console.log(search)
             loading(true);
             this.search(loading, search, this);
+
+            let selectData = [];
+            if(this.relatedData.length > 0){
+                for(let i = 0; i < this.relatedData.length; i++){
+                    let courseData = this.relatedData[i]['courseId'][0];
+                    for(let j = 0; j < courseData.length; j++){
+                        // if(courseData[j]['name'] == this.channelsData[0]){
+                        //     let master = this.relatedData[i]['masterChannelsId'];
+                        //     let sub = this.relatedData[i]['subChannelsId'];
+
+                        //     for(let k = 0; k < sub.length; k++){
+                        //         selectData.push([master['name'], subData[k]['name'], courseData[j]['name']])
+                        //     }
+                        // }
+                    }
+                }
+            }
+            this.selectChannels = selectData
+            loading(false);
         },
         search: _.debounce((loading, search, vm) => {
             fetch(
                 `http://127.0.0.1:8000/getKeyWord?search=${search}`
             ).then(res => {
                 res.json().then(json => (vm.channelsData = json.searchData));
-                loading(false);
             });
         }, 350)
     }
