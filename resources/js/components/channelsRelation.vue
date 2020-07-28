@@ -22,7 +22,7 @@
                     </th>
                 </tr>
             </table>
-            <vSelect label="name" :options="channelsData" :filterable="false" @search="onSearch"></vSelect>
+            <vSelect v-model="searchData" label="name" :options="channelsData" :filterable="false" @search="onSearch" @input="changeSearch"></vSelect>
         </div>
         <div class="form-group" id="select">
             <table class="table table-striped table-bordered" style="width:100%">
@@ -75,7 +75,8 @@ export default {
             subChannels: defaultLable,
             course: defaultLable,
             searchChannels: defaultLable,
-            btnSelect: 'btn btn-primary'
+            btnSelect: 'btn btn-primary',
+            searchData: ''
         }
     },
     mounted(){
@@ -164,35 +165,36 @@ export default {
             }
             this.selectChannels = selectData
         },
-        onSearch(search, loading) {
-            console.log(search)
-            loading(true);
-            this.search(loading, search, this);
-
+        changeSearch: function() {
             let selectData = [];
             if(this.relatedData.length > 0){
                 for(let i = 0; i < this.relatedData.length; i++){
                     let courseData = this.relatedData[i]['courseId'][0];
                     for(let j = 0; j < courseData.length; j++){
-                        // if(courseData[j]['name'] == this.channelsData[0]){
-                        //     let master = this.relatedData[i]['masterChannelsId'];
-                        //     let sub = this.relatedData[i]['subChannelsId'];
+                        if(courseData[j]['name'] == this.searchData){
+                            let master = this.relatedData[i]['masterChannelsId'];
+                            let sub = this.relatedData[i]['subChannelsId'];
 
-                        //     for(let k = 0; k < sub.length; k++){
-                        //         selectData.push([master['name'], subData[k]['name'], courseData[j]['name']])
-                        //     }
-                        // }
+                            for(let k = 0; k < sub.length; k++){
+                                selectData.push([master['name'], sub[k]['name'], courseData[j]['name']])
+                            }
+                        }
                     }
                 }
             }
             this.selectChannels = selectData
-            loading(false);
+        },
+        onSearch(search, loading) {
+            console.log(search)
+            loading(true);
+            this.search(loading, search, this);
         },
         search: _.debounce((loading, search, vm) => {
             fetch(
                 `http://127.0.0.1:8000/getKeyWord?search=${search}`
             ).then(res => {
                 res.json().then(json => (vm.channelsData = json.searchData));
+                loading(false);
             });
         }, 350)
     }
