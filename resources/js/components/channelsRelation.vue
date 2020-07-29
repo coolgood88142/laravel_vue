@@ -11,18 +11,26 @@
                     <th>課程</th>
                 </tr>
                 <tr>
-                    <th>
-                        <vSelect v-model="masterChannels" :options="masterChannelsList" :searchable="true" value="id" label="name" @input="changeMasterChannels"></vSelect>
+                    <th class="channels-width">
+                        <vSelect v-model="masterChannels" :options="masterChannelsList" :searchable="true" value="id" label="name" @input="changeMasterChannels">
+                            <span slot="no-options"></span>
+                        </vSelect>
                     </th>
-                    <th>
-                        <vSelect v-model="subChannels" :options="subChannelsList" :searchable="true" value="id" label="name" @input="changeSubChannels"></vSelect>
+                    <th class="channels-width">
+                        <vSelect v-model="subChannels" :options="subChannelsList" :searchable="true" value="id" label="name" @input="changeSubChannels">
+                            <span slot="no-options"></span>
+                        </vSelect>
                     </th>
-                    <th>
-                        <vSelect v-model="course" :options="courseList" :searchable="true" value="id" label="name"></vSelect>
+                    <th class="channels-width">
+                        <vSelect v-model="course" :options="courseList" :searchable="true" value="id" label="name">
+                            <span slot="no-options"></span>
+                        </vSelect>
                     </th>
                 </tr>
             </table>
-            <vSelect v-model="searchData" label="name" :options="channelsData" :filterable="false" @search="onSearch" @input="changeSearch"></vSelect>
+            <vSelect v-model="searchData" label="name" :options="channelsData" :filterable="false" @search="onSearch" @input="changeSearch">
+                <span slot="no-options"></span>
+            </vSelect>
         </div>
         <div class="form-group" id="select">
             <table class="table table-striped table-bordered" style="width:100%">
@@ -40,6 +48,12 @@
         </div>
     </div>
 </template>
+
+<style>
+    .channels-width{
+        width:30%
+    }
+</style>
 
 <script>
 import 'vue-select/dist/vue-select.css'
