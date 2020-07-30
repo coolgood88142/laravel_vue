@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class SqlController extends Controller
 {
+    protected $elasticService;
+
+    public function __construct(ElasticService $elasticService)
+    {
+        $this->elasticService = $elasticService;
+    }
+
     public function selectData()
     {
         $users = User::where('us_status', 1);
@@ -25,7 +32,7 @@ class SqlController extends Controller
         ];
 
         $params['body'] = [
-            'id' => '5',
+            'id' => '6',
             'name' => 'Test1'
         ];
 
@@ -37,8 +44,8 @@ class SqlController extends Controller
         //     ]
         // ];
 
-        $client = ElasticService::connElastic();
-        ElasticService::createElastic($client, $params);
+        $client = $this->elasticService->addElastic(1, 'Kai');
+        // $this->elasticService->createElastic($client, $params);
         // ElasticService::updateElastic($client, $params);
         // ElasticService::deleteElastic($client, $params);
 

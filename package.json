@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "gitmoji-cli": "^3.2.6",
         "vue-select": "^3.10.5"
     }
 }
