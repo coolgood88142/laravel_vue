@@ -41,31 +41,31 @@ class ElasticService
         ];
     
         $params['body'] = [
-            '@version': 1,
-            'level': 'ERROR',
-            'queryString': '/',
-            '@timestamp': date_default_timezone_set('Asia/Taipei'),
-            'host': 'cw-cms-cwg-tw-queue-64c67d5c6-nnrkj',
-            'message' : 'Trying to get property 'updated_at' of non-object',
-            'requestType': 'cmd',
-            'type': 'product',
-            'fields': {
-                'tag': 'laravel',
-                'type': 'laravel-log-cw-cms.cwg.tw'
-            },
-            'ctx_exception': {
-                'trace': [
+            '@version' => '1',
+            'level' => 'ERROR',
+            'queryString' => '/',
+            '@timestamp' => date_default_timezone_set('Asia/Taipei'),
+            'host' => 'cw-cms-cwg-tw-queue-64c67d5c6-nnrkj',
+            'message' => 'Trying to get property updated_at of non-object',
+            'requestType' =>  'cmd',
+            'type' =>  'product',
+            'fields' => [
+                'tag' => 'laravel',
+                'type' => 'laravel-log-cw-cms.cwg.tw'
+            ],
+            'ctx_exception' => [
+                'trace' => [
                     '/var/www/laravel/app/Jobs/SendLineArticles.php:50',
                 ],
-                "message": "Trying to get property 'updated_at' of non-object",
-                "code": 0,
-                "class": "ErrorException",
-                "file": "/var/www/laravel/app/Jobs/SendLineArticles.php:50"
-            },
-            "input": {
-                "type": "log"
-            },
-            "channel": "product"
+                "message" => "Trying to get property 'updated_at' of non-object",
+                "code" => 0,
+                "class" => "ErrorException",
+                "file" => "/var/www/laravel/app/Jobs/SendLineArticles.php:50"
+            ],
+            'input' => [
+                "type" => "log"
+            ],
+            'channel' => "product"
         ];
 
         // "@version": 1,
