@@ -32,8 +32,8 @@ class SqlController extends Controller
         ];
 
         $params['body'] = [
-            'id' => '6',
-            'name' => 'Test1'
+            'id' => '2',
+            'name' => 'Ming'
         ];
 
         //update
@@ -44,8 +44,9 @@ class SqlController extends Controller
         //     ]
         // ];
 
-        $client = $this->elasticService->addElastic(1, 'Kai');
-        // $this->elasticService->createElastic($client, $params);
+        // $client = $this->elasticService->addElastic(1, 'Kai');
+        $client = $this->elasticService->connElastic();
+        $this->elasticService->createElastic($client, $params);
         // ElasticService::updateElastic($client, $params);
         // ElasticService::deleteElastic($client, $params);
 

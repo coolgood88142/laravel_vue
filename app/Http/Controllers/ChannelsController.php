@@ -98,6 +98,12 @@ class ChannelsController extends Controller
             array_push($totalChannels, $value);
         }
 
+        $host = '127.0.0.1';
+        $message = 'test message';
+        $category = 'record';
+        $sort = 1;
+        $this->elasticService->addElastic($host, $message, $category, $sort);
+
         return view('channelsRelation', [
             'masterChannels' => $master_channels_array,
             'subChannels' => $sub_channels_array,
