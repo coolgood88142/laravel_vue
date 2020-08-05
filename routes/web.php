@@ -47,6 +47,10 @@ Route::get('/validation', function () {
     return view('validation');
 });
 
+Route::get('/card', function () {
+    return view('card');
+});
+
 Route::get('/user','userController@userView')->name('getUserView');
 
 Route::get('/form','userController@getFormData')->name('getForm');
