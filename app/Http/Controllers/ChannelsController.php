@@ -99,9 +99,9 @@ class ChannelsController extends Controller
         }
 
         $host = '127.0.0.1';
+        $category = 'INFO';
         $message = 'test message';
-        $category = 'record';
-        $sort = 1;
+        $sort = 3;
         $this->elasticService->addElastic($host, $message, $category, $sort);
 
         return view('channelsRelation', [
@@ -134,6 +134,12 @@ class ChannelsController extends Controller
         if(count($search_array) > 0){
             $search_array = array_unique($search_array);
         }
+
+        $host = '127.0.0.1';
+        $category = 'INFO';
+        $message = 'getKeyWord';
+        $sort = 4;
+        $this->elasticService->addElastic($host, $message, $category, $sort);
 
         return response()->json(['searchData' => $search_array]);
     }
