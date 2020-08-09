@@ -9,36 +9,56 @@ use Config;
 
 class ElasticService
 {
-    public function connElastic()
+    protected $client;
+    protected $host;
+
+    public function __construct()
     {
+        $host = '127.0.0.1';
         $elastic = Config::get('elastic');
-
         $client = ClientBuilder::create()->setHosts($elastic['hosts'])->build();
-
-        return $client;
     }
 
-    public function createElastic($client, $data)
+    // public function connElastic()
+    // {
+    //     $elastic = Config::get('elastic');
+
+    //     $client = ClientBuilder::create()->setHosts($elastic['hosts'])->build();
+
+    //     return $client;
+    // }
+
+    public function createElastic($data)
     {
-        $response = $client->create($data);
+        $response = $this->$client->create($data);
     }
 
-    public function updateElastic($client, $data)
+    public function updateElastic($data)
     {
-        $response = $client->update($data);
+        $response = $this->$client->update($data);
     }
 
-    public function deleteElastic($client, $data)
+    public function deleteElastic($data)
     {
-        $response = $client->delete($data);
+        $response = $this->$client->delete($data);
     }
 
-    public function addElastic($host, $message, $category, $sort)
+    public function addInfo($message)
+    {
+        $this->addElastic($message, 'INFO');
+    }
+
+    public function addError($message)
+    {
+        $this->addElastic($message, 'ERROR');
+    }
+
+    public function addElastic($message, $level)
     {
         $params =[
             'index' => 'laravel-' . date('Y.m.d'),
             'type' => 'doc',
-            'id' => date('YmdHms')
+            'id' => Hash::make(date('YmdHms'))
         ];
     
         $params['body'] = [
@@ -49,7 +69,7 @@ class ElasticService
                 'tag' => 'laravel',
                 'type' => 'laravel-log-cw-cms.cwg.tw'
             ],
-            'host' => $host,
+            'host' => $this->$host,
             "channel" => "product",
             'requestType' =>  'cmd',
             '@timestamp' => date_default_timezone_set('Asia/Taipei'),
@@ -57,12 +77,9 @@ class ElasticService
                 "type" => "log"
             ],
             'queryString' => '/',
-            'level' => $category,
+            'level' => $level,
             'fields' => [
                 "@timestamp" => date_default_timezone_set('Asia/Taipei')
-            ],
-            'sort' => [
-                $sort
             ]
         ];
 
@@ -92,7 +109,6 @@ class ElasticService
         //         },
         //         "channel": "product"
     
-        $client = $this->connElastic();
-        $this->createElastic($client, $params);
+        $this->createElastic($params);
     }
 }

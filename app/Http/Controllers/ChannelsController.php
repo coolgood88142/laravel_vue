@@ -38,71 +38,75 @@ class ChannelsController extends Controller
         $total_channels_array = [];
         $master_channels_array = [];
         $master_channels_id = [];
-        $master_data = MasterChannels::has('subChannels.course')->get();
-        foreach ($master_data as $key => $value) {
-            $master = MasterChannels::where('id', $value->id)->first();
-            array_push($master_channels_array, ['id' => $master->id, 'name' => $master->name]);
-            array_push($master_channels_id, $value->id);
-            array_push($total_channels_array, $master->name);
+        //在elasticService建立建構值執行連線，不要每個function都寫這段
+        try {
+            // $master_data = MasterChannels::has('subChannels.course')->get();
+            foreach ($master_data as $key => $value) {
+                $master = MasterChannels::where('id', $value->id)->first();
+                array_push($master_channels_array, ['id' => $master->id, 'name' => $master->name]);
+                array_push($master_channels_id, $value->id);
+                array_push($total_channels_array, $master->name);
 
-            $sub = [];
-            $course = [];
-            $course_id = [];
-            $sub_channels =  subChannels::where('master_channels_id', $value->id)->get();
-            foreach ($sub_channels as $key => $value) {
-                array_push($sub, ['id' => $value->id, 'name' => $value->name]);
-                array_push($total_channels_array, $value->name);
+                $sub = [];
+                $course = [];
+                $course_id = [];
+                $sub_channels =  subChannels::where('master_channels_id', $value->id)->get();
+                foreach ($sub_channels as $key => $value) {
+                    array_push($sub, ['id' => $value->id, 'name' => $value->name]);
+                    array_push($total_channels_array, $value->name);
 
-                $courseSub = [];
-                $course_sub_channels = CourseSubChannels::where('sub_channels_id', $value->id)->get();
-                foreach ($course_sub_channels as $key => $value) {
-                    $coursedata = Course::where('id', $value->course_id)->first();
-                    array_push($courseSub, ['id' => $coursedata->id, 'name' => $coursedata->title]);
-                    array_push($total_channels_array, $coursedata->title);
+                    $courseSub = [];
+                    $course_sub_channels = CourseSubChannels::where('sub_channels_id', $value->id)->get();
+                    foreach ($course_sub_channels as $key => $value) {
+                        $coursedata = Course::where('id', $value->course_id)->first();
+                        array_push($courseSub, ['id' => $coursedata->id, 'name' => $coursedata->title]);
+                        array_push($total_channels_array, $coursedata->title);
+                    }
+                    array_push($course, $courseSub);
                 }
-                array_push($course, $courseSub);
+
+                array_push($related, [
+                    'masterChannelsId' => ['id' => $master->id, 'name' => $master->name], 
+                    'subChannelsId' => $sub, 
+                    'courseId' => $course
+                    ]
+                );
             }
 
-            array_push($related, [
-                'masterChannelsId' => ['id' => $master->id, 'name' => $master->name], 
-                'subChannelsId' => $sub, 
-                'courseId' => $course
-                ]
-            );
+            $sub_channels_array = [];
+            $sub_channels_id = [];
+            $sub_data = subChannels::whereIn('master_channels_id', $master_channels_id)->get();
+            foreach ($sub_data as $key => $value) {
+                array_push($sub_channels_array, ['id' => $value->id, 'name' => $value->name]);
+                array_push($sub_channels_id, $value->id);
+            }
+
+            $course_array = [];
+            $course_id = [];
+            $course_sub_data = CourseSubChannels::whereIn('sub_channels_id', $sub_channels_id)->get();
+            foreach ($course_sub_data as $key => $value) {
+                array_push($course_id, $value->course_id);
+            }
+
+            $course_data = Course::whereIn('id', $course_id)->get();
+            foreach ($course_data as $key => $value) {
+                array_push($course_array, ['id' => $value->id, 'name' => $value->title]);
+            }
+
+            $totalChannels = [];
+            $total_channels_array = array_unique($total_channels_array);
+
+            foreach ($total_channels_array as $key => $value) {
+                array_push($totalChannels, $value);
+            }
+            
+            $message = 'test message';
+            $this->elasticService->addInfo($message);
+
+        } catch (Exception $e) {
+            dd('error');
+            $this->elasticService->addError($e);
         }
-
-        $sub_channels_array = [];
-        $sub_channels_id = [];
-        $sub_data = subChannels::whereIn('master_channels_id', $master_channels_id)->get();
-        foreach ($sub_data as $key => $value) {
-            array_push($sub_channels_array, ['id' => $value->id, 'name' => $value->name]);
-            array_push($sub_channels_id, $value->id);
-        }
-
-        $course_array = [];
-        $course_id = [];
-        $course_sub_data = CourseSubChannels::whereIn('sub_channels_id', $sub_channels_id)->get();
-        foreach ($course_sub_data as $key => $value) {
-            array_push($course_id, $value->course_id);
-        }
-
-        $course_data = Course::whereIn('id', $course_id)->get();
-        foreach ($course_data as $key => $value) {
-            array_push($course_array, ['id' => $value->id, 'name' => $value->title]);
-        }
-
-        $totalChannels = [];
-        $total_channels_array = array_unique($total_channels_array);
-
-        foreach ($total_channels_array as $key => $value) {
-            array_push($totalChannels, $value);
-        }
-
-        $host = '127.0.0.1';
-        $category = 'INFO';
-        $message = 'test message';
-        $sort = 3;
-        $this->elasticService->addElastic($host, $message, $category, $sort);
 
         return view('channelsRelation', [
             'masterChannels' => $master_channels_array,
@@ -135,11 +139,8 @@ class ChannelsController extends Controller
             $search_array = array_unique($search_array);
         }
 
-        $host = '127.0.0.1';
-        $category = 'INFO';
         $message = 'getKeyWord';
-        $sort = 4;
-        $this->elasticService->addElastic($host, $message, $category, $sort);
+        $this->elasticService->addInfo($message);
 
         return response()->json(['searchData' => $search_array]);
     }
