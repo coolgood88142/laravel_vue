@@ -77,7 +77,9 @@ let app = new Vue({
                 let card = Object.keys(el)
                 let obj = {
                     'cardName' : el[card[0]].cardName,
-                    'cardNumber' : el[card[0]].full
+                    'cardNumber' : el[card[0]].full,
+                    'cardId': 'cardname' + index,
+                    'cardValue': el[card[0]].last
                 }
                 cardData.push(obj)
             });

@@ -4,10 +4,10 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
-                <p class="card-text">商品：{{ cardData.name }}</p>
-                <p class="card-text">價錢：{{ cardData.price }}</p>
+                <p class="card-text">商品：{{ selectItem.name }}</p>
+                <p class="card-text">價錢：{{ selectItem.price }}</p>
                 <p v-show="isStatus" class="card-text">卡號末四碼：{{ cardValue }}</p>
-                <p class="card-text">刷卡時間：{{ cardData.datetime }}</p>
+                <p class="card-text">刷卡時間：{{ selectItem.datetime }}</p>
                 <div class="row">
                     <div class="col-8">
                         <p class="card-text">信用卡名稱：{{ cardName }}</p>
@@ -16,10 +16,8 @@
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard(index)"/>
                     </div>
                 </div>
-                <div class="row">
-                    <cardList :card-item="cardItem"></cardList>
-                </div>
-                <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(cardData.status)"/>
+                <cardList :card-data="cardData" :card-index="index"></cardList>
+                <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
         </div>
@@ -36,11 +34,20 @@ export default {
         },
         cardItem:{
             type:Object
+        },
+        cardData:{
+            type:Array
+        },
+        index:{
+            type:Number
         }
+    },
+    components: {
+        'cardList': cardList
     },
     data:function(){
         return {
-             'cardData':this.item,
+             'selectItem':this.item,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'btnEdit' : 'btn btn-primary',

@@ -1,52 +1,57 @@
 <template>
-    <div class="card" style="width: 18rem; height: 300px;">
-        <div class="card-body">
-            <div class="form-check" v-for="(card, index) in cardData" :key="index">
-                <input class="form-check-input" type="radio" name="cardname" id="cardname" :value="card.last">
-                <label class="form-check-label" for="cardname">
-                    {{ card.cardName }}:{{ card.full }}
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="cardname" id="cardname" value="">
-                <label class="form-check-label" for="cardname">
-                    Add Card信用卡
-                </label>
+    <form>
+        <div class="form-group row">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col" v-for="(card, index) in cardData" :key="index">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="cardname" :id="card.cardId" :value="card.cardValue">
+                            <label class="form-check-label" :for="card.cardId" >
+                                {{ card.cardName }}:{{ card.cardNumber }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="cardname" :id="cardLastIndex" value="">
+                            <label class="form-check-label" :for="cardLastIndex">
+                                Add Card信用卡
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <input type="button" class="btn btn-primary" id="send" name="send" value="送出" V-on:click="saveCardData()">
+                    </div>
+                </div>
             </div>
         </div>
-        <input type="button" id="send" name="send" value="送出" V-on:click="saveCardData()">
-    </div>
+    </form>
 </template>
 
 <script>
 export default {
     props:{
-        selectedCard:{
-            type:Object
-        },
         cardData:{
             type:Array
+        },
+        cardIndex:{
+            type:Number
         }
     },
     data:function(){
         return {
-             'cardData':this.item,
+             'cardDataLength' : this.cardData.length,
+             'cardLastIndex' : '',
              'btnSuccess' : 'btn btn-success',
-             'btnDanger' : 'btn btn-danger',
-             'successText' : '啟用',
-             'dangerText' : '停止',
-             'isStatus' : this.item.status == '1'
+             'btnDanger' : 'btn btn-danger'
         }
     },
+    mounted() {
+        this.cardLastIndex = this.cardDataLength
+    },
     methods: {
-        changeStatus(status){
-            if(status == '0'){
-                this.item.status = '1'
-                this.isStatus = true
-            }else{
-                this.item.status = '0'
-                this.isStatus = false
-            }
+        saveCardData(){
+
         }
     },
 }
