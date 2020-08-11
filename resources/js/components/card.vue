@@ -16,7 +16,8 @@
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard(index)"/>
                     </div>
                 </div>
-                <cardList :card-data="cardData" :card-index="index"></cardList>
+                <cardList v-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardValue" v-on:change-card="UpdateCardValue"></cardList>
+                <!-- <addCard></addCard> -->
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
@@ -27,6 +28,7 @@
 
 <script>
 import cardList from './cardList.vue';
+import addCard from './addCard.vue';
 export default {
     props:{
         item:{
@@ -43,7 +45,8 @@ export default {
         }
     },
     components: {
-        'cardList': cardList
+        'cardList': cardList,
+        'addCard' : addCard
     },
     data:function(){
         return {
@@ -54,7 +57,8 @@ export default {
              'successText' : '啟用',
              'dangerText' : '停止',
              'editText' : '編輯',
-             'isStatus' : this.item.status == '1'
+             'isStatus' : this.item.status == '1',
+             'isShow' : false
         }
     },
     computed: {
@@ -81,8 +85,19 @@ export default {
                 this.isStatus = false
             }
         },
-        changeCard(index){
-
+        changeCard(){
+            if(this.isShow){
+                this.isShow = false
+            }else{
+                this.isShow = true
+            }
+        },
+        UpdateCardValue(CardSelected) {
+            if(CardSelected != ''){
+                let cardKey = Object.keys(this.cardItem)
+                this.cardItem[cardKey[0]].last = CardSelected
+            }
+            this.isShow = false
         }
     },
 }
