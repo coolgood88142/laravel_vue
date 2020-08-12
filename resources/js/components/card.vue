@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" style="margin-bottom: 60px;">
         <div class="col">
         <div class="card">
             <div class="card-body">
@@ -13,11 +13,11 @@
                         <p class="card-text">信用卡名稱：{{ cardName }}</p>
                     </div>
                     <div class="col-2">
-                        <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard(index)"/>
+                        <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
-                <cardList v-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardValue" v-on:change-card="UpdateCardValue"></cardList>
-                <!-- <addCard></addCard> -->
+                <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="UpdateCardValue"></cardList>
+                <addCard v-if="showModal" @close="showModal = false"></addCard>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
@@ -51,6 +51,7 @@ export default {
     data:function(){
         return {
              'selectItem':this.item,
+             'itemData': this.cardItem,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'btnEdit' : 'btn btn-primary',
@@ -58,20 +59,23 @@ export default {
              'dangerText' : '停止',
              'editText' : '編輯',
              'isStatus' : this.item.status == '1',
-             'isShow' : false
+             'isShow' : false,
+             'cardSelected' : '',
+             'showModal': false
         }
     },
     computed: {
         cardName(){
-            let cardKey = Object.keys(this.cardItem);
+            let cardKey = Object.keys(this.itemData);
             if(this.item.card == cardKey[0]){
-                return this.cardItem[cardKey[0]].cardName
+                return this.itemData[cardKey[0]].cardName
             }
         },
         cardValue(){
-            let cardKey = Object.keys(this.cardItem);
+            let cardKey = Object.keys(this.itemData);
             if(this.item.card == cardKey[0]){
-                return this.cardItem[cardKey[0]].last
+                this.cardSelected = this.itemData[cardKey[0]].last
+                return this.itemData[cardKey[0]].last
             }
         }
     },
@@ -91,11 +95,15 @@ export default {
             }else{
                 this.isShow = true
             }
+            this.cardSelected = this.cardValue
         },
-        UpdateCardValue(CardSelected) {
-            if(CardSelected != ''){
-                let cardKey = Object.keys(this.cardItem)
-                this.cardItem[cardKey[0]].last = CardSelected
+        UpdateCardValue(CardObj) {
+            if(CardObj != ''){
+                let key = Object.keys(CardObj)
+                this.selectItem.card = key
+                this.itemData = CardObj
+            }else{
+                this.showModal = true
             }
             this.isShow = false
         }
