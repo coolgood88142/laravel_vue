@@ -44,7 +44,7 @@
 
               <div class="modal-header">
                 <slot name="header">
-                  新增信用卡
+                  <h3>新增信用卡</h3>
                 </slot>
               </div>
 
@@ -52,28 +52,28 @@
                 <slot name="body">
                     <div class="form-group">
                         <label for="cardName">輸入信用卡名稱</label>
-                        <input type="text" class="form-control" id="cardName">
+                        <input type="text" v-model="cardName" class="form-control" id="cardName">
                    </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" class="form-control" size="4">
+                        <input type="text" v-model="card1"  class="form-control" size="4">
                     </div>
                     <div class="form-check form-check-inline">
                         -
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" class="form-control" size="4">
+                        <input type="text" v-model="card2" class="form-control" size="4">
                     </div>
                     <div class="form-check form-check-inline">
                         -
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" class="form-control" size="4">
+                        <input type="text" v-model="card3" class="form-control" size="4">
                     </div>
                     <div class="form-check form-check-inline">
                         -
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" class="form-control" size="4">
+                        <input type="text" v-model="card4" class="form-control" size="4">
                     </div>
                 </slot>
               </div>
@@ -84,7 +84,7 @@
                         <input type="button" class="btn btn-primary" id="cancel" name="cancel" value="取消" @click="$emit('close')">
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="button" class="btn btn-primary" id="save" name="save" value="儲存" >
+                        <input type="button" class="btn btn-primary" id="save" name="save" value="儲存" @click="$emit('send-card', cardData)">
                     </div>
                   </button>
                 </slot>
@@ -97,18 +97,26 @@
 
 <script>
 export default {
-    props:{
-        // showModal:{
-        //     type:Boolean
-        // }
+    computed: {
+        cardData(){
+            let obj = new Object()
+            obj.cardName = this.cardName
+            obj.full = this.card1 + "-" + this.card2 + "-" + this.card3 + "-" + this.card4
+            obj.last = this.card4
+            obj.first = this.card1
+            
+            return obj
+        }
+        
     },
     data:function(){
         return {
-
+            'cardName' : '',
+            'card1' : '',
+            'card2' : '',
+            'card3' : '',
+            'card4' : ''
         }
-    },
-    methods: {
-        
     }
 }
 </script>>

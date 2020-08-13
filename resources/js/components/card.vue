@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="UpdateCardValue"></cardList>
-                <addCard v-if="showModal" @close="showModal = false"></addCard>
+                <addCard v-if="showModal" @close="showModal = false" v-on:send-card="SendCard"></addCard>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
@@ -102,10 +102,13 @@ export default {
                 let key = Object.keys(CardObj)
                 this.selectItem.card = key
                 this.itemData = CardObj
+                this.isShow = false
             }else{
                 this.showModal = true
             }
-            this.isShow = false
+        },
+        SendCard(CardObj){
+            this.$emit('sendCardObj', CardObj)
         }
     },
 }

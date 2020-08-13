@@ -31,7 +31,6 @@ let app = new Vue({
         cardItems : [
             {
                 'xyz111': {
-                    'cardId': 'cardname0',
                     'cardName': '玉山銀行',
                     'full': '1111-5678-1234-5671',
                     'last': '5671',
@@ -40,7 +39,6 @@ let app = new Vue({
             },
             {
                 'abc111': {
-                    'cardId': 'cardname1',
                     'cardName': '台新銀行',
                     'full': '2222-5678-0199-5672',
                     'last': '5672',
@@ -49,7 +47,6 @@ let app = new Vue({
             },
             {
                 'opq111': {
-                    'cardId': 'cardname2',
                     'cardName': '中國信託',
                     'full': '3333-5978-1234-5673',
                     'last': '5673',
@@ -58,7 +55,6 @@ let app = new Vue({
             },
             {
                 'def111': {
-                    'cardId': 'cardname3',
                     'cardName': '華南銀行',
                     'full': '4444-5978-1234-5674',
                     'last': '5674',
@@ -88,6 +84,10 @@ let app = new Vue({
                 cardData.push(obj)
             });
             return cardData
+        },
+        SaveCardData(CardObj){
+            let id = Math.random().toString(36).substr(6)
+            this.cardItems[id] = CardObj
         }
     }
 })

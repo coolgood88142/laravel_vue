@@ -5,16 +5,16 @@
                 <div class="card-body">
                     <div class="col" v-for="(card, index) in cardAllData" :key="index">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="card.cardId" :value="card.last">
-                            <label class="form-check-label" :for="card.cardId" >
+                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardIndexData[index]" :value="card.last">
+                            <label class="form-check-label" :for="cardIndexData[index]" >
                                 {{ card.cardName }}:{{ card.full }}
                             </label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastIndex" value="">
-                            <label class="form-check-label" :for="cardLastIndex">
+                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastData" value="">
+                            <label class="form-check-label" :for="cardLastData">
                                 新增信用卡
                             </label>
                         </div>
@@ -51,8 +51,9 @@ export default {
     },
     data:function(){
         return {
-             'cardLastIndex' : '',
+             'cardIndexData' : [],
              'cardAllData' : [],
+             'cardLastData' : '',
              'selected' : this.cardSelected,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
@@ -60,7 +61,16 @@ export default {
         }
     },
     mounted() {
-        this.cardLastIndex = this.cardData.length
+        let cardIdArray = []
+        let cardName = 'cardname'
+        let length = this.cardData.length
+        for (let i = 0; i < length; i++) {
+            let id = cardName + i
+            cardIdArray.push(id)
+        }
+        this.cardIndexData = cardIdArray
+        this.cardLastData = cardName + length
+        
         let cardArray = []
         this.cardData.forEach(function(el){
             let cardKey = Object.keys(el);
