@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <input type="button" class="btn btn-primary" id="send" name="send" value="送出" @click="$emit('change-card', selectedData)">
+                        <input type="button" class="btn btn-primary" :id="sendId" name="send" value="送出" @click="$emit('change-card', selectedData)">
                         <!--要再多傳一個物件回來，更換信用卡資訊-->
                         <!--1.信用卡名稱送出實沒更換
                             2.選擇信用卡後沒送出，不會做重置
@@ -52,17 +52,28 @@ export default {
     data:function(){
         return {
              'cardIndexData' : [],
-             'cardAllData' : [],
              'cardLastData' : '',
+             'sendId' : 'send' + this.cardIndex,
              'selected' : this.cardSelected,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'isUpdate' : this.isEdit
         }
     },
+    computed: {
+        cardAllData(){
+            let cardArray = []
+            this.cardData.forEach(function(el){
+                let cardKey = Object.keys(el);
+                cardArray.push(el[cardKey])
+            })
+
+            return cardArray
+        }
+    },
     mounted() {
         let cardIdArray = []
-        let cardName = 'cardname'
+        let cardName = 'cardname' + this.cardIndex + "_"
         let length = this.cardData.length
         for (let i = 0; i < length; i++) {
             let id = cardName + i
@@ -70,13 +81,6 @@ export default {
         }
         this.cardIndexData = cardIdArray
         this.cardLastData = cardName + length
-        
-        let cardArray = []
-        this.cardData.forEach(function(el){
-            let cardKey = Object.keys(el);
-            cardArray.push(el[cardKey])
-        })
-       this.cardAllData = cardArray
     },
     watch:{
         selected(newVal, oldVal){

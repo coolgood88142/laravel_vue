@@ -85,9 +85,22 @@ let app = new Vue({
             });
             return cardData
         },
-        SaveCardData(CardObj){
+        saveCardData(cardObj, index){
+            let length = this.cardItems.length
             let id = Math.random().toString(36).substr(6)
-            this.cardItems[id] = CardObj
+            this.cardItems.push(id)
+            let itenObj = new Object();
+            itenObj[id] = cardObj
+            this.cardItems[length] = itenObj
+            this.items[index].card = id
+
+            let obj = {
+                'cardName': cardObj.cardName,
+                'cardNumber': cardObj.full,
+                'cardId': 'cardname' + length,
+                'cardValue': cardObj.last
+            }
+            this.cardData.push(obj)
         }
     }
 })

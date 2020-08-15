@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <card v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:key="item.id" :card-item="cardItems[index]" :card-data="cardItems" v-on:send-card-obj="SaveCardData"></card>
+            <card v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:key="item.id"  :card-data="cardItems" v-on:send-card-obj="saveCardData"></card>
         </div>
     </div>
     <script src="{{mix('js/app.js')}}"></script>

@@ -16,8 +16,8 @@
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
-                <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="UpdateCardValue"></cardList>
-                <addCard v-if="showModal" @close="showModal = false" v-on:send-card="SendCard"></addCard>
+                <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="updateCardValue"></cardList>
+                <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
@@ -34,9 +34,6 @@ export default {
         item:{
             type:Object
         },
-        cardItem:{
-            type:Object
-        },
         cardData:{
             type:Array
         },
@@ -51,7 +48,6 @@ export default {
     data:function(){
         return {
              'selectItem':this.item,
-             'itemData': this.cardItem,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'btnEdit' : 'btn btn-primary',
@@ -65,6 +61,17 @@ export default {
         }
     },
     computed: {
+         itemData(){
+            let item = ""
+            let select = this.selectItem
+            this.cardData.forEach(function(el){
+                let cardKey = Object.keys(el);
+                if(select.card == cardKey[0]){
+                    item = el
+                }
+            })
+            return item
+        },
         cardName(){
             let cardKey = Object.keys(this.itemData);
             if(this.item.card == cardKey[0]){
@@ -97,7 +104,7 @@ export default {
             }
             this.cardSelected = this.cardValue
         },
-        UpdateCardValue(CardObj) {
+        updateCardValue(CardObj) {
             if(CardObj != ''){
                 let key = Object.keys(CardObj)
                 this.selectItem.card = key
@@ -107,8 +114,10 @@ export default {
                 this.showModal = true
             }
         },
-        SendCard(CardObj){
-            this.$emit('sendCardObj', CardObj)
+        sendCard(CardObj){
+            this.$emit('send-card-obj', CardObj, this.index)
+            this.showModal = false
+            this.isShow = false
         }
     },
 }
