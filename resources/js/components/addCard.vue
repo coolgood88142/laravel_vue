@@ -86,7 +86,6 @@
                     <div class="form-check form-check-inline">
                         <input type="button" class="btn btn-primary" id="save" name="save" value="儲存" @click="$emit('send-card', cardData)">
                     </div>
-                  </button>
                 </slot>
               </div>
             </div>

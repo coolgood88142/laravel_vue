@@ -56,8 +56,7 @@ export default {
              'sendId' : 'send' + this.cardIndex,
              'selected' : this.cardSelected,
              'btnSuccess' : 'btn btn-success',
-             'btnDanger' : 'btn btn-danger',
-             'isUpdate' : this.isEdit
+             'btnDanger' : 'btn btn-danger'
         }
     },
     computed: {

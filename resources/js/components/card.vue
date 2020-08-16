@@ -6,7 +6,7 @@
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">商品：{{ selectItem.name }}</p>
                 <p class="card-text">價錢：{{ selectItem.price }}</p>
-                <p v-show="isStatus" class="card-text">卡號末四碼：{{ cardValue }}</p>
+                <p v-show="isStatus" class="card-text">卡號末四碼：{{ cardSelected }}</p>
                 <p class="card-text">刷卡時間：{{ selectItem.datetime }}</p>
                 <div class="row">
                     <div class="col-8">
@@ -47,7 +47,7 @@ export default {
     },
     data:function(){
         return {
-             'selectItem':this.item,
+             'selectItem': this.item,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'btnEdit' : 'btn btn-primary',
@@ -56,12 +56,11 @@ export default {
              'editText' : '編輯',
              'isStatus' : this.item.status == '1',
              'isShow' : false,
-             'cardSelected' : '',
              'showModal': false
         }
     },
     computed: {
-         itemData(){
+        itemData(){
             let item = ""
             let select = this.selectItem
             this.cardData.forEach(function(el){
@@ -78,10 +77,9 @@ export default {
                 return this.itemData[cardKey[0]].cardName
             }
         },
-        cardValue(){
+        cardSelected(){
             let cardKey = Object.keys(this.itemData);
             if(this.item.card == cardKey[0]){
-                this.cardSelected = this.itemData[cardKey[0]].last
                 return this.itemData[cardKey[0]].last
             }
         }
@@ -102,16 +100,17 @@ export default {
             }else{
                 this.isShow = true
             }
-            this.cardSelected = this.cardValue
+            // this.cardSelected = this.cardValue
         },
         updateCardValue(CardObj) {
             if(CardObj != ''){
                 let key = Object.keys(CardObj)
-                this.selectItem.card = key
-                this.itemData = CardObj
+                this.selectItem.card = key[0]
+                // this.itemData = CardObj
                 this.isShow = false
             }else{
                 this.showModal = true
+
             }
         },
         sendCard(CardObj){
@@ -119,6 +118,6 @@ export default {
             this.showModal = false
             this.isShow = false
         }
-    },
+    }
 }
 </script>>
