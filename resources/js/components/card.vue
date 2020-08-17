@@ -137,8 +137,9 @@ export default {
                 this.showSuccess = true
                 this.isShow = false
                 this.$emit('send-card-obj', CardObj, this.index)
-            }
             
+            }
+           
         }
     },
     watch:{
