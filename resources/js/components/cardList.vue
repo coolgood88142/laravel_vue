@@ -51,7 +51,6 @@ export default {
     },
     data:function(){
         return {
-             'cardIndexData' : [],
              'cardLastData' : '',
              'sendId' : 'send' + this.cardIndex,
              'selected' : this.cardSelected,
@@ -68,18 +67,29 @@ export default {
             })
 
             return cardArray
+        },
+        cardIndexData(){
+            let cardIdArray = []
+            let cardName = 'cardname' + this.cardIndex + "_"
+            let length = this.cardData.length
+            this.cardLastData = cardName + length
+            for (let i = 0; i < length; i++) {
+                let id = cardName + i
+                cardIdArray.push(id)
+            }
+            return  cardIdArray
         }
     },
     mounted() {
-        let cardIdArray = []
-        let cardName = 'cardname' + this.cardIndex + "_"
-        let length = this.cardData.length
-        for (let i = 0; i < length; i++) {
-            let id = cardName + i
-            cardIdArray.push(id)
-        }
-        this.cardIndexData = cardIdArray
-        this.cardLastData = cardName + length
+        // let cardIdArray = []
+        // let cardName = 'cardname' + this.cardIndex + "_"
+        // let length = this.cardData.length
+        // for (let i = 0; i < length; i++) {
+        //     let id = cardName + i
+        //     cardIdArray.push(id)
+        // }
+        // this.cardIndexData = cardIdArray
+        // this.cardLastData = cardName + length
     },
     watch:{
         selected(newVal, oldVal){

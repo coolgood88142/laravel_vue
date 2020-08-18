@@ -5,7 +5,7 @@
             <div class="modal-container">
                 <div class="modal-header">
                     <slot name="header">
-                        <h3>資料有重複</h3>
+                        <h3>{{ message }}</h3>
                     </slot>
                 </div>
                 <div class="modal-footer">
@@ -23,6 +23,10 @@
 
 <script>
 export default {
-
+     props:{
+         message:{
+             type:String
+         }
+     }
 }
 </script>>

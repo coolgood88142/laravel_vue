@@ -73,13 +73,22 @@ let app = new Vue({
     methods:{
         getCardData(){
             let cardData = []
-            this.cardItems.forEach(function(el, index, key) {
+            let items = this.items
+            this.cardItems.forEach(function(el, index) {
                 let card = Object.keys(el)
+                let isUse = false
+                items.forEach(function (obj) {
+                    if (card[0] == obj.card) {
+                        isUse = true
+                    }
+                })
+
                 let obj = {
                     'cardName' : el[card[0]].cardName,
                     'cardNumber' : el[card[0]].full,
                     'cardId': 'cardname' + index,
-                    'cardValue': el[card[0]].last
+                    'cardValue': el[card[0]].last,
+                    'isUseCard': isUse
                 }
                 cardData.push(obj)
             });
@@ -98,9 +107,20 @@ let app = new Vue({
                 'cardName': cardObj.cardName,
                 'cardNumber': cardObj.full,
                 'cardId': 'cardname' + length,
-                'cardValue': cardObj.last
+                'cardValue': cardObj.last,
+                'isUseCard': true
             }
             this.cardData.push(obj)
+        },
+        deleteCard(index){
+            this.cardData.splice(index, 1)
+            this.cardItems.splice(index, 1)
+        }
+    },
+    watch: {
+        cardData(newVal, oldVal){
+            console.log(newVal)
+            console.log(oldVal)
         }
     }
 })

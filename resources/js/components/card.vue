@@ -18,8 +18,7 @@
                 </div>
                 <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="updateCardValue"></cardList>
                 <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
-                <repeatCard v-if="showRepeat" @close="showRepeat = false"></repeatCard>
-                <successCard v-if="showSuccess" @close="showSuccess = false"></successCard>
+                <message v-if="showMessage" @close="showMessage = false" :message="messageText"></message>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
@@ -31,8 +30,7 @@
 <script>
 import cardList from './cardList.vue';
 import addCard from './addCard.vue';
-import repeatCard from './repeatCard.vue';
-import successCard from './successCard.vue';
+import message from './message.vue';
 export default {
     props:{
         item:{
@@ -48,8 +46,7 @@ export default {
     components: {
         'cardList': cardList,
         'addCard' : addCard,
-        'repeatCard': repeatCard,
-        'successCard' : successCard
+        'message': message
     },
     data:function(){
         return {
@@ -63,8 +60,8 @@ export default {
              'isStatus' : this.item.status == '1',
              'isShow' : false,
              'showModal': false,
-             'showRepeat' : false,
-             'showSuccess' : false
+             'showMessage' : false,
+             'messageText' : ''
         }
     },
     computed: {
@@ -124,27 +121,19 @@ export default {
             let isRepeat = false
             this.cardData.forEach(function(el){
                 let key = Object.keys(el)
-                console.log(el[key])
                 if(CardObj.full == el[key].full){
                     isRepeat = true
                 }
             })
 
             this.showModal = false
-            if(isRepeat){
-                this.showRepeat = true
-            }else{
-                this.showSuccess = true
+            this.showMessage = true
+            if(!isRepeat){
+                this.messageText = '新增成功!'
                 this.isShow = false
                 this.$emit('send-card-obj', CardObj, this.index)
-            
-            }
-           
-        }
-    },
-    watch:{
-        showRepeat(newVal){
-            if(!newVal){
+            }else{
+                this.messageText = '資料有重複!'
                 this.showModal = true
             }
         }

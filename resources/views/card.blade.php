@@ -77,8 +77,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Card List</h5>
-                            <p v-for="(card, index) in cardData" :key="index">@{{ card.cardName }}:@{{ card.cardNumber }}</p>
-                        </div>
+                            <div class="form-inline" v-for="(card, index) in cardData" :key="index" style="height: 50px;">
+                              <div class="form-group">
+                                <label>@{{ card.cardName }}:@{{ card.cardNumber }}</label>
+                                <div class="col">
+                                  <small v-show="card.isUseCard" class="text-danger">卡片正使用中!</small>
+                                  <input type="button" v-show="!card.isUseCard" class="btn btn-primary" id="delete" name="delete" value="刪除" v-on:click="deleteCard(index)" >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                     </div>
                 </div>
             </div>
