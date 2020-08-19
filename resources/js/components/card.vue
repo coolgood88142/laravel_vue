@@ -17,8 +17,6 @@
                     </div>
                 </div>
                 <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="updateCardValue"></cardList>
-                <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
-                <message v-if="showMessage" @close="showMessage = false" :message="messageText"></message>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
@@ -59,8 +57,6 @@ export default {
              'editText' : '編輯',
              'isStatus' : this.item.status == '1',
              'isShow' : false,
-             'showModal': false,
-             'showMessage' : false,
              'messageText' : ''
         }
     },
@@ -111,30 +107,8 @@ export default {
             if(CardObj != ''){
                 let key = Object.keys(CardObj)
                 this.selectItem.card = key[0]
-                // this.itemData = CardObj
                 this.isShow = false
-            }else{
-                this.showModal = true
-            }
-        },
-        sendCard(CardObj){
-            let isRepeat = false
-            this.cardData.forEach(function(el){
-                let key = Object.keys(el)
-                if(CardObj.full == el[key].full){
-                    isRepeat = true
-                }
-            })
-
-            this.showModal = false
-            this.showMessage = true
-            if(!isRepeat){
-                this.messageText = '新增成功!'
-                this.isShow = false
-                this.$emit('send-card-obj', CardObj, this.index)
-            }else{
-                this.messageText = '資料有重複!'
-                this.showModal = true
+                this.$emit('update-card')
             }
         }
     }
