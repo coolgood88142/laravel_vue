@@ -27,15 +27,18 @@
                             3.商品卡面要有間距
                             4.新增功能(彈跳視窗)，新增信用卡之後，商品的信用卡資訊要選到以及隱藏編輯，最上方也要更新信用卡資訊-->
                     </div>
-                    <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
-                    <message v-if="showMessage" @close="showMessage = false" :message="messageText"></message>
+
                 </div>
             </div>
         </div>
+        <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
+        <message v-if="showMessage" @close="showMessage = false" :message="messageText"></message>
     </form>
 </template>
 
 <script>
+import addCard from './addCard.vue';
+import message from './message.vue';
 export default {
     props:{
         cardData:{
@@ -51,15 +54,20 @@ export default {
             type:Boolean
         }
     },
+    components:{
+        'addCard' : addCard,
+        'message': message
+    },
     data:function(){
         return {
              'cardLastData' : '',
+             'selectedData' : '',
              'sendId' : 'send' + this.cardIndex,
              'selected' : this.cardSelected,
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'showModal': false,
-             'showMessage' : false,
+             'showMessage' : false
         }
     },
     computed: {
@@ -82,12 +90,15 @@ export default {
                 cardIdArray.push(id)
             }
             return  cardIdArray
-        },
+        }
+    },
+    methods: {
         changeCard(){
-            if(selectedData == ''){
+            if(this.selectedData == ''){
                 this.showModal = true
+            }else{
+                this.$emit('change-card', this.selectedData)
             }
-            this.$emit('change-card', selectedData)
         },
         sendCard(CardObj){
             let isRepeat = false
@@ -102,8 +113,7 @@ export default {
             if(!isRepeat){
                 this.showModal = false
                 this.messageText = '新增成功!'
-                this.isShow = false
-                this.$emit('send-card-obj', CardObj, this.index)
+                this.$emit('send-card-obj', CardObj)
             }else{
                 this.messageText = '資料有重複!'
             }
