@@ -79,7 +79,7 @@ let app = new Vue({
                 let isUse = false
                 _.mapKeys(value, function(card, cardkey){
                     _.forEach(items, function (obj) {
-                        if (cardkey == obj.card) {
+                        if (cardkey == obj.card && obj.status == '1') {
                             isUse = true
                         }
                     })
@@ -107,24 +107,11 @@ let app = new Vue({
             itenObj[id] = cardObj
             this.cardItems[length] = itenObj
             this.items[index].card = id
-
-            let obj = {
-                'cardName': cardObj.cardName,
-                'cardNumber': cardObj.full,
-                'cardId': 'cardname' + length,
-                'cardValue': cardObj.last,
-                'isUseCard': true
-            }
-            this.cardData.push(obj)
+            this.cardData = this.getCardData()
         },
         deleteCard(index){
             this.cardData.splice(index, 1)
             this.cardItems.splice(index, 1)
-        }
-    },
-    watch: {
-        cardData(newVal, oldVal){
-
         }
     }
 })

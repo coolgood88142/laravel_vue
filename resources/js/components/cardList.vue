@@ -1,5 +1,5 @@
 <template>
-    <form v-show="isShow">
+    <form v-show="showCardList">
         <div class="form-group row">
             <div class="card">
                 <div class="card-body">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
-        <message v-if="showMessage" @close="showMessage = false" :message="messageText"></message>
+        <message v-if="showMessage" @close="showMessage = false" :message="messageText" v-on:close="closeMessage"></message>
     </form>
 </template>
 
@@ -67,7 +67,9 @@ export default {
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'showModal': false,
-             'showMessage' : false
+             'showMessage' : false,
+             'showCardList' : this.isShow,
+             'isRepeat' : false
         }
     },
     computed: {
@@ -101,21 +103,25 @@ export default {
             }
         },
         sendCard(CardObj){
-            let isRepeat = false
             this.cardData.forEach(function(el){
                 let key = Object.keys(el)
                 if(CardObj.full == el[key].full){
-                    isRepeat = true
+                    this.isRepeat = true
                 }
             })
 
             this.showMessage = true
-            if(!isRepeat){
-                this.showModal = false
+            if(!this.isRepeat){
                 this.messageText = '新增成功!'
+                this.showModal = false
                 this.$emit('send-card-obj', CardObj)
             }else{
                 this.messageText = '資料有重複!'
+            }
+        },
+        closeMessage(){
+            if(!this.isRepeat){
+                this.showCardList = false
             }
         }
     },
@@ -136,6 +142,7 @@ export default {
             if(newVal == true){
                 this.selected = this.cardSelected
             }
+            this.showCardList = newVal
         }
     }
 }

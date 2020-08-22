@@ -8,11 +8,11 @@
                 <p class="card-text">價錢：{{ selectItem.price }}</p>
                 <p v-show="isStatus" class="card-text">卡號末四碼：{{ cardSelected }}</p>
                 <p class="card-text">刷卡時間：{{ selectItem.datetime }}</p>
-                <div class="row">
+                <div class="row" style="margin-bottom: 20px;">
                     <div class="col-8">
                         <p class="card-text">信用卡名稱：{{ cardName }}</p>
                     </div>
-                    <div class="col-2">
+                    <div v-show="isStatus" class="col-2">
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
@@ -69,10 +69,12 @@ export default {
             return item
         },
         cardName(){
+            let name = '未綁卡'
             let cardKey = Object.keys(this.itemData);
             if(this.item.card == cardKey[0]){
-                return this.itemData[cardKey[0]].cardName
+                name = this.itemData[cardKey[0]].cardName
             }
+            return name
         },
         cardSelected(){
             let cardKey = Object.keys(this.itemData);
@@ -90,6 +92,7 @@ export default {
                 this.item.status = '0'
                 this.isStatus = false
             }
+            this.$emit('update-card')
         },
         changeCard(){
             if(this.isShow){
@@ -97,7 +100,6 @@ export default {
             }else{
                 this.isShow = true
             }
-            // this.cardSelected = this.cardValue
         },
         updateCardValue(CardObj) {
             if(CardObj != ''){
@@ -108,7 +110,7 @@ export default {
             }
         },
         sendNewCard(CardObj){
-            this.$emit('save-new-card', CardObj)
+            this.$emit('save-new-card', CardObj, this.index)
         }
     }
 }
