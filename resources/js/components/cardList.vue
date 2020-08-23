@@ -69,6 +69,7 @@ export default {
              'showModal': false,
              'showMessage' : false,
              'showCardList' : this.isShow,
+             'isError' : false,
              'isRepeat' : false
         }
     },
@@ -79,6 +80,13 @@ export default {
                 let cardKey = Object.keys(el);
                 cardArray.push(el[cardKey])
             })
+
+            // let cardData = this.cardData
+            // _.forEach(cardData, function (value, key) {
+            //     _.mapKeys(value, function(card, cardkey){
+            //         cardArray.push(cardData[key])
+            //     })
+            // })
 
             return cardArray
         },
@@ -102,25 +110,37 @@ export default {
                 this.$emit('change-card', this.selectedData)
             }
         },
-        sendCard(CardObj){
-            this.cardData.forEach(function(el){
-                let key = Object.keys(el)
-                if(CardObj.full == el[key].full){
-                    this.isRepeat = true
-                }
-            })
-
+        sendCard(message, CardObj){
+            let isError = false
             this.showMessage = true
-            if(!this.isRepeat){
-                this.messageText = '新增成功!'
-                this.showModal = false
-                this.$emit('send-card-obj', CardObj)
+
+            if(message != ''){
+                isError = true
+                this.messageText = message
             }else{
-                this.messageText = '資料有重複!'
+                let cardData = this.cardData
+                _.forEach(cardData, function (value, key) {
+                    _.mapKeys(value, function(card, cardkey){
+                        if(CardObj.full == card.full){
+                            isError = true
+                            return
+                        }
+                    })
+                })
+
+                if(!isError){
+                    this.messageText = '新增成功!'
+                    this.showModal = false
+                    this.$emit('send-card-obj', CardObj)
+                }else{
+                    this.messageText = '資料有重複!'
+                }
             }
+            this.isError = isError
+            
         },
         closeMessage(){
-            if(!this.isRepeat){
+            if(!this.isError){
                 this.showCardList = false
             }
         }
@@ -128,13 +148,16 @@ export default {
     watch:{
         selected(newVal, oldVal){
             let obj = ''
-            this.cardData.forEach(function(el){
-                let cardKey = Object.keys(el);
-                let cardLast = el[cardKey].last
+            let cardData = this.cardData
+            _.forEach(cardData, function (value, key) {
+                _.mapKeys(value, function(card, cardkey){
+                    let cardLast = value[cardkey].last
 
-                if(newVal == cardLast){
-                    obj = el
-                }
+                    if(newVal == cardLast){
+                        obj = value
+                        return
+                    }
+                })
             })
             this.selectedData = obj
         },

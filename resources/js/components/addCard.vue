@@ -46,7 +46,7 @@
                         <input type="button" class="btn btn-primary" id="cancel" name="cancel" value="取消" @click="$emit('close')">
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="button" class="btn btn-primary" id="save" name="save" value="儲存" @click="$emit('send-card', cardData)">
+                        <input type="button" class="btn btn-primary" id="save" name="save" value="儲存" @click="checkCardData()">
                     </div>
                 </slot>
               </div>
@@ -55,6 +55,12 @@
         </div>
       </transition>
 </template>
+
+<style>
+    .modal-container{
+        width:500px;
+    }
+</style>
 
 <script>
 export default {
@@ -78,6 +84,33 @@ export default {
             'card3' : '',
             'card4' : ''
         }
+    },
+    methods: {
+        checkCardData(){
+            let message = ''
+            let data = this.cardData
+            let en = '/[A-Za-z\p{Han}]/'
+            if(data.cardName == ''){
+                message = '信用卡名稱不能為空'
+            }else if(data.full.length == 20){
+                message = '卡號請輸入16碼數字'
+            }else if(en.test(data.full)){
+                message = '卡號不能輸入中英文'
+            }
+
+            if(message == ''){
+                let cardNum = _.split(data.full, '-')
+                _.forEach(cardNum, function (value, key) {
+                    if(value.length != 4){
+                        message = '每個卡號區間請輸入4碼數字'
+                        return
+                    }
+                })
+            }
+            
+            this.$emit('send-card', message, data)
+        }
+        
     }
 }
 </script>>

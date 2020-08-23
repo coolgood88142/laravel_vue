@@ -60,27 +60,37 @@ export default {
         itemData(){
             let item = ""
             let select = this.selectItem
-            this.cardData.forEach(function(el){
-                let cardKey = Object.keys(el);
-                if(select.card == cardKey[0]){
-                    item = el
-                }
+            _.forEach(this.cardData, function (value, key) {
+                _.mapKeys(value, function(card, cardkey){
+                    if(select.card == cardkey){
+                        item = value
+                    }
+                })
             })
             return item
         },
         cardName(){
             let name = '未綁卡'
-            let cardKey = Object.keys(this.itemData);
-            if(this.item.card == cardKey[0]){
-                name = this.itemData[cardKey[0]].cardName
-            }
+            let itemData = this.itemData
+            let item = this.item
+            _.mapKeys(itemData, function(card, cardkey){
+                if(item.card == cardkey){
+                    name = itemData[cardkey].cardName
+                }
+            })
             return name
         },
         cardSelected(){
-            let cardKey = Object.keys(this.itemData);
-            if(this.item.card == cardKey[0]){
-                return this.itemData[cardKey[0]].last
-            }
+            let itemData = this.itemData
+            let item = this.item
+            let selected = ''
+            _.mapKeys(itemData, function(card, cardkey){
+                if(item.card == cardkey){
+                    selected =  itemData[cardkey].last
+                }
+            })
+
+            return selected
         }
     },
     methods: {
@@ -103,9 +113,15 @@ export default {
         },
         updateCardValue(CardObj) {
             if(CardObj != ''){
-                let key = Object.keys(CardObj)
-                this.selectItem.card = key[0]
-                this.isShow = false
+                let key = ''
+                let isShow = ''
+                _.mapKeys(CardObj, function(card, cardkey){
+                    key = cardkey
+                    isShow = false
+                })
+
+                this.selectItem.card = key
+                this.isShow = isShow
                 this.$emit('update-card')
             }
         },
