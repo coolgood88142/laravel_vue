@@ -89,12 +89,11 @@ export default {
         checkCardData(){
             let message = ''
             let data = this.cardData
-            let en = '/[A-Za-z\p{Han}]/'
             if(data.cardName == ''){
                 message = '信用卡名稱不能為空'
             }else if(data.full.length == 20){
                 message = '卡號請輸入16碼數字'
-            }else if(en.test(data.full)){
+            }else if(/[A-Za-z\p{Han}]/.test(data.full)){
                 message = '卡號不能輸入中英文'
             }
 

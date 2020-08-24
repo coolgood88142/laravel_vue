@@ -12,7 +12,7 @@
                     <div class="col-8">
                         <p class="card-text">信用卡名稱：{{ cardName }}</p>
                     </div>
-                    <div v-show="isStatus" class="col-2">
+                    <div v-show="isEdit" class="col-2">
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
@@ -51,8 +51,9 @@ export default {
              'successText' : '啟用',
              'dangerText' : '停止',
              'editText' : '編輯',
-             'isStatus' : this.item.status == '1',
              'isShow' : false,
+             'isStatus' : this.item.status == '1',
+             'isEdit' : this.item.status == '1',
              'messageText' : ''
         }
     },
@@ -70,7 +71,7 @@ export default {
             return item
         },
         cardName(){
-            let name = '未綁卡'
+            let name = ''
             let itemData = this.itemData
             let item = this.item
             _.mapKeys(itemData, function(card, cardkey){
@@ -78,6 +79,12 @@ export default {
                     name = itemData[cardkey].cardName
                 }
             })
+
+            if(name == ''){
+                name = '未綁卡'
+                this.isEdit = true
+            }
+
             return name
         },
         cardSelected(){
@@ -98,11 +105,22 @@ export default {
             if(status == '0'){
                 this.item.status = '1'
                 this.isStatus = true
+                this.isEdit = true
             }else{
                 this.item.status = '0'
                 this.isStatus = false
+                this.isEdit = false
             }
             this.$emit('update-card')
+        },
+        getCardItem(){
+            let itemData = this.itemData
+            let item = this.item
+            _.mapKeys(itemData, function(card, cardkey){
+                if(item.card == cardkey){
+                   return itemData[cardkey]
+                }
+            })
         },
         changeCard(){
             if(this.isShow){
