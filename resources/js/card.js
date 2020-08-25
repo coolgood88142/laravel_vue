@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import card from './components/card.vue';
+import message from './components/message.vue';
 
 let app = new Vue({
     el: '#app',
@@ -62,13 +63,16 @@ let app = new Vue({
                 }
             },
         ],
-        cardData: []
+        cardData: [],
+        showErrorMessage: false,
+        errorMessageText: ''
     },
     mounted() {
         this.cardData = this.getCardData()
     },
     components: {
-        'card': card
+        'card': card,
+        'message': message
     },
     methods:{
         getCardData(){
@@ -110,8 +114,15 @@ let app = new Vue({
             this.cardData = this.getCardData()
         },
         deleteCard(index){
-            this.cardData.splice(index, 1)
-            this.cardItems.splice(index, 1)
+            try {
+                //測試try-catch
+                // this.cardData = ''
+                this.cardData.splice(index, 1)
+                this.cardItems.splice(index, 1)
+            } catch(e) {
+                this.showErrorMessage = true
+                this.errorMessageText = '刪除失敗!'
+            }
         }
     }
 })

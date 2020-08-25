@@ -17,25 +17,25 @@
                         <input type="text" v-model="cardName" class="form-control" id="cardName">
                    </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" v-model="card1"  class="form-control" size="4">
+                        <input type="text" v-model="card1"  class="form-control" size="4" maxlength="4">
                     </div>
                     <div class="form-check form-check-inline">
                         -
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" v-model="card2" class="form-control" size="4">
+                        <input type="text" v-model="card2" class="form-control" size="4" maxlength="4">
                     </div>
                     <div class="form-check form-check-inline">
                         -
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" v-model="card3" class="form-control" size="4">
+                        <input type="text" v-model="card3" class="form-control" size="4" maxlength="4">
                     </div>
                     <div class="form-check form-check-inline">
                         -
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="text" v-model="card4" class="form-control" size="4">
+                        <input type="text" v-model="card4" class="form-control" size="4" maxlength="4">
                     </div>
                 </slot>
               </div>
@@ -93,7 +93,7 @@ export default {
                 message = '信用卡名稱不能為空'
             }else if(data.full.length == 20){
                 message = '卡號請輸入16碼數字'
-            }else if(/[A-Za-z\p{Han}]/.test(data.full)){
+            }else if(/[A-Za-z\u4e00-\u9fa5]/.test(data.full)){
                 message = '卡號不能輸入中英文'
             }
 

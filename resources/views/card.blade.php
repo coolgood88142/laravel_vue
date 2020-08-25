@@ -91,7 +91,8 @@
                 </div>
             </div>
             <card v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:key="item.id"  :card-data="cardItems" v-on:save-new-card="saveCardData" v-on:update-card="updateCardData"></card>
-        </div>
+            <message v-if="showErrorMessage" @close="showErrorMessage = false" :message="errorMessageText"></message>
+          </div>
     </div>
     <script src="{{mix('js/app.js')}}"></script>
     <script src="{{mix('js/card.js')}}"></script>

@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="updateCardValue" v-on:send-card-obj="sendNewCard"></cardList>
-                <input type="button" :class="isStatus ? btnDanger : btnSuccess" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
+                <input type="button" :class="isStatus ? btnDanger : btnSuccess" :disabled="isDisabled" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
         </div>
@@ -54,7 +54,8 @@ export default {
              'isShow' : false,
              'isStatus' : this.item.status == '1',
              'isEdit' : this.item.status == '1',
-             'messageText' : ''
+             'messageText' : '',
+             'isDisabled' : false
         }
     },
     computed: {
@@ -68,6 +69,7 @@ export default {
                     }
                 })
             })
+            this.isDisabled = false
             return item
         },
         cardName(){
@@ -83,6 +85,7 @@ export default {
             if(name == ''){
                 name = '未綁卡'
                 this.isEdit = true
+                this.isDisabled = true
             }
 
             return name
