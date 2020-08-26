@@ -141,12 +141,20 @@ export default {
                     isShow = false
                 })
 
+                if(!this.isStatus){
+                    this.isEdit = false
+                }
+
                 this.selectItem.card = key
                 this.isShow = isShow
                 this.$emit('update-card')
             }
         },
         sendNewCard(CardObj){
+            //若切換或新增信用卡時，判斷商品是否停用，停用就不顯示可以編輯
+            if(!this.isStatus){
+                this.isEdit = false
+            }
             this.$emit('save-new-card', CardObj, this.index)
         }
     }

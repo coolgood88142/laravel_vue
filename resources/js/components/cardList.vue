@@ -13,7 +13,7 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastData" value="">
+                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastData" value="*">
                             <label class="form-check-label" :for="cardLastData">
                                 新增信用卡
                             </label>
@@ -104,7 +104,8 @@ export default {
     },
     methods: {
         changeCard(){
-            if(this.selectedData == ''){
+            //這裡要再多寫一個判斷，如果沒選就送出時系統要顯示【至少選擇一個】訊息
+            if(this.selectedData == '*'){
                 this.showModal = true
             }else{
                 this.$emit('change-card', this.selectedData)
@@ -147,7 +148,7 @@ export default {
     },
     watch:{
         selected(newVal, oldVal){
-            let obj = ''
+            let obj = '*'
             let cardData = this.cardData
             _.forEach(cardData, function (value, key) {
                 _.mapKeys(value, function(card, cardkey){

@@ -14,7 +14,7 @@
                 <slot name="body">
                     <div class="form-group">
                         <label for="cardName">輸入信用卡名稱</label>
-                        <input type="text" v-model="cardName" class="form-control" id="cardName">
+                        <input type="text" v-model="cardName" class="form-control" id="cardName" style="width: 93%;">
                    </div>
                     <div class="form-check form-check-inline">
                         <input type="text" v-model="card1"  class="form-control" size="4" maxlength="4">
@@ -58,7 +58,7 @@
 
 <style>
     .modal-container{
-        width:500px;
+        width:480px;
     }
 </style>
 
@@ -91,7 +91,7 @@ export default {
             let data = this.cardData
             if(data.cardName == ''){
                 message = '信用卡名稱不能為空'
-            }else if(data.full.length == 20){
+            }else if(data.full.length != 19){
                 message = '卡號請輸入16碼數字'
             }else if(/[A-Za-z\u4e00-\u9fa5]/.test(data.full)){
                 message = '卡號不能輸入中英文'
