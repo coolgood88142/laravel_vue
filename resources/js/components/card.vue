@@ -12,7 +12,7 @@
                     <div class="col-8">
                         <p class="card-text">信用卡名稱：{{ cardName }}</p>
                     </div>
-                    <div v-show="isEdit" class="col-2">
+                    <div class="col-2">
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
@@ -53,7 +53,6 @@ export default {
              'editText' : '編輯',
              'isShow' : false,
              'isStatus' : this.item.status == '1',
-             'isEdit' : this.item.status == '1',
              'messageText' : '',
              'isDisabled' : false
         }
@@ -84,7 +83,6 @@ export default {
 
             if(name == ''){
                 name = '未綁卡'
-                this.isEdit = true
                 this.isDisabled = true
             }
 
@@ -108,11 +106,9 @@ export default {
             if(status == '0'){
                 this.item.status = '1'
                 this.isStatus = true
-                this.isEdit = true
             }else{
                 this.item.status = '0'
                 this.isStatus = false
-                this.isEdit = false
             }
             this.$emit('update-card')
         },
@@ -141,10 +137,6 @@ export default {
                     isShow = false
                 })
 
-                if(!this.isStatus){
-                    this.isEdit = false
-                }
-
                 this.selectItem.card = key
                 this.isShow = isShow
                 this.$emit('update-card')
@@ -152,9 +144,7 @@ export default {
         },
         sendNewCard(CardObj){
             //若切換或新增信用卡時，判斷商品是否停用，停用就不顯示可以編輯
-            if(!this.isStatus){
-                this.isEdit = false
-            }
+            this.isShow = false
             this.$emit('save-new-card', CardObj, this.index)
         }
     }

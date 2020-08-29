@@ -32,13 +32,13 @@
             </div>
         </div>
         <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
-        <message v-if="showMessage" @close="showMessage = false" :message="messageText" v-on:close="closeMessage"></message>
     </form>
 </template>
 
 <script>
 import addCard from './addCard.vue';
 import message from './message.vue';
+import swal from 'sweetalert'
 export default {
     props:{
         cardData:{
@@ -67,7 +67,6 @@ export default {
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'showModal': false,
-             'showMessage' : false,
              'showCardList' : this.isShow,
              'isError' : false,
              'isRepeat' : false
@@ -113,7 +112,6 @@ export default {
         },
         sendCard(message, CardObj){
             let isError = false
-            this.showMessage = true
 
             if(message != ''){
                 isError = true
@@ -137,6 +135,16 @@ export default {
                     this.messageText = '資料有重複!'
                 }
             }
+
+            if(this.messageText != ''){
+                swal({
+                    title: this.messageText,
+                    confirmButtonColor: "#e6b930",
+                    icon: !isError ? 'success':'error',
+                    showCloseButton: true
+                })
+            }
+                
             this.isError = isError
             
         },
