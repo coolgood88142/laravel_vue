@@ -21,17 +21,12 @@
                     </div>
                     <div class="col">
                         <input type="button" class="btn btn-primary" :id="sendId" name="send" value="送出" @click="changeCard()">
-                        <!--要再多傳一個物件回來，更換信用卡資訊-->
-                        <!--1.信用卡名稱送出實沒更換
-                            2.選擇信用卡後沒送出，不會做重置
-                            3.商品卡面要有間距
-                            4.新增功能(彈跳視窗)，新增信用卡之後，商品的信用卡資訊要選到以及隱藏編輯，最上方也要更新信用卡資訊-->
                     </div>
 
                 </div>
             </div>
         </div>
-        <addCard v-if="showModal" @close="showModal = false" v-on:send-card="sendCard"></addCard>
+        <addCard v-if="showModal" @close="showModal = false" :card-number="cardNumber" v-on:send-card="sendCard"></addCard>
     </form>
 </template>
 
@@ -67,6 +62,7 @@ export default {
              'btnSuccess' : 'btn btn-success',
              'btnDanger' : 'btn btn-danger',
              'showModal': false,
+             //有更好的寫法，為什麼要再多一個變數?直接emit出去就好啦
              'showCardList' : this.isShow,
              'isError' : false,
              'isRepeat' : false
@@ -99,11 +95,21 @@ export default {
                 cardIdArray.push(id)
             }
             return  cardIdArray
+        },
+        cardNumber(){
+            //查一下為什麼cardList.vue無法用lodash
+            let num = []
+            this.cardData.forEach(function(el){
+                console.log(el)
+            })
+            // _.forEach(this.cardData, function (value, key) {
+            //     console.log(value)
+            // })
         }
     },
     methods: {
         changeCard(){
-            //這裡要再多寫一個判斷，如果沒選就送出時系統要顯示【至少選擇一個】訊息
+            //為什麼寫米字號?clear code有寫到，改用delete字串
             if(this.selectedData == '*'){
                 this.showModal = true
             }else{
@@ -156,6 +162,7 @@ export default {
     },
     watch:{
         selected(newVal, oldVal){
+            //obj改用傳key
             let obj = '*'
             let cardData = this.cardData
             _.forEach(cardData, function (value, key) {

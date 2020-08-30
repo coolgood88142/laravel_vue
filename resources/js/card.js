@@ -63,24 +63,25 @@ let app = new Vue({
                 }
             },
         ],
-        cardData: [],
+        // cardData: [],
         showErrorMessage: false,
         errorMessageText: ''
     },
     mounted() {
-        this.cardData = this.getCardData()
+        // this.cardData = this.getCardData()
     },
     components: {
         'card': card,
         'message': message
     },
-    methods:{
-        getCardData(){
-            let cardData = []
+    computed: {
+        cardData(){
+            let data = []
             let cardItems = this.cardItems
             let items = this.items
             _.forEach(cardItems, function (value, key) {
                 let isUse = false
+                //用filter取得key，不要用forEach
                 _.mapKeys(value, function(card, cardkey){
                     _.forEach(items, function (obj) {
                         if (cardkey == obj.card && obj.status == '1') {
@@ -95,13 +96,42 @@ let app = new Vue({
                         'cardValue': card.last,
                         'isUseCard': isUse
                     }
-                    cardData.push(obj)
+                    data.push(obj)
                 })
-            });
-            return cardData
-        },
+            })
+            return data
+        }
+    },
+    methods:{
+        //用computed
+        // getCardData(){
+        //     let cardData = []
+        //     let cardItems = this.cardItems
+        //     let items = this.items
+        //     _.forEach(cardItems, function (value, key) {
+        //         let isUse = false
+        //         //用filter取得key，不要用forEach
+        //         _.mapKeys(value, function(card, cardkey){
+        //             _.forEach(items, function (obj) {
+        //                 if (cardkey == obj.card && obj.status == '1') {
+        //                     isUse = true
+        //                 }
+        //             })
+
+        //             let obj = {
+        //                 'cardName': card.cardName,
+        //                 'cardNumber': card.full,
+        //                 'cardId': 'cardname' + key,
+        //                 'cardValue': card.last,
+        //                 'isUseCard': isUse
+        //             }
+        //             cardData.push(obj)
+        //         })
+        //     });
+        //     return cardData
+        // },
         updateCardData(){
-            this.cardData = this.getCardData()
+            // this.cardData = this.getCardData()
         },
         saveCardData(cardObj, index){
             let length = this.cardItems.length
@@ -111,7 +141,7 @@ let app = new Vue({
             itenObj[id] = cardObj
             this.cardItems[length] = itenObj
             this.items[index].card = id
-            this.cardData = this.getCardData()
+            // this.cardData = this.getCardData()
         },
         deleteCard(index){
             try {

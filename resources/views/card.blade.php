@@ -81,8 +81,8 @@
                               <div class="form-group">
                                 <label>@{{ card.cardName }}:@{{ card.cardNumber }}</label>
                                 <div class="col">
-                                  <small v-show="card.isUseCard" class="text-danger">卡片正使用中!</small>
-                                  <input type="button" v-show="!card.isUseCard" class="btn btn-primary" id="delete" name="delete" value="刪除" v-on:click="deleteCard(index)" >
+                                  <small v-if="card.isUseCard" class="text-danger">卡片正使用中!</small>
+                                  <input type="button" v-else class="btn btn-primary" id="delete" name="delete" value="刪除" v-on:click="deleteCard(index)" >
                                 </div>
                               </div>
                             </div>

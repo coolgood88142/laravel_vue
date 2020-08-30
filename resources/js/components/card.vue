@@ -16,6 +16,7 @@
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
+                <!--cardList換一個名稱，已經被上面的信用卡列表搞混-->
                 <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="updateCardValue" v-on:send-card-obj="sendNewCard"></cardList>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :disabled="isDisabled" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
                 <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
@@ -59,6 +60,7 @@ export default {
     },
     computed: {
         itemData(){
+            //使用全部信用卡的物件用key，抓信用卡物件
             let item = ""
             let select = this.selectItem
             _.forEach(this.cardData, function (value, key) {
@@ -72,6 +74,7 @@ export default {
             return item
         },
         cardName(){
+             //使用全部信用卡的物件用key，抓信用卡名稱
             let name = ''
             let itemData = this.itemData
             let item = this.item
@@ -89,6 +92,7 @@ export default {
             return name
         },
         cardSelected(){
+            //用find在全部的信用卡物件中，取得選擇哪張信用卡
             let itemData = this.itemData
             let item = this.item
             let selected = ''

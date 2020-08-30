@@ -15,7 +15,8 @@
                     <div class="form-group">
                         <label for="cardName">輸入信用卡名稱</label>
                         <input type="text" v-model="cardName" class="form-control" id="cardName" style="width: 93%;">
-                   </div>
+                    </div>
+                    <!-- 改用v-for -->
                     <div class="form-check form-check-inline">
                         <input type="text" v-model="card1"  class="form-control" size="4" maxlength="4">
                     </div>
@@ -63,7 +64,13 @@
 </style>
 
 <script>
+//傳一包全部的【卡號】物件，在這裡檢查，在emit出去訊息就好了
 export default {
+    props:{
+        cardNumber:{
+            type:Array
+        }
+    },
     computed: {
         cardData(){
             let obj = new Object()
