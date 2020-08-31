@@ -79,6 +79,9 @@ let app = new Vue({
             let data = []
             let cardItems = this.cardItems
             let items = this.items
+            let useCard = _.filter(items, function (e) { return e.status == '1' })
+            console.log(useCard)
+
             _.forEach(cardItems, function (value, key) {
                 let isUse = false
                 //用filter取得key，不要用forEach
@@ -103,36 +106,6 @@ let app = new Vue({
         }
     },
     methods:{
-        //用computed
-        // getCardData(){
-        //     let cardData = []
-        //     let cardItems = this.cardItems
-        //     let items = this.items
-        //     _.forEach(cardItems, function (value, key) {
-        //         let isUse = false
-        //         //用filter取得key，不要用forEach
-        //         _.mapKeys(value, function(card, cardkey){
-        //             _.forEach(items, function (obj) {
-        //                 if (cardkey == obj.card && obj.status == '1') {
-        //                     isUse = true
-        //                 }
-        //             })
-
-        //             let obj = {
-        //                 'cardName': card.cardName,
-        //                 'cardNumber': card.full,
-        //                 'cardId': 'cardname' + key,
-        //                 'cardValue': card.last,
-        //                 'isUseCard': isUse
-        //             }
-        //             cardData.push(obj)
-        //         })
-        //     });
-        //     return cardData
-        // },
-        updateCardData(){
-            // this.cardData = this.getCardData()
-        },
         saveCardData(cardObj, index){
             let length = this.cardItems.length
             let id = Math.random().toString(36).substr(6)
@@ -141,7 +114,6 @@ let app = new Vue({
             itenObj[id] = cardObj
             this.cardItems[length] = itenObj
             this.items[index].card = id
-            // this.cardData = this.getCardData()
         },
         deleteCard(index){
             try {

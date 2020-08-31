@@ -60,29 +60,17 @@ export default {
     },
     computed: {
         itemData(){
-            //使用全部信用卡的物件用key，抓信用卡物件
-            let item = ""
             let select = this.selectItem
-            _.forEach(this.cardData, function (value, key) {
-                _.mapKeys(value, function(card, cardkey){
-                    if(select.card == cardkey){
-                        item = value
-                    }
-                })
-            })
+            let item = _.find(this.cardData, select.card)
             this.isDisabled = false
             return item
         },
         cardName(){
              //使用全部信用卡的物件用key，抓信用卡名稱
-            let name = ''
             let itemData = this.itemData
             let item = this.item
-            _.mapKeys(itemData, function(card, cardkey){
-                if(item.card == cardkey){
-                    name = itemData[cardkey].cardName
-                }
-            })
+            let key = _.findKey(itemData, function(e, key) { return key == item.card; })
+            let name = (key == undefined || key == null) ? '' : itemData[key].cardName
 
             if(name == ''){
                 name = '未綁卡'
@@ -95,12 +83,8 @@ export default {
             //用find在全部的信用卡物件中，取得選擇哪張信用卡
             let itemData = this.itemData
             let item = this.item
-            let selected = ''
-            _.mapKeys(itemData, function(card, cardkey){
-                if(item.card == cardkey){
-                    selected =  itemData[cardkey].last
-                }
-            })
+            let key = _.findKey(itemData, function(e, key) { return key == item.card; })
+            let selected = (key == undefined || key == null) ? '' : itemData[key].last
 
             return selected
         }
@@ -114,7 +98,6 @@ export default {
                 this.item.status = '0'
                 this.isStatus = false
             }
-            this.$emit('update-card')
         },
         getCardItem(){
             let itemData = this.itemData
@@ -143,7 +126,6 @@ export default {
 
                 this.selectItem.card = key
                 this.isShow = isShow
-                this.$emit('update-card')
             }
         },
         sendNewCard(CardObj){

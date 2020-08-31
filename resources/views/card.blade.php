@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <card v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:key="item.id"  :card-data="cardItems" v-on:save-new-card="saveCardData" v-on:update-card="updateCardData"></card>
+            <card v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:key="item.id"  :card-data="cardItems" v-on:save-new-card="saveCardData"></card>
             <message v-if="showErrorMessage" @close="showErrorMessage = false" :message="errorMessageText"></message>
           </div>
     </div>
