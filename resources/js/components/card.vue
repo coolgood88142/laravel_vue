@@ -16,10 +16,8 @@
                         <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
-                <!--cardList換一個名稱，已經被上面的信用卡列表搞混-->
-                <cardList :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:change-card="updateCardValue" v-on:send-card-obj="sendNewCard"></cardList>
+                <cardSelect :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:save-card="saveCard"></cardSelect>
                 <input type="button" :class="isStatus ? btnDanger : btnSuccess" :disabled="isDisabled" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
-                <!--排版改用3列，cardList放最上面，停止功能改用只顯示商品、價錢、文字(是否已啟用?)、啟用按鈕-->
             </div>
         </div>
         </div>
@@ -27,7 +25,7 @@
 </template>
 
 <script>
-import cardList from './cardList.vue';
+import cardSelect from './cardSelect.vue';
 export default {
     props:{
         item:{
@@ -41,7 +39,7 @@ export default {
         }
     },
     components: {
-        'cardList': cardList
+        'cardSelect': cardSelect
     },
     data:function(){
         return {
@@ -66,7 +64,6 @@ export default {
             return item
         },
         cardName(){
-             //使用全部信用卡的物件用key，抓信用卡名稱
             let itemData = this.itemData
             let item = this.item
             let key = _.findKey(itemData, function(e, key) { return key == item.card; })
@@ -80,7 +77,6 @@ export default {
             return name
         },
         cardSelected(){
-            //用find在全部的信用卡物件中，取得選擇哪張信用卡
             let itemData = this.itemData
             let item = this.item
             let key = _.findKey(itemData, function(e, key) { return key == item.card; })
@@ -115,23 +111,18 @@ export default {
                 this.isShow = true
             }
         },
-        updateCardValue(CardObj) {
-            if(CardObj != ''){
+        saveCard(CardObj){
+            this.isShow = false
+            if(CardObj != 'add'){
                 let key = ''
-                let isShow = ''
                 _.mapKeys(CardObj, function(card, cardkey){
                     key = cardkey
-                    isShow = false
                 })
 
                 this.selectItem.card = key
-                this.isShow = isShow
+            }else{
+                 this.$emit('save-new-card', CardObj, this.index)
             }
-        },
-        sendNewCard(CardObj){
-            //若切換或新增信用卡時，判斷商品是否停用，停用就不顯示可以編輯
-            this.isShow = false
-            this.$emit('save-new-card', CardObj, this.index)
         }
     }
 }

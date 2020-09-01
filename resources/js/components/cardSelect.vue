@@ -13,7 +13,7 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastData" value="*">
+                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastData" value="add">
                             <label class="form-check-label" :for="cardLastData">
                                 新增信用卡
                             </label>
@@ -71,17 +71,12 @@ export default {
     computed: {
         cardAllData(){
             let cardArray = []
-            this.cardData.forEach(function(el){
-                let cardKey = Object.keys(el);
-                cardArray.push(el[cardKey])
+            let cardData = this.cardData
+            _.forEach(cardData, function (value, key) {
+                _.mapKeys(value, function(card, cardkey){
+                    cardArray.push(card)
+                })
             })
-
-            // let cardData = this.cardData
-            // _.forEach(cardData, function (value, key) {
-            //     _.mapKeys(value, function(card, cardkey){
-            //         cardArray.push(cardData[key])
-            //     })
-            // })
 
             return cardArray
         },
@@ -99,9 +94,9 @@ export default {
         cardNumber(){
             //查一下為什麼cardList.vue無法用lodash
             let num = []
-            this.cardData.forEach(function(el){
-                console.log(el)
-            })
+            // this.cardData.forEach(function(el){
+            //     console.log(el)
+            // })
             // _.forEach(this.cardData, function (value, key) {
             //     console.log(value)
             // })
@@ -109,11 +104,10 @@ export default {
     },
     methods: {
         changeCard(){
-            //為什麼寫米字號?clear code有寫到，改用delete字串
-            if(this.selectedData == '*'){
+            if(this.selectedData == 'add'){
                 this.showModal = true
             }else{
-                this.$emit('change-card', this.selectedData)
+                this.$emit('save-card', this.selectedData)
             }
         },
         sendCard(message, CardObj){
@@ -136,7 +130,7 @@ export default {
                 if(!isError){
                     this.messageText = '新增成功!'
                     this.showModal = false
-                    this.$emit('send-card-obj', CardObj)
+                    this.$emit('save-card', CardObj)
                 }else{
                     this.messageText = '資料有重複!'
                 }
@@ -162,10 +156,9 @@ export default {
     },
     watch:{
         selected(newVal, oldVal){
-            //obj改用傳key
-            let obj = '*'
+            let obj = 'add'
             let cardData = this.cardData
-            _.forEach(cardData, function (value, key) {
+             _.forEach(cardData, function (value, key) {
                 _.mapKeys(value, function(card, cardkey){
                     let cardLast = value[cardkey].last
 
@@ -175,6 +168,7 @@ export default {
                     }
                 })
             })
+            
             this.selectedData = obj
         },
         isShow(newVal, oldVal){
