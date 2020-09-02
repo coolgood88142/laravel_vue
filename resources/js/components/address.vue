@@ -3,15 +3,21 @@
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
         <div class="form-check form-check-inline">
-            <counties v-on:change-counties="updateDistricts" :select-class="countiesSelectClass" :counties-data="countiesData" :counties-selected="userCounties"></counties>
+            <counties v-on:change-counties="updateDistricts" :select-class="countiesSelectClass"
+                :counties-data="countiesData" :counties-selected="userCounties"></counties>
         </div>
         <div class="form-check form-check-inline">
-            <districts v-on:change-districts="getDistrictsSelected" :select-class="districtsSelectClass" :counties-selected-text="countiesSelectedText" :districts-data="districtsData" :districts-selected="userDistricts"></districts>
+            <districts v-on:change-districts="getDistrictsSelected"
+                :select-class="districtsSelectClass" :counties-selected-text="countiesSelectedText"
+                :districts-data="districtsData" :districts-selected="userDistricts"></districts>
         </div>
         <div class="form-check form-check-inline">
-            <input type="text" :class="inputClass" id="us_road" name="us_road" v-model="userRoad" placeholder="請選擇縣市與鄉鎮市區">
+            <input type="text" :class="inputClass" id="us_road" name="us_road"
+                v-model="userRoad" placeholder="請選擇縣市與鄉鎮市區">
         </div>
-        <small v-if="isShow" id="warning" :class="smallClass">{{ isRemind ? remindText : warningText }}</small>
+        <small v-if="isShow" id="warning" :class="smallClass">
+            {{ isRemind ? remindText : warningText }}
+        </small>
     </div>
 </template>
 

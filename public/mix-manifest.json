@@ -1,15 +1,14 @@
 {
-    "/js/api.js": "/js/api.js?id=b0adf1f79ebfdc07a8a4",
-    "/js/app.js": "/js/app.js?id=0b0c2da4d426c43fcff6",
-    "/css/app.css": "/css/app.css?id=2a4461fc35df4e8d0a06",
+    "/js/api.js": "/js/api.js?id=00d21698df6a20e678bb",
+    "/js/app.js": "/js/app.js?id=7d8c20ba3743be4cf216",
     "/js/button.js": "/js/button.js?id=b77ccf25ebd7dee0ec96",
-    "/js/card.js": "/js/card.js?id=ac326a57452cd050d263",
-    "/js/channel.js": "/js/channel.js?id=0cda5b60b38b66bab767",
-    "/js/channelsRelation.js": "/js/channelsRelation.js?id=3777710bf8ec1c525bb0",
-    "/js/city.js": "/js/city.js?id=ba03afc0523f73632fc6",
+    "/js/card.js": "/js/card.js?id=54ed072c39cbb975a3f9",
+    "/js/channel.js": "/js/channel.js?id=97bb5a2c5e07319d0c7c",
+    "/js/channelsRelation.js": "/js/channelsRelation.js?id=be4ef26fd5ae5188084f",
+    "/js/city.js": "/js/city.js?id=40a11be900d602a0425a",
     "/js/date.js": "/js/date.js?id=f702f2ebecca7b8143f3",
-    "/js/style.js": "/js/style.js?id=8cc775852e89a7eb57d3",
-    "/js/user.js": "/js/user.js?id=efb7d755bc9135e24a70",
+    "/js/style.js": "/js/style.js?id=ddf30faeb5d016ab94c6",
+    "/js/user.js": "/js/user.js?id=28b6bf7eadf40f3edb1c",
     "/js/verification.js": "/js/verification.js?id=7cb635f34c8ff6415766",
-    "/js/vueSelect.js": "/js/vueSelect.js?id=8ce3bfc1da8769f74f95"
+    "/js/vueSelect.js": "/js/vueSelect.js?id=ddd44e711b644c0b36ed"
 }

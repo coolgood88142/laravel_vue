@@ -107,7 +107,7 @@ export default {
             if(this.selectedData == 'add'){
                 this.showModal = true
             }else{
-                this.$emit('save-card', this.selectedData)
+                this.$emit('save-card', false, this.selectedData)
             }
         },
         sendCard(message, CardObj){
@@ -130,9 +130,9 @@ export default {
                 if(!isError){
                     this.messageText = '新增成功!'
                     this.showModal = false
-                    this.$emit('save-card', CardObj)
+                    this.$emit('save-card', true, CardObj)
                 }else{
-                    this.messageText = '資料有重複!'
+                    this.messageText = '卡號有重複!'
                 }
             }
 

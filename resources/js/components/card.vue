@@ -111,9 +111,9 @@ export default {
                 this.isShow = true
             }
         },
-        saveCard(CardObj){
+        saveCard(isAdd, CardObj){
             this.isShow = false
-            if(CardObj != 'add'){
+            if(!isAdd){
                 let key = ''
                 _.mapKeys(CardObj, function(card, cardkey){
                     key = cardkey
@@ -121,7 +121,7 @@ export default {
 
                 this.selectItem.card = key
             }else{
-                 this.$emit('save-new-card', CardObj, this.index)
+                this.$emit('save-new-card', CardObj, this.index)
             }
         }
     }
