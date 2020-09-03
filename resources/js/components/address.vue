@@ -27,25 +27,25 @@ import districts from './districts.vue';
 import verification from './mixins/verification.js';
 
 export default {
-    mixins: [verification],
-    props:{
-        countiesSelected:{
-            type:Number
-        },
-        districtsSelected:{
-            type:Number
-        },
-        roadValue:{
-            type:String
-        },
-        countiesData:{
-            type:Array
-        },
-        districtsData:{
-            type:Object
-        }
+  mixins: [verification],
+  props: {
+    countiesSelected: {
+      type:Number
     },
-    data:function(){
+    districtsSelected: {
+      type:Number
+    },
+    roadValue: {
+      type:String
+    },
+    countiesData: {
+      type:Array
+    },
+    districtsData: {
+      type:Object
+    },
+  },
+  data: function() {
         return {
             addressText: '地址',
             countiesSelectedText: '',

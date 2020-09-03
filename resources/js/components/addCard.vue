@@ -77,11 +77,11 @@ export default {
     cardData() {
       const obj = {};
       obj.cardName = this.cardName;
-      obj.full = this.card1 + "-" + this.card2 + "-" + this.card3 + "-" + this.card4;
+      obj.full = `${this.card1} - ${this.card2} - ${this.card3} - ${this.card4}`;
       obj.last = this.card4;
       obj.first = this.card1;
       return obj;
-    }
+    },
   },
   data: function() {
      return {
