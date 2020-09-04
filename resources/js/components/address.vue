@@ -1,4 +1,3 @@
-
 <template>
     <div class="form-group">
         <h3 class="text-black font-weight-bold">地址</h3>
@@ -46,88 +45,88 @@ export default {
     },
   },
   data: function() {
-        return {
-            addressText: '地址',
-            countiesSelectedText: '',
-            warningText: '地址必填',
-            remindText:'地址填寫不完整',
-            addressError: false,
-            isCountiesError: true,
-            isDistrictsError: true,
-            isRoadValueError: true,
-            isRemind: false,
-            isShow: false,
-            countiesSelectClass: this.getSelectClass(),
-            districtsSelectClass: this.getSelectClass(),
-            inputClass: this.getInputClass(),
-            smallClass: this.getTextClass(),
-            userCounties: this.countiesSelected,
-            userDistricts: this.districtsSelected,
-            userRoad: this.roadValue
+    return {
+        addressText: '地址',
+        countiesSelectedText: '',
+        warningText: '地址必填',
+        remindText:'地址填寫不完整',
+        addressError: false,
+        isCountiesError: true,
+        isDistrictsError: true,
+        isRoadValueError: true,
+        isRemind: false,
+        isShow: false,
+        countiesSelectClass: this.getSelectClass(),
+        districtsSelectClass: this.getSelectClass(),
+        inputClass: this.getInputClass(),
+        smallClass: this.getTextClass(),
+        userCounties: this.countiesSelected,
+        userDistricts: this.districtsSelected,
+        userRoad: this.roadValue
+    }
+  },
+  components: {
+      'counties': counties,
+      'districts': districts
+  },
+  mounted() {
+      this.countiesSelectedText = this.countiesData[this.userCounties]['text'];
+  },
+  methods: {
+    getDistrictsSelected(DistrictsSelected) {
+        this.userDistricts = DistrictsSelected;
+    },
+    updateDistricts(CountiesSelected) {
+        this.countiesSelectedText = this.countiesData[CountiesSelected]['text'];
+        this.userCounties = CountiesSelected;
+        this.userDistricts = '';
+    },
+    isAddressError: function(){
+        if (!this.isCountiesError && !this.isDistrictsError && !this.isRoadValueError){
+            this.addressError = false
+            this.isRemind = false
+            this.isShow = false
+        }else{
+            if (this.isCountiesError && this.isDistrictsError && this.isRoadValueError){
+                this.addressError = true
+                this.isRemind = false
+                this.isShow = true
+            }else{
+                this.addressError = false
+                this.isRemind = true
+                this.isShow = true
+            }
         }
     },
-    components:{
-        'counties': counties,
-        'districts': districts
+    getAddressIsError: function(){
+        this.isCountiesError = this.isValueNullOrEmpty(this.userCounties)
+        this.isDistrictsError = this.isValueNullOrEmpty(this.userDistricts)
+        this.isRoadValueError = this.isValueNullOrEmpty(this.userRoad)
+        this.isAddressError()
+
+        this.countiesSelectClass = this.setElementClass(this.isCountiesError, "select", this.isRemind)
+        this.districtsSelectClass = this.setElementClass(this.isDistrictsError, "select", this.isRemind)
+        this.inputClass = this.setElementClass(this.isRoadValueError, "input", this.isRemind)
+        this.smallClass = this.setElementClass(this.addressError, "text", this.isRemind)
+
+        return this.addressError
     },
-    mounted() {
-        this.countiesSelectedText = this.countiesData[this.userCounties]['text'];
+    getCountiesValue(){
+        return this.countiesSelectedText
     },
-    methods: {
-        getDistrictsSelected(DistrictsSelected) {
-            this.userDistricts = DistrictsSelected;
-        },
-        updateDistricts(CountiesSelected) {
-            this.countiesSelectedText = this.countiesData[CountiesSelected]['text'];
-            this.userCounties = CountiesSelected;
-            this.userDistricts = '';
-        },
-        isAddressError: function(){
-            if (!this.isCountiesError && !this.isDistrictsError && !this.isRoadValueError){
-                this.addressError = false
-                this.isRemind = false
-                this.isShow = false
-            }else{
-                if (this.isCountiesError && this.isDistrictsError && this.isRoadValueError){
-                    this.addressError = true
-                    this.isRemind = false
-                    this.isShow = true
-                }else{
-                    this.addressError = false
-                    this.isRemind = true
-                    this.isShow = true
-                }
+    getDistrictsValue(){
+        //直接在後端拿文字就好了，前端會被別人看到資料
+        let userDistrictsData = ''
+        let districtsValue = this.userDistricts
+        let districtsArray = this.districtsData[this.countiesSelectedText]
+        districtsArray.forEach(function(el) { 
+            if(el['value'] == districtsValue){
+                userDistrictsData = el['text']
             }
-        },
-        getAddressIsError: function(){
-            this.isCountiesError = this.isValueNullOrEmpty(this.userCounties)
-            this.isDistrictsError = this.isValueNullOrEmpty(this.userDistricts)
-            this.isRoadValueError = this.isValueNullOrEmpty(this.userRoad)
-            this.isAddressError()
+        })
 
-            this.countiesSelectClass = this.setElementClass(this.isCountiesError, "select", this.isRemind)
-            this.districtsSelectClass = this.setElementClass(this.isDistrictsError, "select", this.isRemind)
-            this.inputClass = this.setElementClass(this.isRoadValueError, "input", this.isRemind)
-            this.smallClass = this.setElementClass(this.addressError, "text", this.isRemind)
-
-            return this.addressError
-        },
-        getCountiesValue(){
-             return this.countiesSelectedText
-        },
-        getDistrictsValue(){
-            //直接在後端拿文字就好了，前端會被別人看到資料
-            let userDistrictsData = ''
-            let districtsValue = this.userDistricts
-            let districtsArray = this.districtsData[this.countiesSelectedText]
-            districtsArray.forEach(function(el) { 
-                if(el['value'] == districtsValue){
-                    userDistrictsData = el['text']
-                }
-            })
-
-            return userDistrictsData
-        },
+         return userDistrictsData
+    },
         getRoadValue(){
             return this.userRoad
         }

@@ -5,7 +5,8 @@
                 <div class="card-body">
                     <div class="col" v-for="(card, index) in cardAllData" :key="index">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardIndexData[index]" :value="card.last">
+                            <input class="form-check-input" type="radio" v-model="selected"
+                                name="cardname" :id="cardIndexData[index]" :value="card.last">
                             <label class="form-check-label" :for="cardIndexData[index]" >
                                 {{ card.cardName }}:{{ card.full }}
                             </label>
@@ -13,7 +14,8 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="selected" name="cardname" :id="cardLastData" value="add">
+                            <input class="form-check-input" type="radio" v-model="selected"
+                                name="cardname" :id="cardLastData" value="add">
                             <label class="form-check-label" :for="cardLastData">
                                 新增信用卡
                             </label>

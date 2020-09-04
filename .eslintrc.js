@@ -15,5 +15,24 @@ module.exports = {
     'vue',
   ],
   rules: {
+    'indent': [
+      'error',
+      'tab',
+    ],
+    'linebreak-style': [
+      'error',
+      'windows',
+    ],
+    'quotes': [
+      'error',
+      'double'
+    ],
+    'semi': [
+      'error',
+      'never',
+    ],
   },
+  globals: {
+    '_': true,
+  }
 };

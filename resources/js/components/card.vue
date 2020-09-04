@@ -13,11 +13,14 @@
                         <p class="card-text">信用卡名稱：{{ cardName }}</p>
                     </div>
                     <div class="col-2">
-                        <input type="button" :class="btnEdit" :value="editText" v-on:click="changeCard()"/>
+                        <input type="button" :class="btnEdit"
+                            :value="editText" v-on:click="changeCard()"/>
                     </div>
                 </div>
-                <cardSelect :is-show="isShow" :card-data="cardData" :card-index="index" :card-selected="cardSelected" v-on:save-card="saveCard"></cardSelect>
-                <input type="button" :class="isStatus ? btnDanger : btnSuccess" :disabled="isDisabled" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
+                <cardSelect :is-show="isShow" :card-data="cardData" :card-index="index"
+                    :card-selected="cardSelected" v-on:save-card="saveCard"></cardSelect>
+                <input type="button" :class="isStatus ? btnDanger : btnSuccess"
+                    :disabled="isDisabled" :value="isStatus ? dangerText : successText" v-on:click="changeStatus(selectItem.status)"/>
             </div>
         </div>
         </div>
