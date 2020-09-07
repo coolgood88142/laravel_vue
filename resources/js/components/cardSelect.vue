@@ -33,9 +33,10 @@
 </template>
 
 <script>
-import addCard from './addCard.vue';
-import message from './message.vue';
-import swal from 'sweetalert'
+import addCard from "./addCard.vue"
+import message from "./message.vue"
+import swal from "sweetalert"
+
 export default {
     props:{
         cardData:{
