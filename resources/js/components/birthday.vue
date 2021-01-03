@@ -17,13 +17,13 @@
 				<option value="0" disabled selected>--請選擇--</option>
 				<option v-for="(month, index) in months" :key="index"
 					:value="month.value">{{ month.value }}</option>
-			 </select>
-			 <label class="form-check-label">月</label>
-		 </div>
-		 <div class="form-check form-check-inline">
-			 <select v-model="userDay" id="us_day" name="us_day" :class="daySelectClass">
-				 <option value="0" disabled selected>--請選擇--</option>
-				 <option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
+			</select>
+			<label class="form-check-label">月</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<select v-model="userDay" id="us_day" name="us_day" :class="daySelectClass">
+				<option value="0" disabled selected>--請選擇--</option>
+				<option v-for="(day, index) in days" :key="index" :value="day">{{ day }}</option>
 			</select>
 			<label class="form-check-label">日</label>
 		</div>
@@ -34,19 +34,19 @@
 </template>
 
 <script>
-let begin_year = 1900
-let end_year = 2020
+const beginYear = 1900
+const endYear = 2020
 
-let begin_month = 1
-let end_month = 12
+const beginMonth = 1
+const endMonth = 12
 
 function DefaultDateData(begin, end) {
-	const date_array = []
-	for (let i = begin; i < end+1; i++) {
-		date_array.push({ value: i })
+	const dateArray = []
+	for (let i = begin; i < end + 1; i += 1) {
+		dateArray.push({ value: i })
 	}
 
-	return date_array
+	return dateArray
 }
 
 import verification from "./mixins/verification.js";
@@ -55,19 +55,19 @@ export default {
 	mixins: [verification],
 	props: {
 		yearsSelected: {
-			type:Number
+			type: Number,
 		},
 		monthsSelected: {
-			type:Number
+			type: Number,
 		},
-		daysSelected:{ 
-			type:Number
+		daysSelected: {
+			type: Number,
 		},
 	},
 	data() {
 		return {
-			years: DefaultDateData(begin_year, end_year),
-			months: DefaultDateData(begin_month, end_month),
+			years: DefaultDateData(beginYear, endYear),
+			months: DefaultDateData(beginMonth, endMonth),
 			days: "",
 			warningText: "生日必填",
 			remindText: "生日填寫不完整",
@@ -112,13 +112,13 @@ export default {
 				this.isRemind = false
 				this.isShow = false
 			} else {
+				this.birthdayError = false
+				this.isRemind = true
+				this.isShow = true
+
 				if (this.isYearError && this.isMonthError && this.isDayError) {
 					this.birthdayError = true
 					this.isRemind = false
-					this.isShow = true
-				} else {
-					this.birthdayError = false
-					this.isRemind = true
 					this.isShow = true
 				}
 			}
@@ -141,13 +141,13 @@ export default {
 		},
 	},
 	watch: {
-		userYear(newVal) {
+		userYear() {
 			this.getBirthdayIsError()
 		},
-		userMonth(newVal) {
+		userMonth() {
 			this.getBirthdayIsError()
 		},
-		userDay(newVal) {
+		userDay() {
 			this.getBirthdayIsError()
 		},
 	},

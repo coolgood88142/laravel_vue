@@ -34,21 +34,20 @@
 export default {
 	props: {
 		channelMaster: {
-			type:Array
+			type: Array,
 		},
 		channelSub: {
-			type:Array
+			type: Array,
 		},
 		masterSelected: {
-			type:Array
+			type: Array,
 		},
 		subSelected: {
-			type:Array
+			type: Array,
 		},
 	},
 	data() {
 		return {
-			//不應該這寫，當function或參數寫壞了，導致回傳資料錯誤變成null的話，畫面全壞，預設值的定義是一定是正常的資料型態
 			channelList: [],
 			btnAdd: "btn btn-primary",
 			btnDelete: "btn btn-secondary",
@@ -60,12 +59,12 @@ export default {
 	},
 	methods: {
 		getChannelData() {
-			const master_selected = this.masterSelected
-			const sub_selected = this.subSelected
+			const masterselected = this.masterSelected
+			const subselected = this.subSelected
 			const data = []
-			if (master_selected.length > 0 && sub_selected.length > 0) {
-				for (let i = 0; i < master_selected.length; i++) {
-					data.push([master_selected[i], sub_selected[i]])
+			if (masterselected.length > 0 && subselected.length > 0) {
+				for (let i = 0; i < masterselected.length; i++) {
+					data.push([masterselected[i], subselected[i]])
 				}
 			}
 			return data

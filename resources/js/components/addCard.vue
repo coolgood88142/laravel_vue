@@ -65,14 +65,13 @@
 </template>
 
 <style>
-		.modal-container{
-				width:480px
-		}
+	.modal-container{
+		width:480px
+	}
 </style>
 
 <script>
-/*傳一包全部的【卡號】物件，在這裡檢查，在emit出去訊息就好了*/
-
+import _ from "lodash"
 export default {
 	computed: {
 		cardData() {
@@ -110,7 +109,6 @@ export default {
 				_.forEach(cardNum, (value) => {
 					if (value.length !== 4) {
 						message = "每個卡號區間請輸入4碼數字"
-						return
 					}
 				})
 			}

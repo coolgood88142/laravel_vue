@@ -32,8 +32,16 @@ module.exports = {
 			"error",
 			"never",
 		],
+		// "react/jsx-filename-extension": [
+		// 	1, { "extensions": [".js", ".jsx"] }
+		// ],
 	},
-	// globals: {
-	// 	"_": true,
-	// }
-};
+	globals: {
+		todoEventBus: "readable",
+	},
+	"import/no-extraneous-dependencies": [
+		"error", {
+			'devDependencies': true
+		},
+	],
+}

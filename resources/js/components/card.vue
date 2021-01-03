@@ -35,17 +35,17 @@ import _ from "lodash"
 export default {
 	props: {
 		item: {
-			type:Object
+			type: Object,
 		},
 		cardData: {
-			type:Array
+			type: Array,
 		},
 		index: {
-			type:Number
+			type: Number,
 		},
 	},
 	components: {
-		"cardSelect": cardSelect
+		"cardSelect": cardSelect,
 	},
 	data() {
 		return {
@@ -72,7 +72,7 @@ export default {
 		cardName() {
 			const itemData = this.itemData
 			const item = this.item
-			const key = _.findKey(itemData, function(e, key) { return key == item.card; })
+			const key = _.findKey(itemData, (e, key) => { return key == item.card; })
 			let name = (key === undefined || key === null) ? "" : itemData[key].cardName
 
 			if (name === "") {
@@ -85,7 +85,7 @@ export default {
 		cardSelected() {
 			const itemData = this.itemData
 			const item = this.item
-			const key = _.findKey(itemData, function(e, key) { return key == item.card; })
+			const key = _.findKey(itemData, (e, key) => { return key == item.card; })
 			const selected = (key === undefined || key === null) ? "" : itemData[key].last
 
 			return selected

@@ -11,13 +11,13 @@
 export default {
 	props: {
 		selectClass: {
-			type:String
+			type: String,
 		},
 		countiesData: {
-			type:Array
+			type: Array,
 		},
 		countiesSelected: {
-			type:Number
+			type: Number,
 		},
 	},
 	data() {

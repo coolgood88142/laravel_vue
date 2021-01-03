@@ -111,7 +111,6 @@ let app = new Vue({
 		},
 		deleteCard(index) {
 			try {
-				//測試try-catch
 				// this.cardData = ""
 				this.cardData.splice(index, 1)
 				this.cardItems.splice(index, 1)

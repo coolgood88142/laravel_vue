@@ -70,19 +70,19 @@ let defaultLable = {"id": 0, "name": "---請選擇---"}
 export default {
 	props: {
 		masterChannelsData: {
-			type:Array
+			type: Array,
 		},
 		subChannelsData: {
-			type:Array
+			type: Array,
 		},
 		courseData: {
-			type:Array
+			type: Array,
 		},
 		relatedData: {
-			type:Array
+			type: Array,
 		},
 		totalChannelsData: {
-			type:Array
+			type: Array,
 		},
 	},
 	data() {
@@ -211,12 +211,13 @@ export default {
 		},
 		search: _.debounce((loading, search, vm) => {
 			fetch(
-				`http://127.0.0.1:8000/getKeyWord?search=${search}`
+				`http://127.0.0.1:8000/getKeyWord?search=${search}`,
 			).then(res => {
 				res.json().then(json => (vm.channelsData = json.searchData))
 				loading(false)
 			})
 		}, 350)
-	},
+	}
 }
+
 </script>

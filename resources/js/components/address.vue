@@ -29,19 +29,19 @@ export default {
 	mixins: [verification],
 	props: {
 		countiesSelected: {
-			type:Number
+			type: Number,
 		},
 		districtsSelected: {
-			type:Number
+			type: Number,
 		},
 		roadValue: {
-			type:String
+			type: String,
 		},
 		countiesData: {
-			type:Array
+			type: Array,
 		},
 		districtsData: {
-			type:Object
+			type: Object,
 		},
 	},
 	data() {
@@ -87,13 +87,13 @@ export default {
 				this.isRemind = false
 				this.isShow = false
 			} else {
+				this.addressError = false
+				this.isRemind = true
+				this.isShow = true
+
 				if (this.isCountiesError && this.isDistrictsError && this.isRoadValueError) {
 					this.addressError = true
 					this.isRemind = false
-					this.isShow = true
-				} else {
-					this.addressError = false
-					this.isRemind = true
 					this.isShow = true
 				}
 			}
@@ -115,7 +115,6 @@ export default {
 			return this.countiesSelectedText
 		},
 		getDistrictsValue() {
-			//直接在後端拿文字就好了，前端會被別人看到資料
 			let userDistrictsData = ""
 			const districtsValue = this.userDistricts
 			const districtsArray = this.districtsData[this.countiesSelectedText]
@@ -132,14 +131,14 @@ export default {
 		},
 	},
 	watch: {
-		userCounties(newVal) {
+		userCounties() {
 			this.userDistricts = 0
 			this.getAddressIsError()
 		},
-		userDistricts(newVal) {
+		userDistricts() {
 			this.getAddressIsError()
 		},
-		userRoad(newVal) {
+		userRoad() {
 			this.getAddressIsError()
 		},
 	},

@@ -36,6 +36,7 @@ class UserController extends Controller
             ],
             'users' => $users
         ];
+        dd($response);
 
         return response()->json($response);
     }
