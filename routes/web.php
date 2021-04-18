@@ -87,3 +87,4 @@ Route::get('/testCode','FormController@laravelTestCode');
 
 Route::POST('/sendValidation','FormController@validationUser')->name('sendValidation');
 
+Route::get('/getAppScript','AppScriptController@addChannelData');

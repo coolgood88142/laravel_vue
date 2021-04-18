@@ -2,25 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class SubChannels extends Model
 {
-    protected $table = 'sub_channels';
-    protected $connection = 'mysql_user';
+    protected $collection = 'sub_channels';
+    public $timestamps = false;
 
-    public function masterChannels()
+    public function mainChannels()
     {
-        return $this->belongsToMany('App\Models\MasterChannels','master_channels_id');
+        return $this->belongsToMany('App\Models\MainChannels','_id');
     }
 
-    public function course()
+    public function articles()
     {
-        return $this->belongsToMany('App\Models\Course');
-    }
-
-    public function courseSubChannels()
-    {
-        return $this->belongsToMany('App\Models\CourseSubChannels', 'course_sub_channels', 'sub_channels_id', 'course_id');
+        return $this->hasMany('App\Models\Articles','_id');
     }
 }
+

@@ -74,7 +74,6 @@
         <div id="app" class="justify-content-center align-items-center">
             <div class="row" style="margin-bottom: 60px;">
                 <div class="col">
-                    <h2 id="title" class="text-center font-weight-bold" style="margin-bottom:20px;">信用卡管理系統</h2>
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Card List</h5>

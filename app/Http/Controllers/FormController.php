@@ -16,20 +16,9 @@ class FormController extends Controller
 {
     public function getFormUserData(Request $request)
     {
-        $client = new \GuzzleHttp\Client();
-        $response = $client->get('https://script.googleusercontent.com/macros/echo?user_content_key=-yex6UFY5iOjrDBSTF9Xk-tuy_e1WRzVdLXbLWBehCM0_M36v8eUV5JI_lr40LVHZmcKQaLgNg2NILiGhWlTjpxtast2Plb-m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnCXgUTRdgqXj3Aq3ZTlpz-TBJKUm1HAR0A93zL_jSiszuca-6WkGG1kr6HoIsCLXONveWPraiRQB&lib=MxgXVhpOa8KXE62faMUKC2eGkeYm2IhVF');
-        $json = json_decode($response->getBody());
-
-        $data = [];
-        foreach($json as $key => $value){
-            $array = [];
-            foreach($value as $a => $b){
-                array_push($array, $b);
-            }
-            array_push($data, $array);
-        }
-
-        dd($data);
+        $sheets = Sheets::spreadsheet('13DiX-Ca39sJP_j--ruilMd4oLKPE3fhNsfV79B04I-M')->sheet('問卷資料');
+            $sheetsValue = $sheets->all();
+        dd($sheetsValue );
 
         if(count($data) > 0){
             $this->addFormUserData($data);

@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         PulkitJalan\Google\GoogleServiceProvider::class,
-
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
     ],
 
     /*
