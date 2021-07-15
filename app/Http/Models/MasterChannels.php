@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MasterChannels extends Model
 {
     protected $table = 'master_channels';
-    protected $connection = 'mysql_user';
+    protected $connection = 'mysql';
 
     public function subChannels()
     {

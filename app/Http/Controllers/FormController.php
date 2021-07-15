@@ -110,4 +110,27 @@ class FormController extends Controller
             ->withErrors('驗證成功!')
             ->withInput();
     }
+
+    public function getRadioData(){
+        return view('radio', [
+            'items' => [
+                '1' => '食物',
+                '2' => '飲料',
+                '3' => '交通',
+            ],
+            'feedItems' => [
+                '1' => '蘋果',
+                '2' => '香蕉',
+                '3' => '可樂',
+                '4' => '汽水',
+                '5' => '汽車',
+                '6' => '機車',
+            ],
+            'data' => [
+                '1' => [1, 2],
+                '2' => [3, 4],
+                '3' => [5, 6],
+            ]
+        ]);
+    }
 }

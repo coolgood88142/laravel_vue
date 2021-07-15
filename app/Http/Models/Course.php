@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $table = 'course';
-    protected $connection = 'mysql_user';
+    protected $connection = 'mysql';
 
     public function subChannels()
     {

@@ -11,6 +11,7 @@ window.axios = require('axios');
 window.select2 = require("vue-select2")
 Vue.config.productionTip = false;
 window._ = require('lodash');
+window.$ = window.jQuery = require('jquery');
 //防止顯示生產訊息，vue預設會顯示
 // Vue.config.debug = false;
 // Vue.config.devtools = false;

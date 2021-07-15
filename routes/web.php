@@ -88,3 +88,9 @@ Route::get('/testCode','FormController@laravelTestCode');
 Route::POST('/sendValidation','FormController@validationUser')->name('sendValidation');
 
 Route::get('/getAppScript','AppScriptController@addChannelData');
+
+Route::get('/ie', 'IeController@getData');
+
+Route::post('/save', 'IeController@saveData')->name('save');
+
+Route::get('/radio', 'FormController@getRadioData');

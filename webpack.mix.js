@@ -23,6 +23,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/channelsRelation.js', 'public/js')
     .js('resources/js/vueSelect.js', 'public/js')
     .js('resources/js/components/mixins/verification.js', 'public/js')
+    .js('resources/js/radio.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .version();
 
